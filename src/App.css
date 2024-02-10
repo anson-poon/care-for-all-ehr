@@ -14,18 +14,38 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  position: sticky; 
+  top: 0;
+  background-color: rgb(247, 247, 247);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: left;
+  padding: 1rem;
+  padding-left: 3rem;
+  font-size: 1rem;
+  color: rgb(62, 62, 62);
+  opacity: 0.5;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+nav.App-nav {
+  margin-left: 3rem;
+}
+
+a {
+  margin: 10px;
+  color: rgb(39, 39, 39);
+  font-size: 1.2rem;
+  vertical-align: middle;
+  text-decoration: none; 
+  transition: ease-out 200ms;
+}
+
+a:hover, button:hover {
+  color: rgb(151, 151, 151);
 }
 
 @keyframes App-logo-spin {
