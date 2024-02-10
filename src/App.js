@@ -12,21 +12,6 @@ import { Link } from 'react-router';
 function App() {
   return (
     <div className="App">
-<<<<<<< HEAD
-      <header className="App-header">
-        <h1>Care For All EHR</h1>
-        <Router>
-        <Navbar />
-          <Routes>
-              <Route path="/" component={<HomePage/>}/>
-              <Route path="/patients" component={<PatientsPage />}/>
-              <Route path="/providers" component={<ProvidersPage/>}/>
-              <Route path="/visits" component={<VisitsPage/>}/>
-          </Routes>
-        </Router>
-      </header>
-      <footer></footer>
-=======
       <Router>
         <header className="App-header">
           <h1>Care For All EHR</h1>
@@ -42,7 +27,6 @@ function App() {
         </div>
         <footer></footer>
       </Router>
->>>>>>> anson-branch
     </div>
   );
 }

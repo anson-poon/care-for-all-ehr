@@ -3,17 +3,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function PatientsPage() {
-<<<<<<< HEAD
-    // const navigate = useNavigate();
-    // const handleClick = () => {
-    //     navigate('/patients/new');
-    // };
-
-    return (
-        <div>
-            <h1>Patients</h1>
-            {/* <button onClick={handleClick}>Add Patient</button> */}
-=======
     return (
         <div>
             <h4>Patients</h4>
@@ -37,7 +26,6 @@ function PatientsPage() {
                 </tr>           
             </tbody>
         </table>
->>>>>>> anson-branch
         </div>
     );
 }
