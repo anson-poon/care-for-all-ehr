@@ -16,15 +16,26 @@
 .App-header {
   position: sticky; 
   top: 0;
-  background-color: rgb(247, 247, 247);
+  background-color: rgba(247, 247, 247, 0.9);
+  border-bottom: 2px solid rgb(204, 204, 204);
   display: flex;
   align-items: center;
   justify-content: left;
   padding: 1rem;
   padding-left: 3rem;
   font-size: 1rem;
-  color: rgb(62, 62, 62);
-  opacity: 0.5;
+  color: rgb(84, 84, 84);
+}
+
+.App-body {
+  background-color: rgba(247, 247, 247, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: rgb(39, 39, 39);
+
 }
 
 .App-link {
@@ -47,6 +58,41 @@ a {
 a:hover, button:hover {
   color: rgb(151, 151, 151);
 }
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2em;
+  
+}
+
+thead { 
+  border: 2px solid rgb(138, 138, 138);
+  color: rgb(255, 255, 255);
+  padding: 10px 20px 10px 20px;
+  background:rgb(115, 115, 115);
+  font-size: 1rem;
+}
+
+tbody { 
+  border: 2px solid rgb(138, 138, 138);
+  color: rgb(39, 39, 39);
+  padding: 10px 20px 10px 20px;
+  font-size: 1rem;
+}
+
+th, td {
+  padding: 10px 20px 10px 20px;
+  text-align: center;
+  border: 2px solid rgb(138, 138, 138);
+}
+
+/* h1 {
+  font-size: 2em;
+  background-image: linear-gradient(45deg, #ffa54c 0%, #e175a4 80%);
+  background-clip: text;
+  color: transparent;
+} */
 
 @keyframes App-logo-spin {
   from {
