@@ -5,7 +5,11 @@ import { useNavigate } from 'react-router-dom';
 function HomePage() {
     return (
         <div>
+<<<<<<< HEAD
             <p>Welcome!</p>
+=======
+            <h1>Welcome!</h1>
+>>>>>>> anson-branch
         </div>
     );
 }

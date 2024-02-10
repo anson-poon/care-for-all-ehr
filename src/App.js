@@ -12,6 +12,7 @@ import { Link } from 'react-router';
 function App() {
   return (
     <div className="App">
+<<<<<<< HEAD
       <header className="App-header">
         <h1>Care For All EHR</h1>
         <Router>
@@ -25,6 +26,23 @@ function App() {
         </Router>
       </header>
       <footer></footer>
+=======
+      <Router>
+        <header className="App-header">
+          <h1>Care For All EHR</h1>
+          <Navbar />
+        </header>
+        <div className="App-body">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/patients" element={<PatientsPage />} />
+            <Route path="/providers" element={<ProvidersPage />} />
+            <Route path="/visits" element={<VisitsPage />} />
+          </Routes>
+        </div>
+        <footer></footer>
+      </Router>
+>>>>>>> anson-branch
     </div>
   );
 }
