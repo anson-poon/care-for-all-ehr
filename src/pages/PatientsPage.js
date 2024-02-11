@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 
 function PatientsPage() {
     return (
@@ -14,6 +15,8 @@ function PatientsPage() {
                     <th>emailAddress</th>
                     <th>dateOfBirth</th>
                     <th>patientID</th>
+                    <th>Update</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,6 +26,8 @@ function PatientsPage() {
                     <th>"a@apple.com"</th>
                     <th>1000-01-02</th>
                     <th>0</th>
+                    <th><RiEdit2Fill/></th>
+                    <th><RiChatDeleteFill/></th>
                 </tr> 
                 <tr>
                     <th>3</th>
@@ -30,11 +35,30 @@ function PatientsPage() {
                     <th>"b@apple.com"</th>
                     <th>1000-01-03</th>
                     <th>1</th>
-                </tr>                 
+                    <th><RiEdit2Fill/></th>
+                    <th><RiChatDeleteFill/></th>
+                </tr>  
+                <tr>
+                    <th>
+                        <input type="text"/>
+                    </th> 
+                    <th>
+                        <input type="text"/>
+                    </th>       
+                    <th>
+                        <input type="text"/>
+                    </th> 
+                    <th>
+                        <input type="text"/>
+                    </th>  
+                    <th>
+                        <input type="text"/>
+                    </th> 
+                </tr>                      
             </tbody>
+            <button>Add information about a new patient</button>
             <a href="/patientindex">go to patient index page</a>
             <a href="/patientproviderintersection">go to patient provider intersection page</a>
-            <a href="/addupdatedeletepatientsdetailedinformation">go to add, update, or delete patients detailed information page</a>
         </table>
         </div>
     );

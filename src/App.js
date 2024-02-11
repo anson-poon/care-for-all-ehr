@@ -13,6 +13,7 @@ import ClinicalNotesPage from './pages/ClinicalNotesPage';
 import InsurancePoliciesPage from './pages/InsurancePoliciesPage';
 import ClinicalFindingsPage from './pages/ClinicalFindingsPage';
 import InsuranceNotesPage from './pages/InsuranceNotesPage';
+import UpdateProviderIndex from './components/UpdateProvider';
 import { useState } from 'react';
 import { Link } from 'react-router';
 
@@ -37,6 +38,7 @@ function App() {
             <Route path="/insurancepolicies" element={<InsurancePoliciesPage />} />
             <Route path="/clinicalfindings" element={<ClinicalFindingsPage />} />
             <Route path="/insurancenotes" element={<InsuranceNotesPage />} />
+            <Route path="/updateproviderindex" element={<UpdateProviderIndex />} />
           </Routes>
         </div>
         <footer></footer>

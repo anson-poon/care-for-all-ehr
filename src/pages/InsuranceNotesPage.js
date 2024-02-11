@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 
 function InsuranceNotesPage() {
     return (
@@ -12,6 +13,8 @@ function InsuranceNotesPage() {
                     <th>insuranceNoteID</th>
                     <th>reimbursementCode</th>
                     <th>visitID</th>
+                    <th>Update</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,17 +22,32 @@ function InsuranceNotesPage() {
                     <th>500</th>
                     <th>1</th>
                     <th>20</th>
+                    <th><RiEdit2Fill/></th>
+                    <th><RiChatDeleteFill/></th>
                 </tr>
                 <tr>
                     <th>600</th>
                     <th>2</th>
                     <th>visitID</th>
-                </tr>                
+                    <th><RiEdit2Fill/></th>
+                    <th><RiChatDeleteFill/></th>
+                </tr>  
+                <tr>
+                    <th>
+                        <input type="text"/>
+                    </th> 
+                    <th>
+                        <input type="text"/>
+                    </th>       
+                    <th>
+                        <input type="text"/>
+                    </th> 
+                </tr>                    
             </tbody>
+            <button>Add new insurance note</button>
         </table>
         <a href="/insurancepolicies">go to insurance policies page</a>
         <a href="/visits">go to visits page</a>
-        <a href="/addupdatedeleteinsurancenotes">go to add, update, or delete insurance notes page</a>
         </div>
     );
 }
