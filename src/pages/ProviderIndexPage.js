@@ -9,7 +9,7 @@ function ProviderIndexPage() {
 
     return (
         <div>
-            <h4>Provider Index Page</h4>
+            <h4>Provider Index</h4>
             <table id="providerindex">
             <thead>
                 <tr>
@@ -41,9 +41,9 @@ function ProviderIndexPage() {
                     <input type="text"/>
                 </th>
             </tr>
-            <button>Add a new provider</button>
+            <button>Add Provider to Index</button>
         </table>
-        <a href="/providers">go to detailed provider information page</a>
+        <a href="/providers">Provider Deatils</a>
         </div>
     );
 }

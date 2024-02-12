@@ -26,7 +26,7 @@ function Navbar() {
             <div className="dropdown">
                 <button className="dropdown-button">Visits</button>
                 <div className="dropdown-content">
-                    <a href="/visits">Visits</a>
+                    <a href="/visits">All Visits</a>
                     <a href="/insurancepolicies">Insurance Policies</a>
                     <a href="/clinicalnotes">Clinical Notes</a>
                 </div>

@@ -6,7 +6,7 @@ import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 function PatientIndexPage() {
     return (
         <div>
-            <h4>Patient Index Page</h4>
+            <h4>Patient Index</h4>
             <table id="patientindex">
             <thead>
                 <tr>
@@ -38,9 +38,9 @@ function PatientIndexPage() {
                     </th>        
                 </tr>       
             </tbody>
-            <button>Add a new patient to index</button>
+            <button>Add New Patient to Index</button>
         </table>
-        <a href="/patients">go to detailed patient information page</a>
+        <a href="/patients">Patient details page</a>
         </div>
     );
 }

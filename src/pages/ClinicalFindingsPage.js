@@ -6,7 +6,7 @@ import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 function ClinicalFindingsPage() {
     return (
         <div>
-            <h4>Clinical Findings Page</h4>
+            <h4>Clinical Findings</h4>
             <table id="clinicalfindings">
             <thead>
                 <tr>
@@ -76,8 +76,7 @@ function ClinicalFindingsPage() {
             </tr>
             <button>Add new clinical findings</button>
         </table>
-        <a href="/clinicalnotes">go to clinical notes page</a>
-        <a href="/visits">go to visits page</a>
+        <a href="/clinicalnotes">Clinical Notes</a>
         </div>
     );
 }

@@ -6,7 +6,7 @@ import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 function PatientProviderIntersectionPage() {
     return (
         <div>
-            <h4>Patient Provider Intersection Page</h4>
+            <h4>Patient/Provider Intersection</h4>
             <table id="patientproviderintersection">
             <thead>
                 <tr>
@@ -38,11 +38,11 @@ function PatientProviderIntersectionPage() {
                     </th>       
                 </tr>                       
             </tbody>
-            <button>Add link between a patient and provider</button>
+            <button>Add Link Between Patient and Provider</button>
         </table>
 
-        <a href="/patients">go to patients page</a>
-        <a href="/providers">go to providers page</a>
+        <a href="/patients">Patient Deatils</a>
+        <a href="/providers">Provider Deatils</a>
         </div>
     );
 }
