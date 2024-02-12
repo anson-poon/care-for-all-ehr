@@ -8,7 +8,7 @@ function Navbar() {
     return(
         <div>
             <div className="dropdown">
-                <button className="dropbtn">Patients</button>
+                <button className="dropdown-button">Patients</button>
                 <div className="dropdown-content">
                     <a href="/patients">Patient Details</a>
                     <a href="/patientindex">Patient Index</a>
@@ -16,7 +16,7 @@ function Navbar() {
                 </div>
             </div>
             <div className="dropdown">
-                <button className="dropbtn">Providers</button>
+                <button className="dropdown-button">Providers</button>
                 <div className="dropdown-content">
                     <a href="/providers">Provider Details</a>
                     <a href="/providerindex">Provider Index</a>
@@ -24,7 +24,7 @@ function Navbar() {
                 </div>
             </div>
             <div className="dropdown">
-                <button className="dropbtn">Visits</button>
+                <button className="dropdown-button">Visits</button>
                 <div className="dropdown-content">
                     <a href="/visits">Visits</a>
                     <a href="/insurancepolicies">Insurance Policies</a>
