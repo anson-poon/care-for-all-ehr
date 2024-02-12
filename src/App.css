@@ -34,6 +34,14 @@ html, body {
 .logo {
   margin-right: 3rem;
   font-size: 1.5rem;
+  font-weight: bold;
+  background-image: linear-gradient(45deg, #5a55ee 0%, #4194cf 50%);
+  background-clip: text;
+  color: transparent;
+}
+
+.logo:hover {
+  color: #7c78f1;
 }
 
 /* dropdown code obtained and modified from documentation of source url:  https://www.w3schools.com/howto/howto_css_dropdown.asp */
@@ -130,6 +138,23 @@ th, td {
   padding: 10px 20px 10px 20px;
   text-align: center;
   border: 2px solid rgb(138, 138, 138);
+}
+
+.add-button {
+  margin: 1em;
+  padding: 0.5em 1em;
+  font-size: 1rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: ease-out 200ms;
+}
+
+.add-button:hover {
+  background-color: #82cd83;
+  color: white;
 }
 
 /* h1 {

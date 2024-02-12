@@ -74,7 +74,7 @@ function ClinicalFindingsPage() {
                     <input type="text"/>
                 </th>
             </tr>
-            <button>Add new clinical findings</button>
+            <button className="add-button">Add new clinical findings</button>
         </table>
         <a href="/clinicalnotes">Clinical Notes</a>
         </div>

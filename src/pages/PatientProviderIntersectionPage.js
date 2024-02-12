@@ -38,11 +38,11 @@ function PatientProviderIntersectionPage() {
                     </th>       
                 </tr>                       
             </tbody>
-            <button>Add Link Between Patient and Provider</button>
+            <button className="add-button">Add Link Between Patient and Provider</button>
         </table>
 
-        <a href="/patients">Patient Deatils</a>
-        <a href="/providers">Provider Deatils</a>
+        <a href="/patients">Patient Details</a>
+        <a href="/providers">Provider Details</a>
         </div>
     );
 }

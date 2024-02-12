@@ -38,9 +38,9 @@ function PatientIndexPage() {
                     </th>        
                 </tr>       
             </tbody>
-            <button>Add New Patient to Index</button>
+            <button className="add-button">Add New Patient to Index</button>
         </table>
-        <a href="/patients">Patient details page</a>
+        <a href="/patients">Patient Details</a>
         </div>
     );
 }
