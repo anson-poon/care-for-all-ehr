@@ -22,7 +22,7 @@ function App() {
     <div className="App">
       <Router>
         <header className="App-header">
-          <h1>Care For All EHR</h1>
+          <a href="/" className="logo">Care For All EHR</a>
           <Navbar />
         </header>
         <div className="App-body">
@@ -41,8 +41,8 @@ function App() {
             <Route path="/updateproviderindex" element={<UpdateProviderIndex />} />
           </Routes>
         </div>
-        <footer></footer>
       </Router>
+      <footer></footer>
     </div>
   );
 }
