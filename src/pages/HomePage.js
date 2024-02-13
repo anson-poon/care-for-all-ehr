@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 function HomePage() {
     return (
         <div>
-            <h1>Welcome!</h1>
+            {/* <h1>Welcome!</h1> */}
         </div>
     );
 }
