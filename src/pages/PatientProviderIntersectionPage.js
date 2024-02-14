@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 
+/*
+Page returns function that shows patient provider intersection table
+*/
 function PatientProviderIntersectionPage() {
     return (
         <div>

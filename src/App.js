@@ -18,18 +18,13 @@ import UpdateProviderIndex from './components/UpdateProvider';
 import { useState } from 'react';
 import { Link } from 'react-router';
 
+/*
+Code citation:
+Knowledge of using extend, React.Component, and render are from reviewing the following tutorial:
+https://levelup.gitconnected.com/how-to-render-react-app-using-express-server-in-node-js-a428ec4dfe2b
+*/
 class App extends React.Component {
-  state = {
-    users: [],
-  };
-  componentDidMount() {
-    axios.get("/users.json").then((response) => {
-      this.setState({ users: response.data });
-    });
-  }
-
   render() {
-    const { user } = this.state;
     return (
       <div className="App">
         <Router>

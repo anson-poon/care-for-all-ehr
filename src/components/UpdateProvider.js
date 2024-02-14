@@ -2,6 +2,9 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+/*
+Component to update provider index
+*/
 function UpdateProviderIndex () {
     return (
         <div>
