@@ -9,7 +9,7 @@ Page returns function that shows patient provider intersection table
 function PatientProviderIntersectionPage() {
     return (
         <div>
-            <h4>Patient/Provider Intersection</h4>
+            <h3>Patient/Provider Intersection</h3>
             <table id="patientproviderintersection">
             <thead>
                 <tr>

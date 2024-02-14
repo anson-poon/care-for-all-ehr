@@ -9,7 +9,7 @@ Page returns function that shows clinical notes table
 function ClinicalNotesPage() {
     return (
         <div>
-            <h4>Clinical Notes</h4>
+            <h3>Clinical Notes</h3>
             <table id="clinicalnotes">
             <thead>
                 <tr>

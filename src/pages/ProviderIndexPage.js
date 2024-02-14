@@ -12,7 +12,7 @@ function ProviderIndexPage() {
 
     return (
         <div>
-            <h4>Provider Index</h4>
+            <h3>Provider Index</h3>
             <table id="providerindex">
             <thead>
                 <tr>

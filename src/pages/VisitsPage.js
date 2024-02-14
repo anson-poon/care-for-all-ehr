@@ -9,7 +9,7 @@ Page returns function that shows visits table
 function VisitsPage() {
     return (
         <div>
-            <h4>All Visits</h4>
+            <h3>All Visits</h3>
             <table id="visits">
             <thead>
                 <tr>

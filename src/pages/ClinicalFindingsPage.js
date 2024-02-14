@@ -9,7 +9,7 @@ Page returns function that shows clinical findings table
 function ClinicalFindingsPage() {
     return (
         <div>
-            <h4>Clinical Findings</h4>
+            <h3>Clinical Findings</h3>
             <table id="clinicalfindings">
                 <thead>
                     <tr>

@@ -9,7 +9,7 @@ Page returns function that shows patients table
 function PatientsPage() {
     return (
         <div>
-            <h4>Patient Details</h4>
+            <h3>Patient Details</h3>
             <table id="patientsdetailedinformation">
             <thead>
                 <tr>

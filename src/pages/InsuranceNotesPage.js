@@ -9,7 +9,7 @@ Page returns function that shows insurance notes table
 function InsuranceNotesPage() {
     return (
         <div>
-            <h4>Insurance Notes</h4>
+            <h3>Insurance Notes</h3>
             <table id="insurancenotes">
             <thead>
                 <tr>

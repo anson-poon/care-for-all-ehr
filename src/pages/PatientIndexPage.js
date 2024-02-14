@@ -9,7 +9,7 @@ Page returns function that shows patient index table
 function PatientIndexPage() {
     return (
         <div>
-            <h4>Patient Index</h4>
+            <h3>Patient Index</h3>
             <table id="patientindex">
             <thead>
                 <tr>

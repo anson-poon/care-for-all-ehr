@@ -9,7 +9,7 @@ Page returns function that shows providers table
 function ProvidersPage() {
     return (
         <div>
-            <h4>Provider Details</h4>
+            <h3>Provider Details</h3>
             <table id="providerdetailedinformation">
             <thead>
                 <tr>
