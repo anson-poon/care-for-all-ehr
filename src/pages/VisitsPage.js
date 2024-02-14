@@ -56,8 +56,9 @@ function VisitsPage() {
                     </th> 
                 </tr>                 
             </tbody>
-            <button className="add-button">Add New Visit</button>
         </table>
+        <button className="add-button">Add New Visit</button>
+        <br/>
         <a href='/insurancepolicies'>Insurance Policies</a>
         <a href='/clinicalnotes'>Clinical Notes</a>
         </div>

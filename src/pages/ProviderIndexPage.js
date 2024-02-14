@@ -41,8 +41,9 @@ function ProviderIndexPage() {
                     <input type="text"/>
                 </th>
             </tr>
-            <button className="add-button">Add Provider to Index</button>
         </table>
+        <button className="add-button">Add Provider to Index</button>
+        <br/>
         <a href="/providers">Provider Details</a>
         </div>
     );

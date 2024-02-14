@@ -59,8 +59,9 @@ function ProvidersPage() {
                     </th> 
                 </tr>                    
             </tbody>
-            <button className="add-button">Add New Provider</button>
         </table>
+        <button className="add-button">Add New Provider</button>
+        <br/>
         <a href="/providerindex">Provider Index</a>
         <a href="/patientproviderintersection">Patient/Provider Intersection</a>
         </div>

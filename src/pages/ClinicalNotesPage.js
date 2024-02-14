@@ -38,8 +38,9 @@ function ClinicalNotesPage() {
                     </th>
                 </tr>          
             </tbody>
-            <button className="add-button">Add New Clinical Note</button>
         </table>
+        <button className="add-button">Add New Clinical Note</button>
+        <br/>
         <a href="/clinicalfindings">Clinical Findings</a>
         </div>
     );

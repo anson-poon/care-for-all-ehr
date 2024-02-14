@@ -44,8 +44,9 @@ function InsurancePoliciesPage() {
                     </th> 
                 </tr>             
             </tbody>
-            <button className="add-button">Add New Insurance Policy</button>
         </table>
+        <button className="add-button">Add New Insurance Policy</button>
+        <br/>
         <a href="/insurancenotes">Insurance Notes</a>
         </div>
     );

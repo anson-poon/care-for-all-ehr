@@ -27,7 +27,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: left;
-  padding: 1rem;
+  padding: 0.5rem;
   padding-left: 4rem;
 }
 
@@ -65,6 +65,7 @@ html, body {
   position: absolute;
   background-color: #f2f2f2;
   min-width: 300px;
+  padding: 0.5rem;
   text-align: left;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -73,6 +74,7 @@ html, body {
 /* Links inside the dropdown */
 .dropdown-content a {
   font-size: 1rem;
+  padding: 0.2rem;
   text-decoration: none;
   display: block;
 }
@@ -113,31 +115,35 @@ a:hover, button:hover {
 }
 
 table {
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 2em;
-  
+  border-collapse: collapse;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 thead { 
-  border: 2px solid rgb(138, 138, 138);
   color: rgb(255, 255, 255);
   padding: 10px 20px 10px 20px;
-  background:rgb(115, 115, 115);
+  background:rgb(89, 120, 191);
   font-size: 1rem;
 }
 
 tbody { 
-  border: 2px solid rgb(138, 138, 138);
   color: rgb(39, 39, 39);
+  background-color: rgb(255, 255, 255);
   padding: 10px 20px 10px 20px;
   font-size: 1rem;
 }
 
 th, td {
   padding: 10px 20px 10px 20px;
-  text-align: center;
-  border: 2px solid rgb(138, 138, 138);
+  border: 1px solid rgb(204, 204, 204);
+  text-align: left;
+}
+
+.text {
+  margin: 1em;
+  padding: 0.5em 1em;
+  font-size: 1.5rem;
 }
 
 .add-button {
@@ -154,6 +160,23 @@ th, td {
 
 .add-button:hover {
   background-color: #82cd83;
+  color: white;
+}
+
+.landing-button {
+  margin: 1em;
+  padding: 0.5em 1em;
+  font-size: 1rem;
+  background-color: rgb(89, 120, 191);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: ease-out 200ms;
+}
+
+.landing-button:hover {
+  background-color: rgb(126, 154, 222);
   color: white;
 }
 

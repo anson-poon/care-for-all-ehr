@@ -38,9 +38,9 @@ function PatientProviderIntersectionPage() {
                     </th>       
                 </tr>                       
             </tbody>
-            <button className="add-button">Add Link Between Patient and Provider</button>
         </table>
-
+        <button className="add-button">Add Link Between Patient and Provider</button>
+        <br/>
         <a href="/patients">Patient Details</a>
         <a href="/providers">Provider Details</a>
         </div>
