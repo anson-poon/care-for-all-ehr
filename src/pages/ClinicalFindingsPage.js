@@ -50,36 +50,47 @@ function ClinicalFindingsPage() {
                         <th><RiEdit2Fill/></th>
                         <th><RiChatDeleteFill/></th>
                     </tr>         
-                    <tr>
-                        <th>
-                            <input type="text"/>
-                        </th>
-                        <th>
-                            <input type="text"/>
-                        </th>
-                        <th>
-                            <input type="text"/>
-                        </th>
-                        <th>
-                            <input type="text"/>
-                        </th>
-                        <th>
-                            <input type="text"/>
-                        </th>
-                        <th>
-                            <input type="text"/>
-                        </th>
-                        <th>
-                            <input type="text"/>
-                        </th>
-                        <th>
-                            <input type="text"/>
-                        </th>
-                    </tr>
                 </tbody>
             </table>
-            <button className="add-button">Add New Clinical Findings</button>
+            <form action="" method="get" className="add-form">
+                <h4>Add New Clinical Finding</h4>
+                <div className="form-row">
+                    <label for="clinicalFindingID">Clinical Finding ID: </label>
+                    <input type="text" name="clinicalFindingID" id="clinicalFindingID" required />
+                </div>
+                <div className="form-row">
+                    <label for="chiefComplaint">Chief Complaint: </label>
+                    <input type="text" name="chiefComplaint" id="chiefComplaint" required />
+                </div>
+                <div className="form-row">
+                    <label for="patientBloodPressure">Patient Blood Pressure: </label>
+                    <input type="text" name="patientBloodPressure" id="patientBloodPressure" required />
+                </div>
+                <div className="form-row">
+                    <label for="patientHeartRate">Patient Heart Rate: </label>
+                    <input type="text" name="patientHeartRate" id="patientHeartRate" required />
+                </div>
+                <div className="form-row">
+                    <label for="patientTemperature">Patient Temperature: </label>
+                    <input type="text" name="patientTemperature" id="patientTemperature" required />
+                </div>
+                <div className="form-row">
+                    <label for="patientRespiratoryRate">Patient Respiratory Rate: </label>
+                    <input type="text" name="patientRespiratoryRate" id="patientRespiratoryRate" required />
+                </div>
+                <div className="form-row">
+                    <label for="narrativeTreatmentPlan">Narrative Treatment Plan: </label>
+                    <input type="text" name="narrativeTreatmentPlan" id="narrativeTreatmentPlan" required />
+                </div>
+                <div className="form-row">
+                    <label for="clinicalNoteID">Clinical Note ID: </label>
+                    <input type="text" name="clinicalNoteID" id="clinicalNoteID" required />
+                </div>
+                <br/>
+                <button className="add-button">Add</button>
+            </form>
             <br/>
+            <h4>Navigation to:</h4>
             <a href="/clinicalnotes">Clinical Notes</a>
         </div>
     );
