@@ -40,10 +40,6 @@ function InsuranceNotesPage() {
             <form action="" method="get" className="add-form">
                 <h4>Add new Insurance Note</h4>
                 <div className="form-row">
-                    <label for="insuranceID">Insurance ID: </label>
-                    <input type="text" name="insuranceID" id="insuranceID" required />
-                </div>
-                <div className="form-row">
                     <label for="reimbursementCode">Reimbursement Code: </label>
                     <input type="text" name="reimbursementCode" id="reimbursementCode" required />
                 </div>

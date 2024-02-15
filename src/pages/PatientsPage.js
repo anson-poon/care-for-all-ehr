@@ -49,10 +49,6 @@ function PatientsPage() {
             <form action="" method="get" className="add-form">
                 <h4>Add New Patient</h4>
                 <div className="form-row">
-                    <label for="patientProfileID">Profile ID: </label>
-                    <input type="text" name="patientProfileID" id="patientProfileID" required />
-                </div>
-                <div className="form-row">
                     <label for="phoneNumber">Phone Number: </label>
                     <input type="text" name="phoneNumber" id="phoneNumber" required />
                 </div>

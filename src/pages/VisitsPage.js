@@ -46,10 +46,6 @@ function VisitsPage() {
             <form action="" method="get" className="add-form">
                 <h4>Add New Visit</h4>
                 <div className="form-row">
-                    <label for="visitID">Visit ID: </label>
-                    <input type="text" name="visitID" id="visitID" required />
-                </div>
-                <div className="form-row">
                     <label for="visitDateTime">Visit Date and Time: </label>
                     <input type="text" name="visitDateTime" id="visitDateTime" required />
                 </div>

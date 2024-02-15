@@ -55,10 +55,6 @@ function ClinicalFindingsPage() {
             <form action="" method="get" className="add-form">
                 <h4>Add New Clinical Finding</h4>
                 <div className="form-row">
-                    <label for="clinicalFindingID">Clinical Finding ID: </label>
-                    <input type="text" name="clinicalFindingID" id="clinicalFindingID" required />
-                </div>
-                <div className="form-row">
                     <label for="chiefComplaint">Chief Complaint: </label>
                     <input type="text" name="chiefComplaint" id="chiefComplaint" required />
                 </div>

@@ -45,10 +45,6 @@ function ClinicalNotesPage() {
             <form action="" method="get" className="add-form">
                 <h4>Add New Clinical Note</h4>
                 <div className="form-row">
-                    <label for="clinicalNoteID">Clinical Note ID: </label>
-                    <input type="text" name="clinicalNoteID" id="clinicalNoteID" required />
-                </div>
-                <div className="form-row">
                     <label for="visitID">Visit ID: </label>
                     <input type="text" name="visitID" id="visitID" required />
                 </div>

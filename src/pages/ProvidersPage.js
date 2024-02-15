@@ -49,10 +49,6 @@ function ProvidersPage() {
             <form action="" method="get" className="add-form">
                 <h4>Add New Provider</h4>
                 <div className="form-row">
-                    <label for="providerProfileID">Profile ID: </label>
-                    <input type="text" name="patientProfileID" id="patientProfileID" required />
-                </div>
-                <div className="form-row">
                     <label for="title">Title: </label>
                     <input type="text" name="title" id="title" required />
                 </div>
