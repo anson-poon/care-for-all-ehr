@@ -8,15 +8,57 @@ The skeleton code in package.json was updated to relevant to this project's arch
 
 /*
 Define routes for react app
-/* 
+*/
 const path = require("path");
 const express = require("express");
 const app = express();
 
 /*
+Define route for database
+Code citation: starter code obtained from course guide: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%201%20-%20Connecting%20to%20a%20MySQL%20Database
+*/
+const db = require('./database/db-connector');
+
+/*
 Use following port on flip server of OSU
 */
 const PORT = process.env.PORT || 62153;
+
+/*
+Connect to database test
+Code citation: starter code obtained from course guide: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%201%20-%20Connecting%20to%20a%20MySQL%20Database
+*/
+/*
+app.get('/', function(req, res)
+{
+  // Define our queries
+  query1 = 'DROP TABLE IF EXISTS diagnostic;';
+  query2 = 'CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);';
+  query3 = 'INSERT INTO diagnostic (text) VALUES ("MySQL is working!")';
+  query4 = 'SELECT * FROM diagnostic;';
+
+  // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
+
+  // DROP TABLE...
+  db.pool.query(query1, function (err, results, fields){
+
+      // CREATE TABLE...
+      db.pool.query(query2, function(err, results, fields){
+
+          // INSERT INTO...
+          db.pool.query(query3, function(err, results, fields){
+
+              // SELECT *...
+              db.pool.query(query4, function(err, results, fields){
+
+                  // Send the results to the browser
+                  res.send(JSON.stringify(results));
+              });
+          });
+      });
+  });
+});
+*/
 
 /*
 React app to use files from following pathways of flip server

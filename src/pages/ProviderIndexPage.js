@@ -12,12 +12,19 @@ function ProviderIndexPage() {
 
     return (
         <div>
-            <h3>Provider Index</h3>
+            <h3>List of Providers</h3>
+            <div className="stylePageDescription">
+                <p>This page allows you to add a new provider to the index of providers table.</p>
+                <p>Adding a new provider will allow the provider to be added in the intersection table.</p>
+                <p>Updating a provider ID and/or name will update relevant entries in other tables, as appropriate. A demo of how update page for provider looks like is available for provider ID 5 by clicking the appropriate icon.</p>
+                <p>Deleting a provider will remove relevant entries from the other tabels.</p>
+            </div>
+            <br></br>
             <table id="providerindex">
                 <thead>
                     <tr>
-                        <th>providerID</th>
-                        <th>providerName</th>
+                        <th>Provider ID</th>
+                        <th>Provider Name</th>
                         <th>Update</th>
                         <th>Delete</th>
                     </tr>
@@ -38,7 +45,7 @@ function ProviderIndexPage() {
                 </tbody>
             </table>
             <form action="" method="get" className="add-form">
-                <h4>Add New Provider to Index</h4>
+                <h4>Add a New Provider</h4>
                 <div className="form-row">
                     <label for="providerID">Provider ID: </label>
                     <input type="text" name="providerID" id="providerID" required />
@@ -50,9 +57,6 @@ function ProviderIndexPage() {
                 <br/>
                 <button className="add-button">Add</button>
             </form>
-        <br/>
-        <h4>Navigate to:</h4>
-        <a href="/providers">Provider Details</a>
         </div>
     );
 }

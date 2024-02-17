@@ -9,7 +9,7 @@ function UpdateProviderIndex () {
     return (
         <div>
             <h4>Update Provider Information</h4>
-            <form>
+            <form className="add-form">
                 <p>
                 <label for="providerID">
                     Update Provider ID
@@ -23,7 +23,7 @@ function UpdateProviderIndex () {
                 </label>
                 </p>
             </form>
-            <button>Submit</button>
+            <button>Submit</button><button>Cancel</button>
         </div>
     );
 }

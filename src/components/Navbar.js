@@ -11,25 +11,31 @@ function Navbar() {
             <div className="dropdown">
                 <button className="dropdown-button">Patients</button>
                 <div className="dropdown-content">
-                    <a href="/patients">Patient Details</a>
-                    <a href="/patientindex">Patient Index</a>
-                    <a href="/patientproviderintersection">Patient/Provider Intersection</a>
+                    <a href="/patientindex">List of Patients</a>
+                    <a href="/patients">Information for Each Patient</a>
                 </div>
             </div>
             <div className="dropdown">
                 <button className="dropdown-button">Providers</button>
                 <div className="dropdown-content">
-                    <a href="/providers">Provider Details</a>
-                    <a href="/providerindex">Provider Index</a>
-                    <a href="/patientproviderintersection">Patient/Provider Intersection</a>
+                    <a href="/providerindex">List of Providers</a>
+                    <a href="/providers">Information for Each Provider</a>
+                </div>
+            </div>
+            <div className="dropdown">
+                <button className="dropdown-button">Intersection Table</button>
+                <div className="dropdown-content">
+                    <a href="/patientproviderintersection">Relationships between Patients & Providers</a>
                 </div>
             </div>
             <div className="dropdown">
                 <button className="dropdown-button">Visits</button>
                 <div className="dropdown-content">
-                    <a href="/visits">All Visits</a>
-                    <a href="/insurancepolicies">Insurance Policies</a>
-                    <a href="/clinicalnotes">Clinical Notes</a>
+                    <a href="/visits">List of Visits</a>
+                    <a href="/insurancepolicies">List of Insurance Policies</a>
+                    <a href="/insurancenotes">List of Insurance Notes</a>
+                    <a href="/clinicalnotes">List of Clinical Notes</a>
+                    <a href="/clinicalfindings">List of Clinical Findings</a>
                 </div>
             </div>            
         </div>    

@@ -33,6 +33,7 @@ html, body {
   justify-content: left;
   padding: 0.5rem;
   padding-left: 4rem;
+  background-color: rgb(84, 84, 84);
 }
 
 .logo {
@@ -48,7 +49,10 @@ html, body {
   color: #7c78f1;
 }
 
-/* dropdown code obtained and modified from documentation of source url:  https://www.w3schools.com/howto/howto_css_dropdown.asp */
+/* 
+dropdown code obtained and modified from documentation of source url:  https://www.w3schools.com/howto/howto_css_dropdown.asp
+shape of border of dropdown button learned from following tutorial https://css-tricks.com/the-shapes-of-css/
+*/
 /* Dropdown Button */
 .dropdown-button {
   font-size: 1.2rem;
@@ -228,6 +232,25 @@ p {
 .landing-button:hover {
   background-color: rgb(126, 154, 222);
   color: white;
+}
+
+/*
+Code citation: code to resize table and make it scrollable thanks to https://www.outsystems.com/forums/discussion/60920/shrink-a-table/#
+*/
+#resizeSearch {
+  overflow-x: auto; 
+  display:block;
+  margin: auto;
+  text-align: center;
+}
+
+.resizeTable {
+  text-align: center;
+}
+
+.stylePageDescription {
+  border-style: ridge;
+  padding: 1em;
 }
 
 /* h1 {

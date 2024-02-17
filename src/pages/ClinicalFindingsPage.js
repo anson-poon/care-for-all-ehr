@@ -9,18 +9,25 @@ Page returns function that shows clinical findings table
 function ClinicalFindingsPage() {
     return (
         <div>
-            <h3>Clinical Findings</h3>
+            <h3>List of Clinical Findings</h3>
+            <div className="stylePageDescription">
+                <p>This page will allow you to add, delete, and update a clinical finding record.</p>
+                <p>Adding new clinical findings will add relevant entries in other tables.</p>
+                <p>Deleting a record will remove relevant records from other tabes.</p>
+                <p>Updating a record will modify existing data from other tables.</p>
+            </div>
+            <br></br>
             <table id="clinicalfindings">
                 <thead>
                     <tr>
-                        <th>clinicalFindingID</th>
-                        <th>chiefComplaint</th>
-                        <th>patientBloodPressure</th>
-                        <th>patientHeartRate</th>
-                        <th>patientTemperature</th>
-                        <th>patientRespiratoryRate</th>
-                        <th>narrativeTreatmentPlan</th>
-                        <th>clinicalNoteID</th>
+                        <th>Clinical Finding ID</th>
+                        <th>Chief Complaint</th>
+                        <th>Blood Pressure</th>
+                        <th>Heart Rate</th>
+                        <th>Temperature</th>
+                        <th>Respiratory Rate</th>
+                        <th>Treatment Plan</th>
+                        <th>Clinical Note ID</th>
                         <th>Update</th>
                         <th>Delete</th>
                     </tr>
@@ -34,7 +41,7 @@ function ClinicalFindingsPage() {
                         <th>98</th>
                         <th>28</th>
                         <th>"History of heart disease"</th>
-                        <th>12</th>
+                        <th>20</th>
                         <th><RiEdit2Fill/></th>
                         <th><RiChatDeleteFill/></th>
                     </tr>
@@ -53,7 +60,7 @@ function ClinicalFindingsPage() {
                 </tbody>
             </table>
             <form action="" method="get" className="add-form">
-                <h4>Add New Clinical Finding</h4>
+                <h4>Add New Clinical Findings</h4>
                 <div className="form-row">
                     <label for="chiefComplaint">Chief Complaint: </label>
                     <input type="text" name="chiefComplaint" id="chiefComplaint" required />
@@ -85,9 +92,6 @@ function ClinicalFindingsPage() {
                 <br/>
                 <button className="add-button">Add</button>
             </form>
-            <br/>
-            <h4>Navigation to:</h4>
-            <a href="/clinicalnotes">Clinical Notes</a>
         </div>
     );
 }

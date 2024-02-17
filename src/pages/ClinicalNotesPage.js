@@ -9,12 +9,20 @@ Page returns function that shows clinical notes table
 function ClinicalNotesPage() {
     return (
         <div>
-            <h3>Clinical Notes</h3>
+            <h3>List of Clinical Notes</h3>
+            <div className="stylePageDescription">
+                <p>This page will allow you to add, delete, and update a clinical note.</p>
+                <p>Adding a new clinical note will add relevant entries in other tables.</p>
+                <p>Deleting a record will remove relevant records from other tabes.</p>
+                <p>Updating a record will modify existing data from other tables.</p>
+            </div>
+            <br></br>
             <table id="clinicalnotes">
                 <thead>
                     <tr>
-                        <th>clinicalNoteID</th>
-                        <th>visitID</th>
+                        <th>Clinical Note ID</th>
+                        <th>Length of Visit</th>
+                        <th>Visit ID</th>
                         <th>Update</th>
                         <th>Delete</th>
                     </tr>
@@ -22,24 +30,18 @@ function ClinicalNotesPage() {
                 <tbody>
                     <tr>
                         <th>12</th>
+                        <th>10:20:00</th>
                         <th>20</th>
                         <th><RiEdit2Fill/></th>
                         <th><RiChatDeleteFill/></th>
                     </tr>
                     <tr>
                         <th>13</th>
+                        <th>10:30:00</th>
                         <th>30</th>
                         <th><RiEdit2Fill/></th>
                         <th><RiChatDeleteFill/></th>
                     </tr> 
-                    <tr>
-                        <th>
-                            <input type="text"/>
-                        </th>
-                        <th>
-                            <input type="text"/>
-                        </th>
-                    </tr>          
                 </tbody>
             </table>
             <form action="" method="get" className="add-form">
@@ -51,9 +53,6 @@ function ClinicalNotesPage() {
                 <br/>
                 <button className="add-button">Add</button>
             </form>
-            <br/>
-            <h4>Navigation to:</h4>
-            <a href="/clinicalfindings">Clinical Findings</a>
         </div>
     );
 }

@@ -9,20 +9,27 @@ Page returns function that shows insurance policies table
 function InsurancePoliciesPage() {
     return (
         <div>
-            <h3>Insurance Policies</h3>
+            <h3>List of Insurance Policies</h3>
+            <div className="stylePageDescription">
+                <p>This page will allow you to add, delete, and update an insurance policy.</p>
+                <p>Adding a new insurance policy will add relevant entries in other tables.</p>
+                <p>Deleting a record will remove relevant records from other tabes.</p>
+                <p>Updating a record will modify existing data from other tables.</p>
+            </div>
+            <br></br>
             <table id="insurancepolicies">
                 <thead>
                     <tr>
-                        <th>insuranceID</th>
-                        <th>insuranceType</th>
-                        <th>patientID</th>
+                        <th>Insurance ID</th>
+                        <th>Insurance Type</th>
+                        <th>Patient ID</th>
                         <th>Update</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th>10</th>
+                        <th>14</th>
                         <th>Anthem PPO</th>
                         <th>0</th>
                         <th><RiEdit2Fill/></th>
@@ -38,7 +45,7 @@ function InsurancePoliciesPage() {
                 </tbody>
             </table>
             <form action="" method="get" className="add-form">
-                <h4>Add New Insurance Policy</h4>
+                <h4>Add a New Insurance Policy</h4>
                 <div className="form-row">
                     <label for="insuranceID">Insurance ID: </label>
                     <input type="text" name="insuranceID" id="insuranceID" required />
@@ -54,9 +61,6 @@ function InsurancePoliciesPage() {
                 <br/>
                 <button className="add-button">Add</button>
             </form>
-            <br/>
-            <h4>Navigation to:</h4>
-            <a href="/insurancenotes">Insurance Notes</a>
         </div>
     );
 }
