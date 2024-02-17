@@ -2,6 +2,11 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import { HiBell } from 'react-icons/hi2';
+
+/*
+Code citation: Code to import icons credited to https://react-icons.github.io/react-icons/
+*/
 
 /*
 Page returns function that shows patients table
@@ -9,7 +14,15 @@ Page returns function that shows patients table
 function PatientsPage() {
     return (
         <div>
-            <h3>Patient Details</h3>
+            <h3>Information for Each Patient</h3>
+            <div className="stylePageDescription">
+                <p>This page allows you to add a new patient with detailed information, which will also update the list of patients and intersection table with relevant attributes.</p>
+                <p>Certain patient attributes, i.e., phone number, email address, and date of birth, are NULLable.</p>
+                <p>Updating a patient's information will update relevant attributes in other tables.</p>
+                <p>Deleting a patient will remove relevant information to this patient from other tables.</p>
+                <p>The list of Visits that a patient has had with one or more providers can also be viewed by clicking on the appropriate button.</p>
+            </div>
+            <br></br>
             <table id="patientsdetailedinformation">
                 <thead>
                     <tr>
@@ -30,7 +43,7 @@ function PatientsPage() {
                         <th>"a@apple.com"</th>
                         <th>1000-01-02</th>
                         <th>0</th>
-                        <th>Visits</th>
+                        <th><HiBell/></th>
                         <th><RiEdit2Fill/></th>
                         <th><RiChatDeleteFill/></th>
                     </tr> 
@@ -40,14 +53,14 @@ function PatientsPage() {
                         <th>"b@apple.com"</th>
                         <th>1000-01-03</th>
                         <th>1</th>
-                        <th>Visits</th>
+                        <th><HiBell/></th>
                         <th><RiEdit2Fill/></th>
                         <th><RiChatDeleteFill/></th>
                     </tr>               
                 </tbody>
             </table>
             <form action="" method="get" className="add-form">
-                <h4>Add New Patient</h4>
+                <h4>Add a New Patient</h4>
                 <div className="form-row">
                     <label for="phoneNumber">Phone Number: </label>
                     <input type="text" name="phoneNumber" id="phoneNumber" required />
@@ -68,9 +81,6 @@ function PatientsPage() {
                 <button className="add-button">Add</button>
             </form>
             <br/>
-            <h4>Navigate to:</h4>
-            <a href="/patientindex">Patient Index</a>
-            <a href="/patientproviderintersection">Patient/Provider Intersection</a>
         </div>
     );
 }

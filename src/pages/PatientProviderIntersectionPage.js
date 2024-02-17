@@ -9,12 +9,22 @@ Page returns function that shows patient provider intersection table
 function PatientProviderIntersectionPage() {
     return (
         <div>
-            <h3>Patient/Provider Intersection</h3>
+            <h3>Relationships between Patients and Providers</h3>
+            <div className="stylePageDescription">
+                <p>This page will show the current relationships among various patients and providers.</p>
+                <p>Additionally, this page allows you to form a relationship between a new/existing Patient and a new/existing Provider.</p>
+                <p>If a new patient and/or provider is added, then this will form one or more entries in relevant tables.</p>
+                <p>The implication of establishing a relationship between a patient and provider is that the patient has had at least one visit with the provider and vice versa.</p>
+                <p>A patient can have one or more providers. Likewise, a provider can have one or more patients.</p>
+                <p>Updating the patientID and/or ProviderID will update relevant data in other tables. Data will not be updated if a matching ID is not available in the index of patients or index of providers.</p>
+                <p>Deleting a relationship between a patient and provider will remove relevant information from other tables, as appropriate.</p>
+            </div>
+            <br></br>
             <table id="patientproviderintersection">
                 <thead>
                     <tr>
-                        <th>patientID</th>
-                        <th>providerID</th>
+                        <th>Patient ID</th>
+                        <th>Provider ID</th>
                         <th>Update</th>
                         <th>Delete</th>
                     </tr>
@@ -35,7 +45,7 @@ function PatientProviderIntersectionPage() {
                 </tbody>
             </table>
             <form action="" method="get" className="add-form">
-                <h4>Add Link Between Patient and Provider</h4>
+                <h4>Add a Relationship Between a Patient and a Provider</h4>
                 <div className="form-row">
                     <label for="patientID">Patient ID: </label>
                     <input type="text" name="patientID" id="patientID" required />
@@ -47,10 +57,6 @@ function PatientProviderIntersectionPage() {
                 <br/>
                 <button className="add-button">Add</button>
             </form>
-            <br/>
-            <h4>Navigate to:</h4>
-            <a href="/patients">Patient Details</a>
-            <a href="/providers">Provider Details</a>
         </div>
     );
 }
