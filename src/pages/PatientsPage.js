@@ -12,55 +12,28 @@ Code citation: Code to import icons credited to https://react-icons.github.io/re
 Page returns function that shows patients table
 */
 function PatientsPage() {
+        
+    const goToUpdatePage = useNavigate();
+
     return (
         <div>
             <h3>Information for Each Patient</h3>
             <div className="stylePageDescription">
-                <p>This page allows you to add a new patient with detailed information, which will also update the list of patients and intersection table with relevant attributes.</p>
-                <p>Certain patient attributes, i.e., phone number, email address, and date of birth, are NULLable.</p>
-                <p>Updating a patient's information will update relevant attributes in other tables.</p>
-                <p>Deleting a patient will remove relevant information to this patient from other tables.</p>
-                <p>The list of Visits that a patient has had with one or more providers can also be viewed by clicking on the appropriate button.</p>
+                <p>This page allows you to <b>get</b> and <b>refresh</b> detailed information for all patients from the MySQL database.</p>
+                <p>Available information for each patient includes their Profile ID, Phone Number, Email Address, Date of Birth, and Patient ID.</p>
+                <p>Additionally, this page allows you to <b>insert</b>, or <b>add</b> information about a new patient that was created on List of Patients page.</p>
+                <p>This page also allows you to <b>delete</b> information for each patient from the MySQL database.</p>
+                <p>Lastly, this page also allows you to update update for each patient, including the ability to set Phone Number, Email Address, and Date of Birth as <b>NULL</b>.</p>
             </div>
             <br></br>
-            <table id="patientsdetailedinformation">
-                <thead>
-                    <tr>
-                        <th>Profile ID</th>
-                        <th>Phone Number</th>
-                        <th>Email Address</th>
-                        <th>Date of Birth</th>
-                        <th>Patient ID</th>
-                        <th>Visits</th>
-                        <th>Update</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>2</th>
-                        <th>1112222</th>
-                        <th>"a@apple.com"</th>
-                        <th>1000-01-02</th>
-                        <th>0</th>
-                        <th><HiBell/></th>
-                        <th><RiEdit2Fill/></th>
-                        <th><RiChatDeleteFill/></th>
-                    </tr> 
-                    <tr>
-                        <th>3</th>
-                        <th>2223333</th>
-                        <th>"b@apple.com"</th>
-                        <th>1000-01-03</th>
-                        <th>1</th>
-                        <th><HiBell/></th>
-                        <th><RiEdit2Fill/></th>
-                        <th><RiChatDeleteFill/></th>
-                    </tr>               
-                </tbody>
-            </table>
             <form action="" method="get" className="add-form">
-                <h4>Add a New Patient</h4>
+                <h4>Add Information for Patient ID:
+                    <label for="patientID">   </label>
+                    <select name="patientID">
+                        <option value="0">0 (James)</option>
+                        <option value="1">1 (Mary)</option>
+                    </select>  
+                </h4>
                 <div className="form-row">
                     <label for="phoneNumber">Phone Number: </label>
                     <input type="text" name="phoneNumber" id="phoneNumber" required />
@@ -73,14 +46,46 @@ function PatientsPage() {
                     <label for="dateOfBirth">Date of Birth: </label>
                     <input type="text" name="dateOfBirth" id="dateOfBirth" required />
                 </div>
-                <div className="form-row">
-                    <label for="patientID">Patient ID: </label>
-                    <input type="text" name="patientID" id="patientID" required />
-                </div>
                 <br/>
                 <button className="add-button">Add</button>
             </form>
-            <br/>
+            <br></br>
+            <button className="SELECT-button">Get Current Information for Each Patient</button>
+            <br></br>
+            <br></br>
+            <table id="patientsdetailedinformation">
+                <thead>
+                    <tr>
+                        <th>Profile ID</th>
+                        <th>Phone Number</th>
+                        <th>Email Address</th>
+                        <th>Date of Birth</th>
+                        <th>Patient ID</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>2</th>
+                        <th>1112222</th>
+                        <th>"a@apple.com"</th>
+                        <th>1000-01-02</th>
+                        <th>0</th>
+                        <th><RiEdit2Fill onClick={() => goToUpdatePage("/updatepatientpage")} /></th>
+                        <th><RiChatDeleteFill/></th>
+                    </tr> 
+                    <tr>
+                        <th>3</th>
+                        <th>2223333</th>
+                        <th>"b@apple.com"</th>
+                        <th>1000-01-03</th>
+                        <th>1</th>
+                        <th><RiEdit2Fill onClick={() => goToUpdatePage("/updatepatientpage")} /></th>
+                        <th><RiChatDeleteFill/></th>
+                    </tr>               
+                </tbody>
+            </table>
         </div>
     );
 }

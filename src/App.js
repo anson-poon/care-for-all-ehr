@@ -14,7 +14,8 @@ import ClinicalNotesPage from './pages/ClinicalNotesPage';
 import InsurancePoliciesPage from './pages/InsurancePoliciesPage';
 import ClinicalFindingsPage from './pages/ClinicalFindingsPage';
 import InsuranceNotesPage from './pages/InsuranceNotesPage';
-import UpdateProviderIndex from './components/UpdateProvider';
+import UpdateProviderPage from './components/UpdateProvider';
+import UpdatePatientPage from './components/UpdatePatientPage';
 import { useState } from 'react';
 import { Link } from 'react-router';
 
@@ -45,7 +46,8 @@ class App extends React.Component {
               <Route path="/insurancepolicies" element={<InsurancePoliciesPage />} />
               <Route path="/clinicalfindings" element={<ClinicalFindingsPage />} />
               <Route path="/insurancenotes" element={<InsuranceNotesPage />} />
-              <Route path="/updateproviderindex" element={<UpdateProviderIndex />} />
+              <Route path="/updateproviderpage" element={<UpdateProviderPage />} />
+              <Route path="/updatepatientpage" element={<UpdatePatientPage />} />
             </Routes>
           </div>
         </Router>

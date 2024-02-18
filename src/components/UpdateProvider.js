@@ -3,29 +3,33 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 /*
-Component to update provider index
+Component to update provider page
 */
-function UpdateProviderIndex () {
+function UpdateProviderPage () {
+
+    const goBack = useNavigate();
+
     return (
         <div>
-            <h4>Update Provider Information</h4>
-            <form className="add-form">
-                <p>
-                <label for="providerID">
-                    Update Provider ID
-                    <input type="text" id="updateProviderID" name="newProviderID"></input>  
-                </label>
-                </p>
-                <p>
-                <label for="providerName">
-                    Update Provider Name
-                    <input type="text" id="updateProviderName" name="newProviderName"></input>  
-                </label>
-                </p>
+            <form action="" method="get" className="add-form">
+                <h4>Update Provider Information</h4>
+                <div className="form-row">
+                    <label for="patientID">Title:</label>
+                    <input type="text" name="patientID" id="patientID" />
+                </div>
+                <div className="form-row">
+                    <label for="name">Speciality:</label>
+                    <input type="text" name="name" id="name" />
+                </div>
+                <div className="form-row">
+                    <label for="name">Phone Number:</label>
+                    <input type="text" name="name" id="name" />
+                </div>
+                <br/>
+                <button className="add-button">Submit</button>                <button className="add-button" onClick={() => goBack("/providers")}>Cancel</button>
             </form>
-            <button>Submit</button><button>Cancel</button>
         </div>
     );
 }
 
-export default UpdateProviderIndex
+export default UpdateProviderPage
