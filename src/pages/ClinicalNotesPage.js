@@ -11,11 +11,30 @@ function ClinicalNotesPage() {
         <div>
             <h3>List of Clinical Notes</h3>
             <div className="stylePageDescription">
-                <p>This page will allow you to add, delete, and update a clinical note.</p>
-                <p>Adding a new clinical note will add relevant entries in other tables.</p>
-                <p>Deleting a record will remove relevant records from other tabes.</p>
-                <p>Updating a record will modify existing data from other tables.</p>
+                <p>This page allows you to <b>get</b> and <b>refresh</b> information on clinical notes that have been associated with existing visits between patients and providers in the MySQL database.</p>
+                <p>Available information for each clinical note includes Clinical Note ID, Length of Visit, and Visit ID.</p>
+                <p>Lastly, this page allows you to <b>insert</b>, or <b>add</b> information about a clinical note for only new visits.</p>
             </div>
+            <br></br>
+            <form action="" method="get" className="add-form">
+                <h4>Add a New Clinical Note</h4>
+                <div className="form-row">
+                    <label for="visitID">Length of Visit</label>
+                    <input type="text" name="visitID" id="visitID" required />
+                </div>
+                <div className="form-row">
+                    <label for="visitID">Visit ID: </label>
+                    <select name="visitID">
+                        <option value="2">2 (between Patient Jacob and Provider Alex)</option>
+                        <option value="3">3 (between Patient Rapheal and Provider Tiffany)</option>
+                    </select>  
+                </div>
+                <br/>
+                <button className="add-button">Add</button>
+            </form>
+            <br></br>
+            <button className="SELECT-button">Get Current Information for Clinical Notes</button>
+            <br></br>
             <br></br>
             <table id="clinicalnotes">
                 <thead>
@@ -23,8 +42,6 @@ function ClinicalNotesPage() {
                         <th>Clinical Note ID</th>
                         <th>Length of Visit</th>
                         <th>Visit ID</th>
-                        <th>Update</th>
-                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,27 +49,14 @@ function ClinicalNotesPage() {
                         <th>12</th>
                         <th>10:20:00</th>
                         <th>20</th>
-                        <th><RiEdit2Fill/></th>
-                        <th><RiChatDeleteFill/></th>
                     </tr>
                     <tr>
                         <th>13</th>
                         <th>10:30:00</th>
                         <th>30</th>
-                        <th><RiEdit2Fill/></th>
-                        <th><RiChatDeleteFill/></th>
                     </tr> 
                 </tbody>
             </table>
-            <form action="" method="get" className="add-form">
-                <h4>Add New Clinical Note</h4>
-                <div className="form-row">
-                    <label for="visitID">Visit ID: </label>
-                    <input type="text" name="visitID" id="visitID" required />
-                </div>
-                <br/>
-                <button className="add-button">Add</button>
-            </form>
         </div>
     );
 }

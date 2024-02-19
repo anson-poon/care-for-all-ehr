@@ -12,55 +12,28 @@ Code citation: Code to import icons credited to https://react-icons.github.io/re
 Page returns function that shows providers table
 */
 function ProvidersPage() {
+    
+    const goToUpdatePage = useNavigate();
+
     return (
         <div>
             <h3>Information for Each Provider</h3>
             <div className="stylePageDescription">
-                <p>This page allows you to add a new provider, update information about a provider, and remove a provider.</p>
-                <p>Adding a new provider with relevant details, such as specialty, will create a new provider entry in appropriate tables.</p>
-                <p>Deleting a provider will remove relevant entries from other tables.</p>
-                <p>Updating a provider will update information from other entries, as appropriate.</p>
-                <p>The list of Visits that a provider has had with one or more patients can also be viewed by clicking on the appropriate button.</p>
+                <p>This page allows you to <b>get</b> and <b>refresh</b> detailed information for all providers from the MySQL database.</p>
+                <p>Available information for each provider includes their Provider Profile ID, Title, Specialty, Phone Number, and Provider ID.</p>
+                <p>Additionally, this page allows you to <b>insert</b>, or <b>add</b> information about a new provider that was created on List of Providers page.</p>
+                <p>This page also allows you to <b>delete</b> information for each provider from the MySQL database.</p>
+                <p>Lastly, this page also allows you to update update for each provider, including the ability to set Title, Specialty, and Phone Number as <b>NULL</b>.</p>
             </div>
             <br></br>
-            <table id="providerdetailedinformation">
-                <thead>
-                    <tr>
-                        <th>Provider Profile ID</th>
-                        <th>Title</th>
-                        <th>Specialty</th>
-                        <th>Phone Number</th>
-                        <th>Provider ID</th>
-                        <th>Visits</th>
-                        <th>Update</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>2</th>
-                        <th>MD</th>
-                        <th>General Surgeon</th>
-                        <th>234567</th>
-                        <th>5</th>
-                        <th><HiBell/></th>
-                        <th><RiEdit2Fill/></th>
-                        <th><RiChatDeleteFill/></th>
-                    </tr>    
-                    <tr>
-                        <th>3</th>
-                        <th>DO</th>
-                        <th>General Hospitalist</th>
-                        <th>234568</th>
-                        <th>6</th>
-                        <th><HiBell/></th>
-                        <th><RiEdit2Fill/></th>
-                        <th><RiChatDeleteFill/></th>
-                    </tr>      
-                </tbody>
-            </table>
             <form action="" method="get" className="add-form">
-                <h4>Add a New Provider</h4>
+                <h4>Add information for Provider ID:
+                    <label for="providerID">   </label>
+                    <select name="providerID">
+                        <option value="5">5 (Avery)</option>
+                        <option value="6">6 (Roy)</option>
+                    </select>  
+                </h4>
                 <div className="form-row">
                     <label for="title">Title: </label>
                     <input type="text" name="title" id="title" required />
@@ -73,13 +46,46 @@ function ProvidersPage() {
                     <label for="providerPhoneNumber">Phone Number: </label>
                     <input type="text" name="providerPhoneNumber" id="providerPhoneNumber" required />
                 </div>
-                <div className="form-row">
-                    <label for="providerID">Provider ID: </label>
-                    <input type="text" name="providerID" id="providerID" required />
-                </div>
                 <br/>
                 <button className="add-button">Add</button>
             </form>
+            <br></br>
+            <button className="SELECT-button">Get Current Information for Each Provider</button>
+            <br></br>
+            <br></br>
+            <table id="providerdetailedinformation">
+                <thead>
+                    <tr>
+                        <th>Provider Profile ID</th>
+                        <th>Title</th>
+                        <th>Specialty</th>
+                        <th>Phone Number</th>
+                        <th>Provider ID</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>2</th>
+                        <th>MD</th>
+                        <th>General Surgeon</th>
+                        <th>234567</th>
+                        <th>5</th>
+                        <th><RiEdit2Fill onClick={() => goToUpdatePage("/updateproviderpage")} /></th>
+                        <th><RiChatDeleteFill/></th>
+                    </tr>    
+                    <tr>
+                        <th>3</th>
+                        <th>DO</th>
+                        <th>General Hospitalist</th>
+                        <th>234568</th>
+                        <th>6</th>
+                        <th><RiEdit2Fill onClick={() => goToUpdatePage("/updateproviderpage")} /></th>
+                        <th><RiChatDeleteFill/></th>
+                    </tr>      
+                </tbody>
+            </table>
         </div>
     );
 }

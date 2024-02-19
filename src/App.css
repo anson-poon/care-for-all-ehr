@@ -121,6 +121,17 @@ a {
   transition: ease-out 200ms;
 }
 
+/*
+Code citation: styling for lists credited to https://www.w3schools.com/css/css_list.asp
+*/
+.userGuide {
+  font-size: 1rem;
+  margin: 0.5rem 1rem 0.5rem 1rem;
+  text-align: left;
+  list-style-type: circle;
+  list-style-position: outside;
+}
+
 a:hover, button:hover {
   color: rgb(151, 151, 151);
 }
@@ -150,7 +161,7 @@ tbody {
 th, td {
   padding: 10px 20px 10px 20px;
   border: 1px solid rgb(204, 204, 204);
-  text-align: left;
+  text-align: center;
 }
 
 h3 {
@@ -212,8 +223,25 @@ p {
   transition: ease-out 200ms;
 }
 
+.SELECT-button {
+  padding: 0.5em 2em;
+  font-size: 1rem;
+  background-color: #38a6d2;
+  color: white;
+  border: solid;
+  border-radius: 10px;
+  border-color: blue;
+  cursor: pointer;
+  transition: ease-out 200ms;
+}
+
 .add-button:hover {
   background-color: #82cd83;
+  color: white;
+}
+
+.SELECT-button:hover {
+  background-color: #38a6d278;
   color: white;
 }
 
