@@ -3,10 +3,8 @@ Code citation:
 css skeleton code obtained from CS 290 template
 */
 html, body {
-  margin: 0;
-  padding: 0;
   font-family: 'Roboto', sans-serif;
-  background-color: #f2f2f2;
+  background-color: #ffffff;
 }
 
 .App {
@@ -18,35 +16,29 @@ html, body {
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
   position: sticky; 
   top: 0;
-  border-bottom: 2px solid rgb(204, 204, 204);
   display: flex;
   align-items: center;
   justify-content: left;
   padding: 0.5rem;
   padding-left: 4rem;
-  background-color: rgb(84, 84, 84);
+  background-color: #333333;
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
 }
 
 .logo {
   margin-right: 3rem;
   font-size: 1.5rem;
   font-weight: bold;
-  background-image: linear-gradient(45deg, #5a55ee 0%, #4194cf 70%);
+  background-image: linear-gradient(45deg, #7288f6 0%, #5bade8 70%);
   background-clip: text;
   color: transparent;
 }
 
 .logo:hover {
-  color: #7c78f1;
+  color: #75b7e3;
 }
 
 /* 
@@ -55,9 +47,14 @@ shape of border of dropdown button learned from following tutorial https://css-t
 */
 /* Dropdown Button */
 .dropdown-button {
-  font-size: 1.2rem;
-  color: rgb(84, 84, 84);
+  font-size: 1rem;
+  color: rgb(255, 255, 255);
+  background-color: #333333;
   border: none;
+}
+
+.dropdown-button:hover {
+  transition: ease-out 200ms;
 }
 
 /* The container <div> - needed to position the dropdown content */
@@ -69,14 +66,22 @@ shape of border of dropdown button learned from following tutorial https://css-t
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
+  opacity: 0;
   display: none;
   position: absolute;
-  background-color: #f2f2f2;
+  background-color: #ffffff;
   min-width: 300px;
   padding: 0.5rem;
   text-align: left;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  transition: opacity 0.5s ease;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  opacity: 1;
+  display: block;
 }
 
 /* Links inside the dropdown */
@@ -87,21 +92,33 @@ shape of border of dropdown button learned from following tutorial https://css-t
   display: block;
 }
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
-
 /* Change the background color of the dropdown button when the dropdown content is shown
 .dropdown:hover .dropbtn {background-color: #3e8e41;} */
 
 .App-body {
   color: rgb(84, 84, 84);
   font-size: calc(10px + 2vmin);
-  display: flex;
   align-items: center;
   justify-content: center;
   width: 80%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-column1 {
+  flex: 2 1 0;
+  padding-right: 0.5rem;
+  text-align: center;
+}
+
+.flex-column2 {
+  flex: 1 1 0;
+  padding-left: 0.5rem;
+  text-align: center;
 }
 
 .App-link {
@@ -136,24 +153,37 @@ a:hover, button:hover {
   color: rgb(151, 151, 151);
 }
 
+.icon {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.icon:hover {
+  opacity: 0.5;
+  transition: opacity 200ms ease;
+}
+
 table {
+  width: 100%;
   border-collapse: collapse;
+  border-style: hidden; /* Hide outside border */
   border-radius: 20px;
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
+  box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.2);
 }
 
 thead { 
   color: rgb(255, 255, 255);
   padding: 10px 20px 10px 20px;
-  background:rgb(89, 120, 191);
+  background:#333333;
   font-size: 1rem;
 }
 
 tbody { 
   color: rgb(39, 39, 39);
-  background-color: rgb(255, 255, 255);
+  background-color: #eeeeee;
   padding: 10px 20px 10px 20px;
   font-size: 1rem;
 }
@@ -161,7 +191,8 @@ tbody {
 th, td {
   padding: 10px 20px 10px 20px;
   border: 1px solid rgb(204, 204, 204);
-  text-align: center;
+  font-weight: normal;
+  text-align: left;
 }
 
 h3 {
@@ -179,17 +210,10 @@ p {
   text-align: left;
 }
 
-.add-form {
-  margin-left: auto;
-  margin-right: auto;
-  width: 500px;
-  margin-top: 3rem;
-  padding: 1.5rem;
-  font-size: 1rem;
-  background-color: #e3e3e3;
-  color: rgb(39, 39, 39);
+.page-description {
+  border: 1px solid rgb(204, 204, 204);
+  padding: 0.5em;
   border-radius: 20px;
-  text-align: center;
 }
 
 .form-row {
@@ -212,49 +236,50 @@ p {
   border: 1px solid rgb(204, 204, 204);
 }
 
+.add-form {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem;
+  font-size: 1rem;
+  background-color: #eeeeee;
+  color: rgb(39, 39, 39);
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.2);
+}
+
 .add-button {
   padding: 0.5em 2em;
   font-size: 1rem;
-  background-color: #4CAF50;
+  background-color: rgba(76,175,80);
   color: white;
   border: none;
   border-radius: 10px;
-  cursor: pointer;
-  transition: ease-out 200ms;
-}
-
-.SELECT-button {
-  padding: 0.5em 2em;
-  font-size: 1rem;
-  background-color: #38a6d2;
-  color: white;
-  border: solid;
-  border-radius: 10px;
-  border-color: blue;
   cursor: pointer;
   transition: ease-out 200ms;
 }
 
 .add-button:hover {
-  background-color: #82cd83;
+  background-color: rgba(76,175,80, 70%);
   color: white;
 }
 
-.SELECT-button:hover {
-  background-color: #38a6d278;
-  color: white;
-}
-
-.landing-button {
-  margin: 1em;
-  padding: 0.5em 1em;
+.SELECT-button {
+  padding: 0.5em 1.5em;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
   font-size: 1rem;
   background-color: rgb(89, 120, 191);
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   transition: ease-out 200ms;
+}
+
+.SELECT-button:hover {
+  background-color: rgba(89, 120, 191, 80%);
+  color: white;
 }
 
 .landing-button:hover {
@@ -274,11 +299,6 @@ Code citation: code to resize table and make it scrollable thanks to https://www
 
 .resizeTable {
   text-align: center;
-}
-
-.stylePageDescription {
-  border-style: ridge;
-  padding: 1em;
 }
 
 /* h1 {
