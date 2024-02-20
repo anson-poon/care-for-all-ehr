@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import { SearchBoxClinicalNotes } from '../components/SearchBox';
 
 /*
 Page returns function that shows clinical notes table
@@ -10,12 +11,12 @@ function ClinicalNotesPage() {
     return (
         <div>
             <h3>List of Clinical Notes</h3>
-            <div className="stylePageDescription">
+            <div className="page-description">
                 <p>This page allows you to <b>get</b> and <b>refresh</b> information on clinical notes that have been associated with existing visits between patients and providers in the MySQL database.</p>
                 <p>Available information for each clinical note includes Clinical Note ID, Length of Visit, and Visit ID.</p>
                 <p>Lastly, this page allows you to <b>insert</b>, or <b>add</b> information about a clinical note for only new visits.</p>
             </div>
-            <br></br>
+            <SearchBoxClinicalNotes/>
             <form action="" method="get" className="add-form">
                 <h4>Add a New Clinical Note</h4>
                 <div className="form-row">

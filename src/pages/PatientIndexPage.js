@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import patientData from '../data/patientData';
+import { SearchBoxPatientIndex } from '../components/SearchBox';
 
 /*
 Page returns function that shows patient index table
@@ -22,13 +23,14 @@ function PatientIndexPage() {
                     Details of any visit the patient may have had with provider(s) will remain unchanged.
                 </p>
             </div>
+            <SearchBoxPatientIndex />
             <button className="SELECT-button">Refresh List of Patients</button>
             <div className="flex-container">
                 <div className="flex-column1">
                     <table id="patientindex">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Patient ID</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Delete</th>

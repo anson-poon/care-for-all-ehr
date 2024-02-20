@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import { SearchBarClinicalFindings } from '../components/SearchBox';
 
 /*
 Page returns function that shows clinical findings table
@@ -15,7 +16,7 @@ function ClinicalFindingsPage() {
                 <p>Available information for each clinical findings note includes Clinical Finding ID, Chief Complaint, Patient Blood Pressure, Patient Heart Rate, Patient Temperature, Patient Respiratory Rate, Treatment Plan, and Clinical Note ID.</p>
                 <p>Lastly, this page allows you to <b>insert</b>, or <b>add</b> information on clinical findings for only a new clinical note ID.</p>
             </div>
-            <br></br>
+            <SearchBarClinicalFindings/>
             <form action="" method="get" className="add-form">
                 <h4>Add Clinical Findings to a New Clinical Note</h4>
                 <div className="form-row">

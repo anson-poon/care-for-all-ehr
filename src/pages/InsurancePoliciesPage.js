@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import insuranceData from '../data/insuranceData';
+import { SearchBoxInsurancePolicies } from '../components/SearchBox';
 
 /*
 Page returns function that shows insurance policies table
@@ -17,6 +18,7 @@ function InsurancePoliciesPage() {
                 <p>Lastly, this page allows you to <b>insert</b>, or <b>add</b> information about an insurance policy for an existing patient or a newly created patient.</p>
                 <p><b>Special Note</b>:  If an insurance policy is already linked with a patient, then an error will occur if the insurance policy is linked with another patient.</p>
             </div>
+            <SearchBoxInsurancePolicies />
             <button className="SELECT-button">Refresh List of Insurance Policies</button>
             <div className="flex-container">
                 <div className="flex-column1">

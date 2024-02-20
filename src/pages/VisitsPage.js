@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import { SearchBoxVisits } from '../components/SearchBox';
 
 /*
 Page returns function that shows visits table
@@ -16,13 +17,12 @@ function VisitsPage() {
                 <p>Lastly, this page allows you to <b>insert</b>, or <b>add</b> information on a new visit between a patient and a provider when the following requirements have been <b>met</b>:</p>
                 <ol className="userGuide">
                     <li>The relationship between a patient and a provider have been formed on the Relationships between Patients & Providers page.</li>
-                    <br></br>
                     <li>An insurance ID has been associated with a patient on the List of Insurance Policies page.</li>
                 </ol>
                 <p>Failure to meet these requirements will result in an error if the creation of the new visit is attempted.</p>
                 <p><b>Special Note</b>:  When a provider is selected, then the appropriate form will automatically generate the patients that have a relationship with the provider. Then once the patient is selected, then the form will also automatically generate insurance policies that have been associated with the specific patient.</p>
             </div>
-            <br></br>
+            <SearchBoxVisits/>
             <form action="" method="get" className="add-form">
                 <h4>Add a New Visit</h4>
                 <div className="form-row">
@@ -61,7 +61,7 @@ function VisitsPage() {
                 <thead>
                     <tr>
                         <th>Visit ID</th>
-                        <th>Date and Time of Visit</th>
+                        <th>Date & Time</th>
                         <th>Provider ID</th>
                         <th>Patient ID</th>
                         <th>Insurance ID</th>

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import { HiBell } from 'react-icons/hi2';
 import patientData from '../data/patientData';
+import {SearchBoxPatientProfiles} from '../components/SearchBox';
 
 /*
 Code citation: Code to import icons credited to https://react-icons.github.io/react-icons/
@@ -26,13 +27,14 @@ function PatientProfilesPage() {
                 <p>This page also allows you to <b>delete</b> information for each patient from the MySQL database.</p>
                 <p>Lastly, this page also allows you to update update for each patient, including the ability to set Phone Number, Email Address, and Date of Birth as <b>NULL</b>.</p>
             </div>
+            <SearchBoxPatientProfiles />
             <button className="SELECT-button">Get Current Information for Each Patient</button>
             <div className="flex-container">
                 <div className="flex-column1">
                     <table id="patientsdetailedinformation">
                         <thead>
                             <tr>
-                                <th>Profile ID</th>
+                                <th>Patient Profile ID</th>
                                 <th>Phone Number</th>
                                 <th>Email Address</th>
                                 <th>Date of Birth</th>

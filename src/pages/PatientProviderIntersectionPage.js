@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import patientProviderIntersectionData from '../data/patientProviderIntersectionData';
-
+import {SearchBoxPatientProviderRelationships} from '../components/SearchBox';
 /*
 Page returns function that shows patient provider intersection table
 */
@@ -26,6 +26,7 @@ function PatientProviderIntersectionPage() {
                 </ol>
                 <p><b>Special Note</b>:  Once a relationship has been defined between a patient and a provider, then a visit entry can be created on List of Visits page to represent a visit occurred between the two entities.</p>
             </div>
+            <SearchBoxPatientProviderRelationships />
             <button className="SELECT-button">Refresh Patient/Provider Relationships</button>
             <div className="flex-container">
                 <div className="flex-column1">

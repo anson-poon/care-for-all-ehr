@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import providerData from '../data/providerData';
+import {SearchBoxProviderIndex} from '../components/SearchBox';
 
 /*
 Page returns function that shows provider index table
@@ -22,6 +23,7 @@ function ProviderIndexPage() {
                     Details of any visit the provider may have had with patient(s) will remain unchanged.
                 </p>
             </div>
+            <SearchBoxProviderIndex />
             <button className="SELECT-button">Refresh List of Providers</button>
             <div className="flex-container">
                 <div className="flex-column1">
