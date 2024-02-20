@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import insuranceData from '../data/insuranceData';
 
 /*
 Page returns function that shows insurance policies table
@@ -16,7 +17,7 @@ function InsurancePoliciesPage() {
                 <p>Lastly, this page allows you to <b>insert</b>, or <b>add</b> information about an insurance policy for an existing patient or a newly created patient.</p>
                 <p><b>Special Note</b>:  If an insurance policy is already linked with a patient, then an error will occur if the insurance policy is linked with another patient.</p>
             </div>
-            <button className="SELECT-button">Get Current Information for Insurance Policies</button>
+            <button className="SELECT-button">Refresh List of Insurance Policies</button>
             <div className="flex-container">
                 <div className="flex-column1">
                     <table id="insurancepolicies">
@@ -28,16 +29,13 @@ function InsurancePoliciesPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>14</th>
-                                <th>Anthem PPO</th>
-                                <th>0</th>
-                            </tr>
-                            <tr>
-                                <th>11</th>
-                                <th>Blue Cross Blue Shield HMO</th>
-                                <th>1</th>
-                            </tr>
+                            {insuranceData.map((item, index) => (
+                                <tr key={index}>
+                                    <th>{item.insuranceID}</th>
+                                    <th>{item.type}</th>
+                                    <th>{item.patientID}</th>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
