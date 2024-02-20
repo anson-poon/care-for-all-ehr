@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import { SearchBoxVisits } from '../components/SearchBox';
+import visitData from '../data/visitData';
 
 /*
 Page returns function that shows visits table
@@ -37,20 +38,15 @@ function VisitsPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>20</th>
-                                <th>1000-01-01 00:00:00</th>
-                                <th>5</th>
-                                <th>4</th>
-                                <th>14</th>
-                            </tr>
-                            <tr>
-                                <th>30</th>
-                                <th>1000-01-02 00:10:10</th>
-                                <th>6</th>
-                                <th>3</th>
-                                <th>13</th>
-                            </tr>
+                            {visitData.map((item, index) => (
+                                <tr key={index}>
+                                    <th>{item.visitID}</th>
+                                    <th>{item.dateTime}</th>
+                                    <th>{item.providerID}</th>
+                                    <th>{item.patientID}</th>
+                                    <th>{item.insuranceID}</th>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
@@ -59,7 +55,7 @@ function VisitsPage() {
                         <h4>Add a New Visit</h4>
                         <div className="form-row">
                             <label for="visitDateTime">Date and Time: </label>
-                            <input type="text" name="visitDateTime" id="visitDateTime" required />
+                            <input type="datetime-local" name="visitDateTime" id="visitDateTime" required />
                         </div>
                         <div className="form-row">
                             <label for="providerID">Provider ID:  </label>
