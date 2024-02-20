@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import patientProviderIntersectionData from '../data/patientProviderIntersectionData';
 
 /*
 Page returns function that shows patient provider intersection table
@@ -36,7 +37,12 @@ function PatientProviderIntersectionPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            {patientProviderIntersectionData.map((item, index) => (
+                                <tr key={index}>
+                                    <th>{item.patientID}</th>
+                                    <th>{item.providerID}</th>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
