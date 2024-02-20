@@ -10,7 +10,7 @@ Page returns function that shows insurance policies table
 function InsurancePoliciesPage() {
     return (
         <div>
-            <h3>Insurance Policies</h3>
+            <h3>List of Insurance Policies</h3>
             <div className="page-description">
                 <p>This page allows you to <b>get</b> and <b>refresh</b> information on insurance policies that have been associated with patients in the MySQL database.</p>
                 <p>Available information for each insurance policy includes Insurance ID, Insurance Type, and Patient ID.</p>
