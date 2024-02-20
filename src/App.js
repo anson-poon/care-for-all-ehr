@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import PatientsPage from './pages/PatientsPage';
-import ProvidersPage from './pages/ProvidersPage';
+import ProviderProfilesPage from './pages/ProviderProfilesPage';
 import VisitsPage from './pages/VisitsPage';
 import PatientIndexPage from './pages/PatientIndexPage';
 import PatientProviderIntersectionPage from './pages/PatientProviderIntersectionPage';
@@ -37,7 +37,7 @@ class App extends React.Component {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/patients" element={<PatientsPage />} />
-              <Route path="/providers" element={<ProvidersPage />} />
+              <Route path="/providers" element={<ProviderProfilesPage />} />
               <Route path="/visits" element={<VisitsPage />} />
               <Route path="/patientindex" element={<PatientIndexPage />} />
               <Route path="/patientproviderintersection" element={<PatientProviderIntersectionPage />} />

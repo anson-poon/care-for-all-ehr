@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import providerData from '../data/providerData';
 
 /*
 Page returns function that shows provider index table
@@ -33,16 +34,13 @@ function ProviderIndexPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>5</th>
-                                <th>Avery</th>
-                                <th><RiChatDeleteFill className="icon"/></th>
-                            </tr>
-                            <tr>
-                                <th>6</th>
-                                <th>Roy</th>
-                                <th><RiChatDeleteFill className="icon"/></th>
-                            </tr>
+                            {providerData.map((item, index) => (
+                                <tr key={index}>
+                                    <th>{item.providerID}</th>
+                                    <th>{item.providerName}</th>
+                                    <th><RiChatDeleteFill className="icon" /></th>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
