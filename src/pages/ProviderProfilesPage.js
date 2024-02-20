@@ -58,13 +58,15 @@ function ProviderProfilesPage() {
                 </div>
                 <div className="flex-column2">
                     <form action="" method="get" className="add-form">
-                        <h4>Add information for Provider ID:
-                            <label for="providerID">   </label>
-                            <select name="providerID">
-                                <option value="5">5 (Avery)</option>
-                                <option value="6">6 (Roy)</option>
+                        <h4>Add Provider Profile:</h4>
+                        <div className="form-row">
+                            <label for="providerID">Provider ID: </label>
+                            <select name="providerID" id="providerID">
+                                {providerData.map((item, index) => (
+                                    <option value={item.providerID}>{item.providerID} ({item.providerLastName})</option>
+                                ))}
                             </select>
-                        </h4>
+                        </div>
                         <div className="form-row">
                             <label for="title">Title: </label>
                             <input type="text" name="title" id="title" required />
