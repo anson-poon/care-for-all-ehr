@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import insuranceNotesData from '../data/insuranceNotesData';
 import { SearchBoxInsuranceNotes } from '../components/SearchBox';
 
 /*
@@ -29,16 +30,13 @@ function InsuranceNotesPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>500</th>
-                                <th>1</th>
-                                <th>20</th>
-                            </tr>
-                            <tr>
-                                <th>600</th>
-                                <th>2</th>
-                                <th>30</th>
-                            </tr>
+                            {insuranceNotesData.map((item, index) => (
+                                <tr key={index}>
+                                    <th>{item.insuranceNoteID}</th>
+                                    <th>{item.reimbursementCode}</th>
+                                    <th>{item.visitID}</th>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

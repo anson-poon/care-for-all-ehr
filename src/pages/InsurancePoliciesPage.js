@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
-import insuranceData from '../data/insuranceData';
+import insurancePoliciesData from '../data/insurancePoliciesData';
 import { SearchBoxInsurancePolicies } from '../components/SearchBox';
 
 /*
@@ -31,7 +31,7 @@ function InsurancePoliciesPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {insuranceData.map((item, index) => (
+                            {insurancePoliciesData.map((item, index) => (
                                 <tr key={index}>
                                     <th>{item.insuranceID}</th>
                                     <th>{item.type}</th>

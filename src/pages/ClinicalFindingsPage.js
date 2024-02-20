@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import clinicalFindingsData from '../data/clinicalFindingsData';
 import { SearchBarClinicalFindings } from '../components/SearchBox';
 
 /*
@@ -35,26 +36,18 @@ function ClinicalFindingsPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>11</th>
-                                <th>"chest pain"</th>
-                                <th>2</th>
-                                <th>60</th>
-                                <th>98</th>
-                                <th>28</th>
-                                <th>"History of heart disease"</th>
-                                <th>20</th>
-                            </tr>
-                            <tr>
-                                <th>12</th>
-                                <th>"stomach pain"</th>
-                                <th>1</th>
-                                <th>40</th>
-                                <th>95</th>
-                                <th>22</th>
-                                <th>"Complains of severe abdominal pain, left lower..."</th>
-                                <th>13</th>
-                            </tr>
+                            {clinicalFindingsData.map((item, index) => (
+                                <tr key={index}>
+                                    <th>{item.clinicalFindingID}</th>
+                                    <th>{item.chiefComplaint}</th>
+                                    <th>{item.bloodPressure}</th>
+                                    <th>{item.heartRate}</th>
+                                    <th>{item.temperature}</th>
+                                    <th>{item.respiratoryRate}</th>
+                                    <th>{item.treatmentPlan}</th>
+                                    <th>{item.clinicalNoteID}</th>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

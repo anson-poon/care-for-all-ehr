@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import clinicalNotesData from '../data/clinicalNotesData';
 import { SearchBoxClinicalNotes } from '../components/SearchBox';
 
 /*
@@ -30,16 +31,13 @@ function ClinicalNotesPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>12</th>
-                                <th>10:20:00</th>
-                                <th>20</th>
-                            </tr>
-                            <tr>
-                                <th>13</th>
-                                <th>10:30:00</th>
-                                <th>30</th>
-                            </tr>
+                            {clinicalNotesData.map((item, index) => (
+                                <tr key={index}>
+                                    <th>{item.clinicalNoteID}</th>
+                                    <th>{item.lengthOfVisit}</th>
+                                    <th>{item.visitID}</th>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

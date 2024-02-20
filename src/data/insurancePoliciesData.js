@@ -1,4 +1,4 @@
-const insuranceData = [
+const insurancePoliciesData = [
     {
       insuranceID: 1,
       type: 'Anthem PPO',
@@ -51,5 +51,5 @@ const insuranceData = [
     }
   ];
   
-  export default insuranceData;
+  export default insurancePoliciesData;
   
