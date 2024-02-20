@@ -4,7 +4,7 @@ import axios from "axios";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
-import PatientsPage from './pages/PatientsPage';
+import PatientProfilesPage from './pages/PatientProfilesPage';
 import ProviderProfilesPage from './pages/ProviderProfilesPage';
 import VisitsPage from './pages/VisitsPage';
 import PatientIndexPage from './pages/PatientIndexPage';
@@ -36,7 +36,7 @@ class App extends React.Component {
           <div className="App-body">
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/patients" element={<PatientsPage />} />
+              <Route path="/patients" element={<PatientProfilesPage />} />
               <Route path="/providers" element={<ProviderProfilesPage />} />
               <Route path="/visits" element={<VisitsPage />} />
               <Route path="/patientindex" element={<PatientIndexPage />} />

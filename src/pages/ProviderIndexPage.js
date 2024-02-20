@@ -28,7 +28,7 @@ function ProviderIndexPage() {
                     <table id="providerindex">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Provider ID</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Delete</th>
