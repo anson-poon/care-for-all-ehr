@@ -17,7 +17,7 @@ function ProvidersPage() {
 
     return (
         <div>
-            <h3>Information for Each Provider</h3>
+            <h3>Provider Profiles</h3>
             <div className="page-description">
                 <p>This page allows you to <b>get</b> and <b>refresh</b> detailed information for all providers from the MySQL database.</p>
                 <p>Available information for each provider includes their Provider Profile ID, Title, Specialty, Phone Number, and Provider ID.</p>
@@ -25,7 +25,7 @@ function ProvidersPage() {
                 <p>This page also allows you to <b>delete</b> information for each provider from the MySQL database.</p>
                 <p>Lastly, this page also allows you to update update for each provider, including the ability to set Title, Specialty, and Phone Number as <b>NULL</b>.</p>
             </div>
-            <button className="SELECT-button">Get Current Information for Each Provider</button>
+            <button className="SELECT-button">Refresh Provider Profiles</button>
             <div className="flex-container">
                 <div className="flex-column1">
                     <table id="providerdetailedinformation">

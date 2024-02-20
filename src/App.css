@@ -111,13 +111,13 @@ shape of border of dropdown button learned from following tutorial https://css-t
 
 .flex-column1 {
   flex: 2 1 0;
-  padding-right: 0.5rem;
+  padding-right: 1rem;
   text-align: center;
 }
 
 .flex-column2 {
   flex: 1 1 0;
-  padding-left: 0.5rem;
+  padding-left: 1rem;
   text-align: center;
 }
 
@@ -265,6 +265,8 @@ p {
 }
 
 .SELECT-button {
+  display: flex;
+  align-items: left;
   padding: 0.5em 1.5em;
   margin-bottom: 1rem;
   margin-top: 1rem;

@@ -10,7 +10,7 @@ function ProviderIndexPage() {
     return (
         <div>
             <h3>List of Providers</h3>
-            <div className="stylePageDescription">
+            <div className="page-description">
                 <p>This page allows you to <b>get</b> and <b>refresh</b> a list of providers, if any, from the MySQL database.</p>
                 <p>Available information on the list of providers from the database includes their IDs and names.</p>
                 <p>Additionally, this page allows you to <b>insert</b> a new provider into the MySQL database.</p>
@@ -21,11 +21,9 @@ function ProviderIndexPage() {
                     Details of any visit the provider may have had with patient(s) will remain unchanged.
                 </p>
             </div>
-            <br/>
-            <button className="SELECT-button">Get Current List of Providers</button>
-            <br/>
-            <div className="container">
-                <div className="column">
+            <button className="SELECT-button">Refresh List of Providers</button>
+            <div className="flex-container">
+                <div className="flex-column1">
                     <table id="providerindex">
                         <thead>
                             <tr>
@@ -48,7 +46,7 @@ function ProviderIndexPage() {
                         </tbody>
                     </table>
                 </div>
-                <div className="column">
+                <div className="flex-column2">
                     <form action="" method="get" className="add-form">
                         <h4>Add a New Provider</h4>
                         <div className="form-row">
