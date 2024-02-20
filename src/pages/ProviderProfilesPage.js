@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import { HiBell } from 'react-icons/hi2';
+import providerData from '../data/providerData';
 
 /*
 Code citation: Code to import icons credited to https://react-icons.github.io/react-icons/
@@ -41,24 +42,17 @@ function ProviderProfilesPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>2</th>
-                                <th>MD</th>
-                                <th>General Surgeon</th>
-                                <th>234567</th>
-                                <th>5</th>
-                                <th><RiEdit2Fill className="icon" onClick={() => goToUpdatePage("/updateproviderpage")} /></th>
-                                <th><RiChatDeleteFill className="icon"/></th>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <th>DO</th>
-                                <th>General Hospitalist</th>
-                                <th>234568</th>
-                                <th>6</th>
-                                <th><RiEdit2Fill className="icon" onClick={() => goToUpdatePage("/updateproviderpage")} /></th>
-                                <th><RiChatDeleteFill className="icon"/></th>
-                            </tr>
+                            {providerData.map((item, index) => (
+                                <tr key={index}>
+                                    <th>{item.providerProfileID}</th>
+                                    <th>{item.title}</th>
+                                    <th>{item.specialty}</th>
+                                    <th>{item.phoneNumber}</th>
+                                    <th>{item.providerID}</th>
+                                    <th><RiEdit2Fill className="icon" onClick={() => goToUpdatePage("/updateproviderpage")} /></th>
+                                    <th><RiChatDeleteFill className="icon" /></th>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
