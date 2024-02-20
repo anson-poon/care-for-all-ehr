@@ -19,7 +19,7 @@ function PatientProfilesPage() {
     return (
         <div>
             <h3>Patient Profiles</h3>
-            <div className="stylePageDescription">
+            <div className="page-description">
                 <p>This page allows you to <b>get</b> and <b>refresh</b> detailed information for all patients from the MySQL database.</p>
                 <p>Available information for each patient includes their Profile ID, Phone Number, Email Address, Date of Birth, and Patient ID.</p>
                 <p>Additionally, this page allows you to <b>insert</b>, or <b>add</b> information about a new patient that was created on List of Patients page.</p>
