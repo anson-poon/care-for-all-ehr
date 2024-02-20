@@ -17,11 +17,8 @@ function PatientProviderIntersectionPage() {
                 <p>Lastly, this page allows you to only <b>insert</b>, or define, a relationship among entities in the following scenarios:</p>
                 <ol className="userGuide">
                     <li>A new relationship can be formed between a newly created patient and a newly created provider.</li>
-                    <br></br>
                     <li>A new relationship can be formed between a newly created patient and an existing provider.</li>
-                    <br></br>
                     <li>A new relationship can be formed between an existing patient and a newly created provider.</li>
-                    <br></br>
                     <li>A new relationship can be formed between an existing patient and an existing provider only if the two existing entities have never established a relationship before.</li>
                 </ol>
                 <p><b>Special Note</b>:  Once a relationship has been defined between a patient and a provider, then a visit entry can be created on List of Visits page to represent a visit occurred between the two entities.</p>
