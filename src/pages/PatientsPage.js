@@ -17,7 +17,7 @@ function PatientsPage() {
 
     return (
         <div>
-            <h3>Information for Each Patient</h3>
+            <h3>Patient Profiles</h3>
             <div className="stylePageDescription">
                 <p>This page allows you to <b>get</b> and <b>refresh</b> detailed information for all patients from the MySQL database.</p>
                 <p>Available information for each patient includes their Profile ID, Phone Number, Email Address, Date of Birth, and Patient ID.</p>
@@ -67,22 +67,7 @@ function PatientsPage() {
                 </thead>
                 <tbody>
                     <tr>
-                        <th>2</th>
-                        <th>1112222</th>
-                        <th>"a@apple.com"</th>
-                        <th>1000-01-02</th>
-                        <th>0</th>
-                        <th><RiEdit2Fill onClick={() => goToUpdatePage("/updatepatientpage")} /></th>
-                        <th><RiChatDeleteFill/></th>
-                    </tr> 
-                    <tr>
-                        <th>3</th>
-                        <th>2223333</th>
-                        <th>"b@apple.com"</th>
-                        <th>1000-01-03</th>
-                        <th>1</th>
-                        <th><RiEdit2Fill onClick={() => goToUpdatePage("/updatepatientpage")} /></th>
-                        <th><RiChatDeleteFill/></th>
+                        
                     </tr>               
                 </tbody>
             </table>
