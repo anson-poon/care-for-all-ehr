@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
-import { HiBell } from 'react-icons/hi2';
+import { SearchBoxProviderProfiles } from '../components/SearchBox';
 import providerData from '../data/providerData';
 
 /*
@@ -26,6 +26,7 @@ function ProviderProfilesPage() {
                 <p>This page also allows you to <b>delete</b> information for each provider from the MySQL database.</p>
                 <p>Lastly, this page also allows you to update update for each provider, including the ability to set Title, Specialty, and Phone Number as <b>NULL</b>.</p>
             </div>
+            <SearchBoxProviderProfiles />
             <button className="SELECT-button">Refresh Provider Profiles</button>
             <div className="flex-container">
                 <div className="flex-column1">

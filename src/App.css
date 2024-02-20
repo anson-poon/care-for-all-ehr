@@ -4,6 +4,7 @@ css skeleton code obtained from CS 290 template
 */
 html, body {
   font-family: 'Roboto', sans-serif;
+  font-size: 0.95rem;
   background-color: #ffffff;
 }
 
@@ -32,13 +33,13 @@ html, body {
   margin-right: 3rem;
   font-size: 1.5rem;
   font-weight: bold;
-  background-image: linear-gradient(45deg, #7288f6 0%, #5bade8 70%);
+  background-image: linear-gradient(45deg, #61d5ff 0%, #61a3ff 80%);
   background-clip: text;
   color: transparent;
 }
 
 .logo:hover {
-  color: #75b7e3;
+  color: #37caff;
 }
 
 /* 
@@ -71,7 +72,7 @@ shape of border of dropdown button learned from following tutorial https://css-t
   position: absolute;
   background-color: #ffffff;
   min-width: 300px;
-  padding: 0.5rem;
+  padding: 0.5rem 0 0.5rem 0;
   text-align: left;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -87,7 +88,6 @@ shape of border of dropdown button learned from following tutorial https://css-t
 /* Links inside the dropdown */
 .dropdown-content a {
   font-size: 1rem;
-  padding: 0.2rem;
   text-decoration: none;
   display: block;
 }
@@ -171,7 +171,7 @@ table {
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
-  box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.2);
+  box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.2);
 }
 
 thead { 
@@ -216,6 +216,51 @@ p {
   border-radius: 20px;
 }
 
+.search-box {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.search-box > select,
+.search-box > input,
+.search-box > button {
+  padding: 0.5rem;
+  -webkit-border-radius: 0;
+  border: 0;
+  outline: 1px solid #ccc;
+}
+
+.search-box > select {
+  flex: 1;
+  background-color: #eeeeee;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.search-box > input {
+  flex: 5;
+}
+
+.search-box > button {
+  flex: 1;
+  font-size: 1rem;
+  background-color: rgb(89, 120, 191);
+  color: white;
+  cursor: pointer;
+  transition: ease-out 200ms;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  outline: 1px solid rgb(89, 120, 191);
+}
+
+.search-box > button:hover {
+  background-color: rgba(89, 120, 191, 80%);
+  color: white;
+}
+
+
 .form-row {
   display: flex;
   padding: 1rem 2rem 0rem 2rem;
@@ -252,7 +297,7 @@ select {
   color: rgb(39, 39, 39);
   border-radius: 20px;
   text-align: center;
-  box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.2);
+  box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.2);
 }
 
 .add-button {

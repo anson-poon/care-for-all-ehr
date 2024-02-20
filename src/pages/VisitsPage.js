@@ -10,7 +10,7 @@ function VisitsPage() {
     return (
         <div>
             <h3>List of Visits</h3>
-            <div className="stylePageDescription">
+            <div className="page-description">
                 <p>This page allows you to <b>get</b> and <b>refresh</b> information on visits that have already been associated between patients and providers in the MySQL database.</p>
                 <p>Available information for each visit includes Visit ID, Date and Time of Visit, Provider ID, Patient ID, and Insurance ID.</p>
                 <p>Lastly, this page allows you to <b>insert</b>, or <b>add</b> information on a new visit between a patient and a provider when the following requirements have been <b>met</b>:</p>
