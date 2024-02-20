@@ -28,8 +28,9 @@ function ProviderIndexPage() {
                     <table id="providerindex">
                         <thead>
                             <tr>
-                                <th>Provider ID</th>
-                                <th>Provider Name</th>
+                                <th>ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
@@ -37,7 +38,8 @@ function ProviderIndexPage() {
                             {providerData.map((item, index) => (
                                 <tr key={index}>
                                     <th>{item.providerID}</th>
-                                    <th>{item.providerName}</th>
+                                    <th>{item.providerFirstName}</th>
+                                    <th>{item.providerLastName}</th>
                                     <th><RiChatDeleteFill className="icon" /></th>
                                 </tr>
                             ))}
@@ -48,14 +50,14 @@ function ProviderIndexPage() {
                     <form action="" method="get" className="add-form">
                         <h4>Add a New Provider</h4>
                         <div className="form-row">
-                            <label for="providerID">Provider ID: </label>
-                            <input type="text" name="providerID" id="providerID" required />
+                            <label for="firstName">First Name: </label>
+                            <input type="text" name="firstName" id="firstName" required />
                         </div>
                         <div className="form-row">
-                            <label for="name">Name: </label>
-                            <input type="text" name="name" id="name" required />
+                            <label for="lastName">Last Name: </label>
+                            <input type="text" name="lastName" id="lastName" required />
                         </div>
-                        <br />
+                        <br/>
                         <button className="add-button">Add</button>
                     </form>
                 </div>
