@@ -75,14 +75,14 @@ const providerData = [
     providerProfileID: 9,
     title: 'MD',
     specialty: 'Gastroenterology',
-    phoneNumber: '22244445555',
+    phoneNumber: '2224445555',
     providerID: 9,
     providerFirstName: 'Honey',
     providerLastName: 'Bunches'
   },
   {
     providerProfileID: 10,
-    title: 'DM',
+    title: 'DO',
     specialty: 'Pulmonology',
     phoneNumber: '2225556666',
     providerID: 10,
