@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import { HiBell } from 'react-icons/hi2';
 import patientData from '../data/patientData';
-import {SearchBoxPatientProfiles} from '../components/SearchBox';
+import { SearchBoxPatientProfiles } from '../components/SearchBox';
 
 /*
 Code citation: Code to import icons credited to https://react-icons.github.io/react-icons/
@@ -60,13 +60,14 @@ function PatientProfilesPage() {
                 </div>
                 <div className="flex-column2">
                     <form action="" method="get" className="add-form">
-                        <h4>Add Information for Patient ID:
-                            <label for="patientID">   </label>
+                        <h4>Add Patient Profile:</h4>
+                        <div className="form-row">
+                            <label for="patientID">Patient ID:</label>
                             <select name="patientID">
                                 <option value="0">0 (James)</option>
                                 <option value="1">1 (Mary)</option>
                             </select>
-                        </h4>
+                        </div>
                         <div className="form-row">
                             <label for="phoneNumber">Phone Number: </label>
                             <input type="text" name="phoneNumber" id="phoneNumber" required />
