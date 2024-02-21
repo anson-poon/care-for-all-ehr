@@ -2,102 +2,102 @@ const clinicalFindingsData = [
     {
         clinicalFindingID: 11,
         chiefComplaint: "chest pain",
-        bloodPressure: 2,
-        heartRate: 60,
+        bloodPressure: 1,
+        heartRate: 50,
         temperature: 98,
-        respiratoryRate: 28,
-        treatmentPlan: "History of heart disease",
-        clinicalNoteID: 20
+        respiratoryRate: 16,
+        treatmentPlan: "History of CABG x4, see cardiologist",
+        clinicalNoteID: 1
     },
     {
         clinicalFindingID: 12,
-        chiefComplaint: "stomach pain",
-        bloodPressure: 1,
-        heartRate: 40,
-        temperature: 95,
-        respiratoryRate: 22,
-        treatmentPlan: "Complains of severe abdominal pain, left lower...",
-        clinicalNoteID: 13
+        chiefComplaint: "heartburn",
+        bloodPressure: 2,
+        heartRate: 90,
+        temperature: 98,
+        respiratoryRate: 20,
+        treatmentPlan: "Has been on ibuprofen 800 mg QID, suspected stomach ulcer, see GI doctor",
+        clinicalNoteID: 2
     },
     {
         clinicalFindingID: 13,
-        chiefComplaint: "headache",
-        bloodPressure: 2,
-        heartRate: 50,
-        temperature: 100,
-        respiratoryRate: 21,
-        treatmentPlan: "Complains of severe headache, right side...",
-        clinicalNoteID: 14
+        chiefComplaint: "migraines",
+        bloodPressure: 3,
+        heartRate: 70,
+        temperature: 97,
+        respiratoryRate: 16,
+        treatmentPlan: "Pain 10/10, refractory, directed to ER due to concern for stroke",
+        clinicalNoteID: 3
     },
     {
         clinicalFindingID: 14,
-        chiefComplaint: "back pain",
-        bloodPressure: 1,
-        heartRate: 45,
-        temperature: 97,
+        chiefComplaint: "diarrhea",
+        bloodPressure: 3,
+        heartRate: 140,
+        temperature: 99,
         respiratoryRate: 20,
-        treatmentPlan: "Complains of severe back pain, lower...",
-        clinicalNoteID: 15
+        treatmentPlan: "Non-stop BMs 24/7, directed to ER",
+        clinicalNoteID: 4
     },
     {
         clinicalFindingID: 15,
-        chiefComplaint: "fever",
-        bloodPressure: 2,
-        heartRate: 55,
-        temperature: 102,
-        respiratoryRate: 19,
-        treatmentPlan: "Complains of severe fever, high...",
-        clinicalNoteID: 16
+        chiefComplaint: "constipation",
+        bloodPressure: 3,
+        heartRate: 104,
+        temperature: 99,
+        respiratoryRate: 14,
+        treatmentPlan: "Has had no BM for 1 month. Not passing gas. Abd distended. Referred to ER.",
+        clinicalNoteID: 5
     },
     {
         clinicalFindingID: 16,
-        chiefComplaint: "cough",
-        bloodPressure: 1,
-        heartRate: 35,
-        temperature: 96,
-        respiratoryRate: 18,
-        treatmentPlan: "Complains of severe cough, dry...",
-        clinicalNoteID: 17
+        chiefComplaint: "non-stop vomiting",
+        bloodPressure: 2,
+        heartRate: 70,
+        temperature: 98,
+        respiratoryRate: 20,
+        treatmentPlan: "Hcg positive. Tested positive with home pregnancy test on 01/01/24.",
+        clinicalNoteID: 6
     },
     {
         clinicalFindingID: 17,
-        chiefComplaint: "sore throat",
-        bloodPressure: 2,
-        heartRate: 65,
-        temperature: 99,
-        respiratoryRate: 17,
-        treatmentPlan: "Complains of severe sore throat, right side...",
-        clinicalNoteID: 18
+        chiefComplaint: "sick with COVID",
+        bloodPressure: 1,
+        heartRate: 130,
+        temperature: 103,
+        respiratoryRate: 40,
+        treatmentPlan: "SpO2 88% on RA. SOB. Directed to ER.",
+        clinicalNoteID: 7
     },
     {
         clinicalFindingID: 18,
-        chiefComplaint: "earache",
-        bloodPressure: 1,
-        heartRate: 70,
-        temperature: 101,
-        respiratoryRate: 16,
-        treatmentPlan: "Complains of severe earache, left side...",
-        clinicalNoteID: 19
+        chiefComplaint: "double vision",
+        bloodPressure: 3,
+        heartRate: 80,
+        temperature: 98,
+        respiratoryRate: 14,
+        treatmentPlan: "Vision has been worsening. Myopia suspected. Referred to optometry.",
+        clinicalNoteID: 8
     },
     {
         clinicalFindingID: 19,
-        chiefComplaint: "toothache",
+        chiefComplaint: "need physical for sports",
         bloodPressure: 2,
-        heartRate: 75,
-        temperature: 103,
-        respiratoryRate: 15,
-        treatmentPlan: "Complains of severe toothache, upper...",
-        clinicalNoteID: 20
+        heartRate: 80,
+        temperature: 97,
+        respiratoryRate: 18,
+        treatmentPlan: "Heart and lung sounds normal. Positive for hypperreflexia; labwork ordered.",
+        clinicalNoteID: 9
     },
     {
         clinicalFindingID: 20,
-        chiefComplaint: "stomach pain",
-        bloodPressure: 1,
+        chiefComplaint: "lonely",
+        bloodPressure: 4,
         heartRate: 80,
-        temperature: 104,
-        respiratoryRate: 14,
-        treatmentPlan: "Complains of severe stomach pain, upper...",
-        clinicalNoteID: 21
+        temperature: 98,
+        respiratoryRate: 16,
+        treatmentPlan: "PHQ-9 score 27. Pt with active SI. Directed to ER for likely inpatient hospitalization for BH crisis.",
+        clinicalNoteID: 10
     }
 ];
 

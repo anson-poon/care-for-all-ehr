@@ -1,53 +1,53 @@
 const insuranceNotesData = [
     {
-        insuranceNoteID: 500,
-        reimbursementCode: "A0427",
+        insuranceNoteID: 1,
+        reimbursementCode: "A1000",
+        visitID: 2
+    },
+    {
+        insuranceNoteID: 2,
+        reimbursementCode: "B2000",
+        visitID: 4
+    },
+    {
+        insuranceNoteID: 3,
+        reimbursementCode: "C3000",
+        visitID: 6
+    },
+    {
+        insuranceNoteID: 4,
+        reimbursementCode: "D4000",
+        visitID: 8
+    },
+    {
+        insuranceNoteID: 5,
+        reimbursementCode: "E5000",
+        visitID: 10
+    },
+    {
+        insuranceNoteID: 6,
+        reimbursementCode: "F6000",
+        visitID: 12
+    },
+    {
+        insuranceNoteID: 7,
+        reimbursementCode: "G7000",
+        visitID: 14
+    },
+    {
+        insuranceNoteID: 8,
+        reimbursementCode: "H8000",
+        visitID: 16
+    },
+    {
+        insuranceNoteID: 9,
+        reimbursementCode: "I9000",
+        visitID: 18
+    },
+    {
+        insuranceNoteID: 10,
+        reimbursementCode: "J1234",
         visitID: 20
-    },
-    {
-        insuranceNoteID: 501,
-        reimbursementCode: "A0428",
-        visitID: 30
-    },
-    {
-        insuranceNoteID: 502,
-        reimbursementCode: "A0429",
-        visitID: 40
-    },
-    {
-        insuranceNoteID: 503,
-        reimbursementCode: "A0430",
-        visitID: 50
-    },
-    {
-        insuranceNoteID: 504,
-        reimbursementCode: "A0431",
-        visitID: 60
-    },
-    {
-        insuranceNoteID: 505,
-        reimbursementCode: "A0432",
-        visitID: 70
-    },
-    {
-        insuranceNoteID: 506,
-        reimbursementCode: "A0433",
-        visitID: 80
-    },
-    {
-        insuranceNoteID: 507,
-        reimbursementCode: "A0434",
-        visitID: 90
-    },
-    {
-        insuranceNoteID: 508,
-        reimbursementCode: "A0435",
-        visitID: 100
-    },
-    {
-        insuranceNoteID: 509,
-        reimbursementCode: "A0436",
-        visitID: 110
     }
 ];
 

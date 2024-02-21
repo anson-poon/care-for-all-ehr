@@ -2,92 +2,92 @@ const providerData = [
   {
     providerProfileID: 1,
     title: 'MD',
-    specialty: 'Anesthesiologist',
-    phoneNumber: '234566',
+    specialty: 'Internal Medicine',
+    phoneNumber: '1112223333',
     providerID: 1,
-    providerFirstName: 'Adam',
-    providerLastName: 'Smith'
+    providerFirstName: 'Josh',
+    providerLastName: 'Adams'
   },
   {
     providerProfileID: 2,
-    title: 'MD',
-    specialty: 'Ophthalmologist',
-    phoneNumber: '234565',
+    title: 'DO',
+    specialty: 'Hospice',
+    phoneNumber: '1113334444',
     providerID: 2,
-    providerFirstName: 'Bella',
-    providerLastName: 'Jones'
+    providerFirstName: 'Jacob',
+    providerLastName: 'Smith'
   },
   {
     providerProfileID: 3,
-    title: 'DO',
-    specialty: 'Family Medicine Physician',
-    phoneNumber: '234564',
+    title: 'PA',
+    specialty: 'Palliative Care',
+    phoneNumber: '1115556666',
     providerID: 3,
-    providerFirstName: 'Charlie',
-    providerLastName: 'Brown'
+    providerFirstName: 'Lou',
+    providerLastName: 'Jacobs'
   },
   {
     providerProfileID: 4,
-    title: 'MD',
-    specialty: 'Orthopedic Surgeon',
-    phoneNumber: '234563',
+    title: 'NP',
+    specialty: 'Physical Medicine & Rehabilitation',
+    phoneNumber: '1116667777',
     providerID: 4,
-    providerFirstName: 'David',
-    providerLastName: 'Lee'
+    providerFirstName: 'Minh',
+    providerLastName: 'Le'
   },
   {
     providerProfileID: 5,
-    title: 'DO',
-    specialty: 'Psychiatrist',
-    phoneNumber: '234562',
+    title: 'MD',
+    specialty: 'Nephrology',
+    phoneNumber: '1117778888',
     providerID: 5,
-    providerFirstName: 'Emily',
-    providerLastName: 'Clark'
+    providerFirstName: 'Dixie',
+    providerLastName: 'Pixie'
   },
   {
     providerProfileID: 6,
     title: 'DO',
-    specialty: 'General Hospitalist',
-    phoneNumber: '234568',
+    specialty: 'OB/GYN',
+    phoneNumber: '1118889999',
     providerID: 6,
-    providerFirstName: 'Roy',
-    providerLastName: 'Taylor'
+    providerFirstName: 'Sushi',
+    providerLastName: 'Mendez'
   },
   {
     providerProfileID: 7,
-    title: 'MD',
-    specialty: 'General Surgeon',
-    phoneNumber: '234567',
+    title: 'PA',
+    specialty: 'Psychiatry',
+    phoneNumber: '1119992222',
     providerID: 7,
-    providerFirstName: 'Avery',
-    providerLastName: 'Miller'
+    providerFirstName: 'Hickory',
+    providerLastName: 'Rick'
   },
   {
     providerProfileID: 8,
-    title: 'MD',
-    specialty: 'Pediatrician',
-    phoneNumber: '234569',
+    title: 'NP',
+    specialty: 'Family Medicine',
+    phoneNumber: '2223334444',
     providerID: 8,
-    providerFirstName: 'Olivia',
-    providerLastName: 'Wilson'
+    providerFirstName: 'Maple',
+    providerLastName: 'Jane'
   },
   {
     providerProfileID: 9,
-    title: 'DO',
-    specialty: 'Cardiologist',
-    phoneNumber: '234570',
+    title: 'MD',
+    specialty: 'Gastroenterology',
+    phoneNumber: '2224445555',
     providerID: 9,
-    providerFirstName: 'Elijah',
-    providerLastName: 'Thompson'
+    providerFirstName: 'Honey',
+    providerLastName: 'Bunches'
   },
   {
     providerProfileID: 10,
-    title: 'MD',
-    specialty: 'Dermatologist',
-    phoneNumber: '234571',
+    title: 'DO',
+    specialty: 'Pulmonology',
+    phoneNumber: '2225556666',
     providerID: 10,
-    providerFirstName: 'Sophia',
-    providerLastName: 'Anderson'
+    providerFirstName: 'Greek',
+    providerLastName: 'Yogurt'
   },
 ];
 
