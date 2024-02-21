@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import providerData from '../data/providerData';
-import {SearchBoxProviderIndex} from '../components/SearchBox';
-import {AddFormProviderIndex} from '../components/AddForm';
+import { SearchBoxProviderIndex } from '../components/SearchBox';
+import { AddFormProviderIndex } from '../components/AddForm';
 
 /*
 Page returns function that shows provider index table
@@ -50,7 +50,19 @@ function ProviderIndexPage() {
                     </table>
                 </div>
                 <div className="flex-column2">
-                    <AddFormProviderIndex/>
+                    <form action="" method="get" className="add-form">
+                        <h4>Add a New Provider</h4>
+                        <div className="form-row">
+                            <label for="firstName">First Name: </label>
+                            <input type="text" name="firstName" id="firstName" required />
+                        </div>
+                        <div className="form-row">
+                            <label for="lastName">Last Name: </label>
+                            <input type="text" name="lastName" id="lastName" required />
+                        </div>
+                        <br />
+                        <button className="add-button">Add</button>
+                    </form>
                 </div>
             </div>
         </div>
