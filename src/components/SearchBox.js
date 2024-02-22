@@ -19,7 +19,7 @@ export function SearchBoxPatientIndex() {
                 <option value="patientID">Patient ID</option>
                 <option value="firstName">First Name</option>
                 <option value="lastName">Last Name</option>
-                <option value="patientFullName">Full Name (First and Last Name)</option>
+                <option value="patientFullName">Patient First & Last Name</option>
             </select>
             <input type="text" placeholder="Search Patients" />
             <button>Search</button>
@@ -36,7 +36,7 @@ export function SearchBoxPatientProfiles() {
                 <option value="emailAddress">Email Address</option>
                 <option value="dateOfBirth">Date of Birth</option>
                 <option value="patientID">Patient ID</option>
-                <option value="patientFullName">Full Name (First and Last Name)</option>
+                <option value="patientFullName">Patient First & Last Name</option>
             </select>
             <input type="text" placeholder="Search Patient Profiles" />
             <button>Search</button>
