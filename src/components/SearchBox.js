@@ -16,6 +16,7 @@ export function SearchBoxPatientIndex() {
     return (
         <div className="search-box">
             <select name="attributes" id="attributes">
+                <option value="patientFullName">Patient First and Last Name</option>
                 <option value="patientID">Patient ID</option>
                 <option value="firstName">First Name</option>
                 <option value="lastName">Last Name</option>
@@ -30,6 +31,7 @@ export function SearchBoxPatientProfiles() {
     return (
         <div className="search-box">
             <select name="attributes" id="attributes">
+                <option value="patientFullName">Patient First and Last Name</option>
                 <option value="patientProfileID">Patient Profile ID</option>
                 <option value="phoneNumber">Phone Number</option>
                 <option value="emailAddress">Email Address</option>
@@ -46,6 +48,7 @@ export function SearchBoxInsurancePolicies() {
     return (
         <div className="search-box">
             <select name="attributes" id="attributes">
+                <option value="patientFullName">Patient First and Last Name</option>
                 <option value="insuranceID">Insurance ID</option>
                 <option value="type">Insurance Type</option>
                 <option value="patientID">Patient ID</option>
@@ -60,6 +63,7 @@ export function SearchBoxProviderIndex() {
     return (
         <div className="search-box">
             <select name="attributes" id="attributes">
+                <option value="providerFullName">Provider First and Last Name</option>
                 <option value="providerID">Provider ID</option>
                 <option value="providerFirstName">First Name</option>
                 <option value="providerLastName">Last Name</option>
@@ -74,6 +78,7 @@ export function SearchBoxProviderProfiles() {
     return (
         <div className="search-box">
             <select name="attributes" id="attributes">
+                <option value="providerFullName">Provider First and Last Name</option>
                 <option value="providerProfileID">Provider Profile ID</option>
                 <option value="title">Title</option>
                 <option value="speciality">Specialty</option>
@@ -90,6 +95,8 @@ export function SearchBoxPatientProviderRelationships() {
     return (
         <div className="search-box">
             <select name="attributes" id="attributes">
+                <option value="patientFullName">Patient First and Last Name</option>
+                <option value="providerFullName">Provider First and Last Name</option>
                 <option value="patientID">Patient ID</option>
                 <option value="providerID">Provider ID</option>
             </select>
@@ -103,6 +110,7 @@ export function SearchBoxVisits() {
     return (
         <div className="search-box">
             <select name="attributes" id="attributes">
+                <option value="patientFullName">Patient First and Last Name</option>
                 <option value="visitID">Visit ID</option>
                 <option value="dateTime">Date & Time</option>
                 <option value="providerID">Provider ID</option>
@@ -119,6 +127,7 @@ export function SearchBoxInsuranceNotes() {
     return (
         <div className="search-box">
             <select name="attributes" id="attributes">
+                <option value="patientFullName">Patient First and Last Name</option>
                 <option value="insuranceID">Insurance ID</option>
                 <option value="reimbursementCode">Reimbursement Code</option>
                 <option value="visitID">Visit ID</option>
@@ -133,6 +142,7 @@ export function SearchBoxClinicalNotes() {
     return (
         <div className="search-box">
             <select name="attributes" id="attributes">
+                <option value="patientFullName">Patient First and Last Name</option>
                 <option value="clinicalNoteID">Clinical Note ID</option>
                 <option value="visitID">Visit ID</option>
             </select>
@@ -146,6 +156,7 @@ export function SearchBarClinicalFindings() {
     return (
         <div className="search-box">
             <select name="attributes" id="attributes">
+                <option value="patientFullName">Patient First and Last Name</option>
                 <option value="clinicalFindingID">Clinical Finding ID</option>
                 <option value="clinicalNoteID">Clinical Note ID</option>
             </select>
