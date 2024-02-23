@@ -10,13 +10,33 @@ import { SearchBoxPatientIndex } from '../components/SearchBox';
 Page returns function that shows patient index table
 */
 function PatientIndexPage() {
-    const [data, setData] = useState([]);   // Initialize state to hold fetched data
 
+    // logic for INSERT
+    // technique to insert data learned from https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Add.jsx
+    const [attributes, setAttributes] = useState({
+        patientId:"",
+        patientFirstName:"",
+        patientLastName:"",
+    });
+    const handleInsertData = (e) => {
+        setAttributes((prev)=>({ ...prev, [e.target.name]:e.target.value}));
+    };
+    const submitNewData = async e => {
+        e.preventDefault()
+        try {
+            await axios.post("/sqlDataInsert", attributes)
+            window.location.reload()
+        } catch (err) {
+            console.error("Error adding data:", err);
+        }
+    };
+
+    // logic for SELECT
+    const [data, setData] = useState([]);   // Initialize state to hold fetched data
     // Fetch data from the database
     useEffect(() => {
         fetchData();
     }, []);
-
     const fetchData = async () => {
         try {
             // fetch data from sqlData route
@@ -89,15 +109,19 @@ function PatientIndexPage() {
                     <form action="" method="get" className="add-form">
                         <h4>Add a New Patient</h4>
                         <div className="form-row">
+                            <label for="patientID">Patient ID:</label>
+                            <input type="text" name="patientID" id="patientID" onChange = {handleInsertData} required />
+                        </div>
+                        <div className="form-row">
                             <label for="firstName">First Name: </label>
-                            <input type="text" name="firstNname" id="firstNname" required />
+                            <input type="text" name="patientFirstName" id="firstNname" onChange = {handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="lastName">Last Name: </label>
-                            <input type="text" name="lastName" id="lastName" required />
+                            <input type="text" name="patientLastName" id="lastName" onChange = {handleInsertData} required />
                         </div>
                         <br />
-                        <button className="add-button">Add</button>
+                        <button className="add-button" onClick = {submitNewData}>Add</button>
                     </form>
                 </div>
             </div>
