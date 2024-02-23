@@ -23,7 +23,7 @@ export function SearchBoxPatientIndex({ userChoice, handleChange, handleSearch }
 
     return (
         <div className="search-box">
-            <select name="selectPatientIndex" value={userChoice} onChange={handleChange}>
+            <select name="selectPatient" value={userChoice} onChange={handleChange}>
                 <option value="" selected disabled hidden>Choose Attribute</option>
                 <option value="patientID">Patient ID</option>
                 <option value="patientFirstName">First Name</option>
@@ -36,19 +36,27 @@ export function SearchBoxPatientIndex({ userChoice, handleChange, handleSearch }
     );
 }
 
-export function SearchBoxPatientProfiles() {
+export function SearchBoxPatientProfiles({ userChoice, handleChange, handleSearch }) {
+    const [searchValue, setSearchValue] = useState('');
+
+    // handle user input
+    const handleInputChange = (event) => {
+        setSearchValue(event.target.value);
+    };
+    
     return (
         <div className="search-box">
-            <select name="attributes" id="attributes">
+            <select name="selectPatientProfile" value={userChoice} onChange={handleChange}>
+                <option value="" selected disabled hidden>Choose Attribute</option>
                 <option value="patientProfileID">Patient Profile ID</option>
-                <option value="phoneNumber">Phone Number</option>
+                <option value="patientPhoneNumber">Phone Number</option>
                 <option value="emailAddress">Email Address</option>
                 <option value="dateOfBirth">Date of Birth</option>
                 <option value="patientID">Patient ID</option>
                 <option value="patientFullName">Patient First & Last Name</option>
             </select>
-            <input type="text" placeholder="Search Patient Profiles" />
-            <button>Search</button>
+            <input type="text" placeholder="Search Patient Profiles" value={searchValue} onChange={handleInputChange}/>
+            <button onClick={() => handleSearch(searchValue)}>Search</button>
         </div>
     );
 }

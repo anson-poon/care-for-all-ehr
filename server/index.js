@@ -66,7 +66,33 @@ app.get('/test', function (req, res) {
 // get all entries for the Patients page
 app.get('/sqlData', (req, res) => {
     console.log(req.query);
-    let query = 'SELECT * FROM Patients';
+    let query = 'SELECT * FROM ';
+
+    switch (req.query.table) {
+        case 'Patients':
+            query += 'Patients';
+            break;
+        case 'PatientProfiles':
+            query += 'PatientProfiles';
+            break;
+        case 'Visits':
+            query += 'Visits';
+            break;
+        case 'InsuranceNotes':
+            query += 'InsuranceNotes';
+            break;
+        case 'ClinicalNotes':
+            query += 'ClinicalNotes';
+            break;
+        case 'ClinicalFindings':
+            query += 'ClinicalFindings';
+            break;
+        case 'PatientProviderRelationships':
+            query += 'PatientProviderRelationships';
+            break;
+        default:
+            return res.status(400).json({ error: 'Invalid table' });
+    }
     db.pool.query(query, (err, data, fields) => {
         if (err) {
             res.status(500).json({ error: 'Failed to fetch data' });
@@ -76,8 +102,8 @@ app.get('/sqlData', (req, res) => {
     });
 })
 
-// search a patient by patientFirstName
-app.get('/sqlData/searchPatientIndex', (req, res) => {
+// search a Patient by an attribute
+app.get('/sqlData/searchPatient', (req, res) => {
     const { userChoice, userInput } = req.query;
 
     console.log(userChoice);
@@ -97,7 +123,6 @@ app.get('/sqlData/searchPatientIndex', (req, res) => {
         default:
             return res.status(400).json({ error: 'Invalid search query' });
     }
-    
     db.pool.query(query, [userInput], (err, data) => {
         if (err) {
             res.status(500).json({ error: 'Failed to search data' });
@@ -106,6 +131,42 @@ app.get('/sqlData/searchPatientIndex', (req, res) => {
         }
     })
 })
+
+// search a Patient Profile by an attribute
+app.get('/sqlData/searchPatientProfiles', (req, res) => {
+    const { userChoice, userInput } = req.query;
+
+    console.log(userChoice);
+    console.log(userInput);
+
+    let query = 'SELECT * FROM PatientProfiles WHERE ';
+    switch (userChoice) {
+        case 'patientProfileID':
+            query += 'patientProfileID = ?';
+            break;
+        case 'patientPhoneNumber':
+            query += 'patientPhoneNumber = ?';
+            break;
+        case 'emailAddress':
+            query += 'emailAddress = ?';
+            break;
+        case 'dateOfBirth':
+            query += 'dateOfBirth = ?';
+            break;
+        case 'patientID':
+            query += 'patientID = ?';
+            break;
+        default:
+            return res.status(400).json({ error: 'Invalid search query' });
+    }
+    db.pool.query(query, [userInput], (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to search data' });
+        } else {
+            return res.json(data);
+        }
+    })
+})  
 
 // search a patient by patientID
 // app.get('/sqlData/:patientID', (req, res) => {

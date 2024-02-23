@@ -1,10 +1,10 @@
 import React from 'react';
+import axios from "axios";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
-import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
-import patientData from '../data/patientData';
+import { RiChatDeleteFill} from 'react-icons/ri';
 import { SearchBoxPatientIndex } from '../components/SearchBox';
+// import patientData from '../data/patientData';
 
 /*
 Page returns function that shows patient index table
@@ -12,7 +12,7 @@ Page returns function that shows patient index table
 function PatientIndexPage() {
     const [data, setData] = useState([]);   // Initialize state to hold fetched data
 
-    // Fetch data from the database
+    // SELECT * FROM Patients
     useEffect(() => {
         fetchData();
     }, []);
@@ -20,7 +20,7 @@ function PatientIndexPage() {
     const fetchData = async () => {
         try {
             // fetch data from sqlData route
-            const response = await axios.get('/sqlData');
+            const response = await axios.get('/sqlData/?table=Patients');
             // Set the fetched data to state
             setData(response.data); 
         } catch (err) {
@@ -28,6 +28,7 @@ function PatientIndexPage() {
         }
     };
 
+    // DE:ETE FROM Patients WHERE patientID = ?
     // technique to delete data credited to https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Books.jsx
     const deleteData = async (patientID) => {
         try {
@@ -38,6 +39,7 @@ function PatientIndexPage() {
         }
     };
 
+    // SELECT * FROM Patients WHERE userChoice = ?
     const [userChoice, setUserChoice] = useState('');
 
     const handleChange = (choice) => {
@@ -46,7 +48,7 @@ function PatientIndexPage() {
     
     const handleSearch = async (userInput) => {
         try {
-            const response = await axios.get(`/sqlData/searchPatientIndex/?userChoice=${userChoice}&userInput=${userInput}`);
+            const response = await axios.get(`/sqlData/searchPatient/?userChoice=${userChoice}&userInput=${userInput}`);
             setData(response.data); 
         } catch (err) {
             console.error('Error fetching data:', err);
