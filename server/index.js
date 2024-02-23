@@ -63,7 +63,7 @@ app.get('/test', function (req, res) {
     });
 });
 
-// get all entries for the Patients page
+// get all entries for each table
 app.get('/sqlData', (req, res) => {
     console.log(req.query);
     let query = 'SELECT * FROM ';
@@ -207,6 +207,41 @@ app.get('/sqlData/searchProvider', (req, res) => {
     })
 })
 
+// search a ProviderProfile by an attribute
+app.get('/sqlData/searchProviderProfiles', (req, res) => {
+    const { userChoice, userInput } = req.query;
+
+    console.log(userChoice);
+    console.log(userInput);
+
+    let query = 'SELECT * FROM ProviderProfiles WHERE ';
+    switch (userChoice) {
+        case 'providerProfileID':
+            query += 'providerProfileID = ?';
+            break;
+        case 'title':
+            query += 'title = ?';
+            break;
+        case 'specialty':
+            query += 'specialty = ?';
+            break;
+        case 'providerPhoneNumber':
+            query += 'providerPhoneNumber = ?';
+            break;
+        case 'providerID':
+            query += 'providerID = ?';
+            break;
+        default:
+            return res.status(400).json({ error: 'Invalid search query' });
+    }
+    db.pool.query(query, [userInput], (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to search data' });
+        } else {
+            return res.json(data);
+        }
+    })
+})
 
 // technique to delete data credited to https://codewithmarish.com/post/full-stack-crud-app
 app.delete("/sqlDataDelete/:patientID", (req, res) => {

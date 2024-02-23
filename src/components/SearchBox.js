@@ -99,19 +99,27 @@ export function SearchBoxProviderIndex({ userChoice, handleChange, handleSearch 
     );
 }
 
-export function SearchBoxProviderProfiles() {
+export function SearchBoxProviderProfiles({ userChoice, handleChange, handleSearch }) {
+    const [searchValue, setSearchValue] = useState('');
+
+    // handle user input
+    const handleInputChange = (event) => {
+        setSearchValue(event.target.value);
+    };
+
     return (
         <div className="search-box">
-            <select name="attributes" id="attributes">
+            <select name="selectProviderProfiles" value={userChoice} onChange={handleChange}>
+            <option value="" selected disabled hidden>Choose Attribute</option>
                 <option value="providerProfileID">Provider Profile ID</option>
                 <option value="title">Title</option>
-                <option value="speciality">Specialty</option>
-                <option value="phoneNumber">Phone Number</option>
+                <option value="specialty">Specialty</option>
+                <option value="providerPhoneNumber">Phone Number</option>
                 <option value="providerID">Provider ID</option>
                 <option value="providerFullName">Provider First & Last Name</option>
             </select>
-            <input type="text" placeholder="Search Provider Profiles" />
-            <button>Search</button>
+            <input type="text" placeholder="Search Provider Profiles"  value={searchValue} onChange={handleInputChange}/>
+            <button onClick={() => handleSearch(searchValue)}>Search</button>
         </div>
     );
 };

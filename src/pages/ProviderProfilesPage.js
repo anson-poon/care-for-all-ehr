@@ -1,5 +1,6 @@
 import React from 'react';
-import { useState } from 'react';
+import axios from "axios";
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import { SearchBoxProviderProfiles } from '../components/SearchBox';
@@ -16,6 +17,51 @@ function ProviderProfilesPage() {
 
     const goToUpdatePage = useNavigate();
 
+    // SELECT * FROM ProviderProfiles
+    const [data, setData] = useState([]);   // Initialize state to hold fetched data
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/sqlData/?table=ProviderProfiles');
+            // Set the fetched data to state
+            setData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
+    // DE:ETE FROM ProviderProfiles WHERE providerID = ?
+    // technique to delete data credited to https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Books.jsx
+    const deleteData = async (providerID) => {
+        try {
+            await axios.delete("/sqlDataDelete/" + providerID);
+            window.location.reload()
+        } catch (err) {
+            console.error("Failed to delete data:", err);
+        }
+    };
+
+    // SELECT * FROM ProviderProfiles WHERE userChoice = ?
+    const [userChoice, setUserChoice] = useState('');
+
+    const handleChange = (choice) => {
+        setUserChoice(choice.target.value);
+    }
+
+    const handleSearch = async (userInput) => {
+        try {
+            const response = await axios.get(`/sqlData/searchProviderProfiles/?userChoice=${userChoice}&userInput=${userInput}`);
+            setData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    }
+
     return (
         <div>
             <h3>Provider Profiles</h3>
@@ -26,8 +72,11 @@ function ProviderProfilesPage() {
                 <p>This page also allows you to <b>delete</b> information for each provider from the MySQL database.</p>
                 <p>Lastly, this page also allows you to update update for each provider, including the ability to set Title, Specialty, and Phone Number as <b>NULL</b>.</p>
             </div>
-            <SearchBoxProviderProfiles />
-            <button className="SELECT-button">Refresh Provider Profiles</button>
+            <SearchBoxProviderProfiles
+                userChoice={userChoice}
+                handleChange={handleChange}
+                handleSearch={handleSearch} />
+            <button className="SELECT-button" onClick={fetchData}>Refresh Provider Profiles</button>
             <div className="flex-container">
                 <div className="flex-column1">
                     <table id="providerdetailedinformation">
@@ -43,15 +92,15 @@ function ProviderProfilesPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {providerData.map((item, index) => (
+                            {data.map((item, index) => (
                                 <tr key={index}>
                                     <th>{item.providerProfileID}</th>
                                     <th>{item.title}</th>
                                     <th>{item.specialty}</th>
-                                    <th>{item.phoneNumber}</th>
+                                    <th>{item.providerPhoneNumber}</th>
                                     <th>{item.providerID}</th>
                                     <th><RiEdit2Fill className="icon" onClick={() => goToUpdatePage("/updateproviderpage")} /></th>
-                                    <th><RiChatDeleteFill className="icon" /></th>
+                                    <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.providerID)} /></th>
                                 </tr>
                             ))}
                         </tbody>
