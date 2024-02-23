@@ -27,7 +27,7 @@ const db = require('./database/db-connector');
 /*
 Use env port or default port on flip server of OSU
 */
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5786;
 
 /*
 Connect to database test
@@ -74,6 +74,19 @@ app.get('/sqlData', (req, res) => {
         }
     });
 })
+
+// technique to delete data credited to https://codewithmarish.com/post/full-stack-crud-app
+app.delete("/sqlDataDelete/:patientID", (req, res) => {
+    let patientID = req.params.patientID;
+    let query = 'DELETE FROM Patients WHERE patientID = ?';
+    db.pool.query(query, [patientID], (err, data) => {
+      if (err) {
+        res.status(500).json({ error: 'Failed to delete data' });
+      } else {
+        return res.json({data});
+      }
+    })
+});
 
 /*
 React app to use files from following pathways of flip server
