@@ -38,6 +38,21 @@ function PatientIndexPage() {
         }
     };
 
+    const [userChoice, setUserChoice] = useState('');
+
+    const handleChange = (choice) => {
+        setUserChoice(choice.target.value);
+    }
+    
+    const handleSearch = async (userInput) => {
+        try {
+            const response = await axios.get(`/sqlData/searchPatientIndexFirstName/${userInput}`);
+            setData(response.data); 
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    }
+
     return (
         <div>
             <h3>List of Patients</h3>
@@ -52,8 +67,11 @@ function PatientIndexPage() {
                     Details of any visit the patient may have had with provider(s) will remain unchanged.
                 </p>
             </div>
-            <SearchBoxPatientIndex />
-            <button className="SELECT-button">Refresh List of Patients</button>
+            <SearchBoxPatientIndex  
+                userChoice={userChoice} 
+                handleChange={handleChange} 
+                handleSearch={handleSearch} />
+            <button className="SELECT-button" onClick={fetchData}>Refresh List of Patients</button>
             <div className="flex-container">
                 <div className="flex-column1">
                     <table id="patientindex">

@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 
 export function SearchBox() {
     return (
@@ -12,17 +13,24 @@ export function SearchBox() {
     );
 }
 
-export function SearchBoxPatientIndex() {
+export function SearchBoxPatientIndex({ userChoice, handleChange, handleSearch }) {
+    const [searchValue, setSearchValue] = useState('');
+
+    const handleInputChange = (event) => {
+        setSearchValue(event.target.value);
+    };
+
     return (
         <div className="search-box">
-            <select name="attributes" id="attributes">
+            <select name="selectPatientIndex" value={userChoice} onChange={handleChange}>
                 <option value="patientID">Patient ID</option>
                 <option value="firstName">First Name</option>
                 <option value="lastName">Last Name</option>
                 <option value="patientFullName">Patient First & Last Name</option>
             </select>
-            <input type="text" placeholder="Search Patients" />
-            <button>Search</button>
+            <input type="text" placeholder="Search Patients" value={searchValue} onChange={handleInputChange}/>
+            <button onClick={() => handleSearch(searchValue)}>Search</button>
+            <p>{userChoice}</p>
         </div>
     );
 }
@@ -164,6 +172,6 @@ export function SearchBarClinicalFindings() {
             <button>Search</button>
         </div>
     );
-}   
+}
 
 export default SearchBox;

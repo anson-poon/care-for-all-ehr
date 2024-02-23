@@ -34,57 +34,87 @@ Connect to database test
 Code citation: starter code obtained from course guide: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%201%20-%20Connecting%20to%20a%20MySQL%20Database
 */
 
-app.get('/test', function(req, res)
-{
-  // Define our queries
-  let query1 = 'DROP TABLE IF EXISTS diagnostic;';
-  let query2 = 'CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);';
-  let query3 = 'INSERT INTO diagnostic (text) VALUES ("MySQL is working!")';
-  let query4 = 'SELECT * FROM diagnostic;';
+app.get('/test', function (req, res) {
+    // Define our queries
+    let query1 = 'DROP TABLE IF EXISTS diagnostic;';
+    let query2 = 'CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);';
+    let query3 = 'INSERT INTO diagnostic (text) VALUES ("MySQL is working!")';
+    let query4 = 'SELECT * FROM diagnostic;';
 
-  // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
+    // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
 
-  // DROP TABLE...
-  db.pool.query(query1, function (err, results, fields){
+    // DROP TABLE...
+    db.pool.query(query1, function (err, results, fields) {
 
-      // CREATE TABLE...
-      db.pool.query(query2, function(err, results, fields){
+        // CREATE TABLE...
+        db.pool.query(query2, function (err, results, fields) {
 
-          // INSERT INTO...
-          db.pool.query(query3, function(err, results, fields){
+            // INSERT INTO...
+            db.pool.query(query3, function (err, results, fields) {
 
-              // SELECT *...
-              db.pool.query(query4, function(err, results, fields){
+                // SELECT *...
+                db.pool.query(query4, function (err, results, fields) {
 
-                  // Send the results to the browser
-                  res.send(JSON.stringify(results));
-              });
-          });
-      });
-  });
+                    // Send the results to the browser
+                    res.send(JSON.stringify(results));
+                });
+            });
+        });
+    });
 });
 
+// get all entries for the Patients page
 app.get('/sqlData', (req, res) => {
-    let query = 'SELECT * FROM Patients'
-    db.pool.query(query, (err, rows, fields) => {
+    console.log(req.query);
+    let query = 'SELECT * FROM Patients';
+    db.pool.query(query, (err, data, fields) => {
         if (err) {
             res.status(500).json({ error: 'Failed to fetch data' });
         } else {
-            res.json(rows); // Send the fetched data as JSON response
+            res.json(data); // Send the fetched data as JSON response
         }
     });
 })
+
+// search a patient by patientFirstName
+app.get('/sqlData/searchPatientIndexFirstName/:userInput', (req, res) => {
+    // let userChoice = req.params.userChoice;
+    let userInput = req.params['userInput'];
+    console.log(userInput)
+    let query = 'SELECT * FROM Patients WHERE patientFirstName = ?';
+    db.pool.query(query, [userInput], (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to search data' });
+        } else {
+            return res.json(data);
+        }
+    })
+})
+
+// search a patient by patientID
+// app.get('/sqlData/:patientID', (req, res) => {
+//     let patientID = req.params.patientID;
+//     let query = 'SELECT * FROM Patients WHERE patientID = ?';
+//     db.pool.query(query, [patientID], (err, data) => {
+//         if (err) {
+//             res.status(500).json({ error: 'Failed to search data' });
+//         } else {
+//             return res.json(data);
+//         }
+//     })
+// })
+
 
 // technique to delete data credited to https://codewithmarish.com/post/full-stack-crud-app
 app.delete("/sqlDataDelete/:patientID", (req, res) => {
     let patientID = req.params.patientID;
     let query = 'DELETE FROM Patients WHERE patientID = ?';
     db.pool.query(query, [patientID], (err, data) => {
-      if (err) {
-        res.status(500).json({ error: 'Failed to delete data' });
-      } else {
-        return res.json({data});
-      }
+        if (err) {
+            res.status(500).json({ error: 'Failed to delete data' });
+        } else {
+            return res.json({ data });
+        }
     })
 });
 
