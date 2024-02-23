@@ -6,12 +6,17 @@ package.json also included skeleton code for start and build script from the tut
 The skeleton code in package.json was updated to relevant to this project's architecture.
 */
 
+require('dotenv').config();
+
 /*
 Define routes for react app
 */
 const path = require("path");
 const express = require("express");
 const app = express();
+const cors = require('cors');
+app.use(express.json())
+app.use(cors())
 
 /*
 Define route for database
@@ -20,22 +25,22 @@ Code citation: starter code obtained from course guide: https://github.com/osu-c
 const db = require('./database/db-connector');
 
 /*
-Use following port on flip server of OSU
+Use env port or default port on flip server of OSU
 */
-const PORT = process.env.PORT || 62153;
+const PORT = process.env.PORT || 3000;
 
 /*
 Connect to database test
 Code citation: starter code obtained from course guide: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%201%20-%20Connecting%20to%20a%20MySQL%20Database
 */
-/*
-app.get('/', function(req, res)
+
+app.get('/test', function(req, res)
 {
   // Define our queries
-  query1 = 'DROP TABLE IF EXISTS diagnostic;';
-  query2 = 'CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);';
-  query3 = 'INSERT INTO diagnostic (text) VALUES ("MySQL is working!")';
-  query4 = 'SELECT * FROM diagnostic;';
+  let query1 = 'DROP TABLE IF EXISTS diagnostic;';
+  let query2 = 'CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);';
+  let query3 = 'INSERT INTO diagnostic (text) VALUES ("MySQL is working!")';
+  let query4 = 'SELECT * FROM diagnostic;';
 
   // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
 
@@ -58,7 +63,17 @@ app.get('/', function(req, res)
       });
   });
 });
-*/
+
+app.get('/sqlData', (req, res) => {
+    let query = 'SELECT * FROM Patients'
+    db.pool.query(query, (err, rows, fields) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to fetch data' });
+        } else {
+            res.json(rows); // Send the fetched data as JSON response
+        }
+    });
+})
 
 /*
 React app to use files from following pathways of flip server
@@ -68,11 +83,11 @@ app.use(express.static("public"));
 
 /* 
 If above routes are unable to locate relevant files, then:
-Catch-all route that serves the React app
+Catch-all route that serves the static React app
 */
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "build", "index.html"));
-  });
+});
 
 /*
 Terminal message to inform developer the server running React app is up and running

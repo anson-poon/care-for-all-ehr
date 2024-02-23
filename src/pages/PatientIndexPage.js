@@ -1,6 +1,7 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import patientData from '../data/patientData';
 import { SearchBoxPatientIndex } from '../components/SearchBox';
@@ -9,6 +10,24 @@ import { SearchBoxPatientIndex } from '../components/SearchBox';
 Page returns function that shows patient index table
 */
 function PatientIndexPage() {
+    const [data, setData] = useState([]);   // Initialize state to hold fetched data
+
+    // Fetch data from the database
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/sqlData');
+            // Set the fetched data to state
+            setData(response.data); 
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
     return (
         <div>
             <h3>List of Patients</h3>
@@ -37,7 +56,16 @@ function PatientIndexPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {patientData.map((item, index) => (
+                            {/* {patientData.map((item, index) => (
+                                <tr key={index}>
+                                    <th>{item.patientID}</th>
+                                    <th>{item.patientFirstName}</th>
+                                    <th>{item.patientLastName}</th>
+                                    <th><RiChatDeleteFill className="icon" /></th>
+                                </tr>
+                            ))} */}
+                            <p>DISPLAYING SQL DATA</p>
+                            {data.map((item, index) => (
                                 <tr key={index}>
                                     <th>{item.patientID}</th>
                                     <th>{item.patientFirstName}</th>
