@@ -16,6 +16,7 @@ export function SearchBox() {
 export function SearchBoxPatientIndex({ userChoice, handleChange, handleSearch }) {
     const [searchValue, setSearchValue] = useState('');
 
+    // handle user input
     const handleInputChange = (event) => {
         setSearchValue(event.target.value);
     };
@@ -23,14 +24,14 @@ export function SearchBoxPatientIndex({ userChoice, handleChange, handleSearch }
     return (
         <div className="search-box">
             <select name="selectPatientIndex" value={userChoice} onChange={handleChange}>
+                <option value="" selected disabled hidden>Choose Attribute</option>
                 <option value="patientID">Patient ID</option>
-                <option value="firstName">First Name</option>
-                <option value="lastName">Last Name</option>
+                <option value="patientFirstName">First Name</option>
+                <option value="patientLastName">Last Name</option>
                 <option value="patientFullName">Patient First & Last Name</option>
             </select>
             <input type="text" placeholder="Search Patients" value={searchValue} onChange={handleInputChange}/>
             <button onClick={() => handleSearch(searchValue)}>Search</button>
-            <p>{userChoice}</p>
         </div>
     );
 }

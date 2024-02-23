@@ -46,7 +46,7 @@ function PatientIndexPage() {
     
     const handleSearch = async (userInput) => {
         try {
-            const response = await axios.get(`/sqlData/searchPatientIndexFirstName/${userInput}`);
+            const response = await axios.get(`/sqlData/searchPatientIndex/?userChoice=${userChoice}&userInput=${userInput}`);
             setData(response.data); 
         } catch (err) {
             console.error('Error fetching data:', err);

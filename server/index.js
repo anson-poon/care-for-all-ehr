@@ -77,11 +77,27 @@ app.get('/sqlData', (req, res) => {
 })
 
 // search a patient by patientFirstName
-app.get('/sqlData/searchPatientIndexFirstName/:userInput', (req, res) => {
-    // let userChoice = req.params.userChoice;
-    let userInput = req.params['userInput'];
-    console.log(userInput)
-    let query = 'SELECT * FROM Patients WHERE patientFirstName = ?';
+app.get('/sqlData/searchPatientIndex', (req, res) => {
+    const { userChoice, userInput } = req.query;
+
+    console.log(userChoice);
+    console.log(userInput);
+
+    let query = 'SELECT * FROM Patients WHERE ';
+    switch (userChoice) {
+        case 'patientID':
+            query += 'patientID = ?';
+            break;
+        case 'patientFirstName':
+            query += 'patientFirstName = ?';
+            break;
+        case 'patientLastName':
+            query += 'patientLastName = ?';
+            break;
+        default:
+            return res.status(400).json({ error: 'Invalid search query' });
+    }
+    
     db.pool.query(query, [userInput], (err, data) => {
         if (err) {
             res.status(500).json({ error: 'Failed to search data' });
