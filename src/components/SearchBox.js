@@ -76,17 +76,25 @@ export function SearchBoxInsurancePolicies() {
     );
 }
 
-export function SearchBoxProviderIndex() {
+export function SearchBoxProviderIndex({ userChoice, handleChange, handleSearch }) {
+    const [searchValue, setSearchValue] = useState('');
+
+    // handle user input
+    const handleInputChange = (event) => {
+        setSearchValue(event.target.value);
+    };
+
     return (
         <div className="search-box">
-            <select name="attributes" id="attributes">
+            <select name="selectProvider" value={userChoice} onChange={handleChange}>
+                <option value="" selected disabled hidden>Choose Attribute</option>
                 <option value="providerID">Provider ID</option>
                 <option value="providerFirstName">First Name</option>
                 <option value="providerLastName">Last Name</option>
                 <option value="providerFullName">Provider First & Last Name</option>
             </select>
-            <input type="text" placeholder="Search Providers" />
-            <button>Search</button>
+            <input type="text" placeholder="Search Providers" value={searchValue} onChange={handleInputChange}/>
+            <button onClick={() => handleSearch(searchValue)}>Search</button>
         </div>
     );
 }

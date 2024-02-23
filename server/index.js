@@ -75,6 +75,18 @@ app.get('/sqlData', (req, res) => {
         case 'PatientProfiles':
             query += 'PatientProfiles';
             break;
+        case 'InsurancePolicies':
+            query += 'InsurancePolicies';
+            break;
+        case 'Providers':
+            query += 'Providers';
+            break;
+        case 'ProviderProfiles':
+            query += 'ProviderProfiles';
+            break;
+        case 'PatientProviderRelationships':
+            query += 'PatientProviderRelationships';
+            break;
         case 'Visits':
             query += 'Visits';
             break;
@@ -86,9 +98,6 @@ app.get('/sqlData', (req, res) => {
             break;
         case 'ClinicalFindings':
             query += 'ClinicalFindings';
-            break;
-        case 'PatientProviderRelationships':
-            query += 'PatientProviderRelationships';
             break;
         default:
             return res.status(400).json({ error: 'Invalid table' });
@@ -102,7 +111,7 @@ app.get('/sqlData', (req, res) => {
     });
 })
 
-// search a Patient by an attribute
+// search Patients by an attribute
 app.get('/sqlData/searchPatient', (req, res) => {
     const { userChoice, userInput } = req.query;
 
@@ -132,7 +141,7 @@ app.get('/sqlData/searchPatient', (req, res) => {
     })
 })
 
-// search a Patient Profile by an attribute
+// search PatientProfiles by an attribute
 app.get('/sqlData/searchPatientProfiles', (req, res) => {
     const { userChoice, userInput } = req.query;
 
@@ -166,20 +175,37 @@ app.get('/sqlData/searchPatientProfiles', (req, res) => {
             return res.json(data);
         }
     })
-})  
+})
 
-// search a patient by patientID
-// app.get('/sqlData/:patientID', (req, res) => {
-//     let patientID = req.params.patientID;
-//     let query = 'SELECT * FROM Patients WHERE patientID = ?';
-//     db.pool.query(query, [patientID], (err, data) => {
-//         if (err) {
-//             res.status(500).json({ error: 'Failed to search data' });
-//         } else {
-//             return res.json(data);
-//         }
-//     })
-// })
+// search a Provider by an attribute
+app.get('/sqlData/searchProvider', (req, res) => {
+    const { userChoice, userInput } = req.query;
+
+    console.log(userChoice);
+    console.log(userInput);
+
+    let query = 'SELECT * FROM Providers WHERE ';
+    switch (userChoice) {
+        case 'providerID':
+            query += 'providerID = ?';
+            break;
+        case 'providerFirstName':
+            query += 'providerFirstName = ?';
+            break;
+        case 'providerLastName':
+            query += 'providerLastName = ?';
+            break;
+        default:
+            return res.status(400).json({ error: 'Invalid search query' });
+    }
+    db.pool.query(query, [userInput], (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to search data' });
+        } else {
+            return res.json(data);
+        }
+    })
+})
 
 
 // technique to delete data credited to https://codewithmarish.com/post/full-stack-crud-app

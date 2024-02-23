@@ -1,15 +1,60 @@
 import React from 'react';
-import { useState } from 'react';
+import axios from "axios";
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import providerData from '../data/providerData';
 import { SearchBoxProviderIndex } from '../components/SearchBox';
-import { AddFormProviderIndex } from '../components/AddForm';
 
 /*
 Page returns function that shows provider index table
 */
 function ProviderIndexPage() {
+    const [data, setData] = useState([]);   // Initialize state to hold fetched data
+
+    // SELECT * FROM Providers
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/sqlData/?table=Providers');
+            // Set the fetched data to state
+            setData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
+    // DE:ETE FROM Providers WHERE providerID = ?
+    // technique to delete data credited to https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Books.jsx
+    const deleteData = async (providerID) => {
+        try {
+            await axios.delete("/sqlDataDelete/" + providerID);
+            window.location.reload()
+        } catch (err){
+            console.error("Failed to delete data:", err);
+        }
+    };
+
+    // SELECT * FROM Providers WHERE userChoice = ?
+    const [userChoice, setUserChoice] = useState('');
+
+    const handleChange = (choice) => {
+        setUserChoice(choice.target.value);
+    }
+    
+    const handleSearch = async (userInput) => {
+        try {
+            const response = await axios.get(`/sqlData/searchProvider/?userChoice=${userChoice}&userInput=${userInput}`);
+            setData(response.data); 
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    }
+
     return (
         <div>
             <h3>List of Providers</h3>
@@ -24,8 +69,11 @@ function ProviderIndexPage() {
                     Details of any visit the provider may have had with patient(s) will remain unchanged.
                 </p>
             </div>
-            <SearchBoxProviderIndex />
-            <button className="SELECT-button">Refresh List of Providers</button>
+            <SearchBoxProviderIndex 
+                userChoice={userChoice} 
+                handleChange={handleChange} 
+                handleSearch={handleSearch} />
+            <button className="SELECT-button" onClick={fetchData}>Refresh List of Providers</button>
             <div className="flex-container">
                 <div className="flex-column1">
                     <table id="providerindex">
@@ -38,12 +86,12 @@ function ProviderIndexPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {providerData.map((item, index) => (
+                            {data.map((item, index) => (
                                 <tr key={index}>
                                     <th>{item.providerID}</th>
                                     <th>{item.providerFirstName}</th>
                                     <th>{item.providerLastName}</th>
-                                    <th><RiChatDeleteFill className="icon" /></th>
+                                    <th><RiChatDeleteFill className="icon"  onClick={() => deleteData(item.providerID)}/></th>
                                 </tr>
                             ))}
                         </tbody>
