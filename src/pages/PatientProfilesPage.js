@@ -41,7 +41,7 @@ function PatientProfilesPage() {
     // technique to delete data credited to https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Books.jsx
     const deleteData = async (patientID) => {
         try {
-            await axios.delete("/sqlDataDelete/" + patientID);
+            await axios.delete("/sqlDataDelete/patients/" + patientID);
             window.location.reload()
         } catch (err){
             console.error("Failed to delete data:", err);

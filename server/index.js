@@ -244,10 +244,22 @@ app.get('/sqlData/searchProviderProfiles', (req, res) => {
 })
 
 // technique to delete data credited to https://codewithmarish.com/post/full-stack-crud-app
-app.delete("/sqlDataDelete/:patientID", (req, res) => {
+app.delete("/sqlDataDelete/patients/:patientID", (req, res) => {
     let patientID = req.params.patientID;
     let query = 'DELETE FROM Patients WHERE patientID = ?';
     db.pool.query(query, [patientID], (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to delete data' });
+        } else {
+            return res.json({ data });
+        }
+    })
+});
+
+app.delete("/sqlDataDelete/providers/:providerID", (req, res) => {
+    let providerID = req.params.providerID;
+    let query = 'DELETE FROM Providers WHERE providerID = ?';
+    db.pool.query(query, [providerID], (err, data) => {
         if (err) {
             res.status(500).json({ error: 'Failed to delete data' });
         } else {

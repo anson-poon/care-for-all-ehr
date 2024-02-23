@@ -39,7 +39,7 @@ function ProviderProfilesPage() {
     // technique to delete data credited to https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Books.jsx
     const deleteData = async (providerID) => {
         try {
-            await axios.delete("/sqlDataDelete/" + providerID);
+            await axios.delete("/sqlDataDelete/providers/" + providerID);
             window.location.reload()
         } catch (err) {
             console.error("Failed to delete data:", err);
@@ -100,7 +100,7 @@ function ProviderProfilesPage() {
                                     <th>{item.providerPhoneNumber}</th>
                                     <th>{item.providerID}</th>
                                     <th><RiEdit2Fill className="icon" onClick={() => goToUpdatePage("/updateproviderpage")} /></th>
-                                    <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.providerID)} /></th>
+                                    <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.providerProfileID)} /></th>
                                 </tr>
                             ))}
                         </tbody>

@@ -32,7 +32,7 @@ function ProviderIndexPage() {
     // technique to delete data credited to https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Books.jsx
     const deleteData = async (providerID) => {
         try {
-            await axios.delete("/sqlDataDelete/" + providerID);
+            await axios.delete("/sqlDataDelete/providers/" + providerID);
             window.location.reload()
         } catch (err){
             console.error("Failed to delete data:", err);
