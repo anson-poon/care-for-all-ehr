@@ -88,6 +88,42 @@ app.delete("/sqlDataDelete/:patientID", (req, res) => {
     })
 });
 
+// logic for UPDATE
+// technique to update data learned from https://github.com/safak/youtube2022/blob/react-mysql/client/src/pages/Update.jsx
+app.put("/sqlDataUpdate/:patientID", (req, res) => {
+    const patientID = req.params.patientID;
+    const patientFirstName = req.body.patientFirstName;
+    const patientLastName = req.body.patientLastName;
+    db.pool.query("UPDATE Patients SET patientFirstName = ?, patientLastName = ? WHERE patientID = ?", [patientFirstName, patientLastName, patientID], (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    }
+    );
+})
+
+// logic for INSERT
+// technique to insert data learned from https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Add.jsx
+app.post("/sqlDataInsert",(req,res)=>{
+    let query ="INSERT INTO Patients (patientID, patientFirstName, patientLastName) VALUES (?)";
+    let attributes = [
+        req.body.patientID,
+        req.body.patientFirstName,
+        req.body.patientLastName,
+    ]
+    db.pool.query(query,[attributes],(err,data)=>{
+        if(err) {
+            res.status(500).json({ error: 'Failed to delete data' });
+        } else {    
+            return res.json({data});
+        }
+    })
+
+});
+
+
 /*
 React app to use files from following pathways of flip server
 */
