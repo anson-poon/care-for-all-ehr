@@ -1,22 +1,43 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from "axios";
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import patientData from '../data/patientData';
 import { SearchBoxPatientIndex } from '../components/SearchBox';
+import { redirect } from 'react-router-dom';
 
 /*
 Page returns function that shows patient index table
 */
 function PatientIndexPage() {
-    const [data, setData] = useState([]);   // Initialize state to hold fetched data
 
+    // logic for INSERT
+    // technique to insert data learned from https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Add.jsx
+    const [attributes, setAttributes] = useState({
+        patientId:"",
+        patientFirstName:"",
+        patientLastName:"",
+    });
+    const handleInsertData = (e) => {
+        setAttributes((prev)=>({ ...prev, [e.target.name]:e.target.value}));
+    };
+    const submitNewData = async e => {
+        e.preventDefault()
+        try {
+            await axios.post("/sqlDataInsert", attributes)
+            window.location.reload()
+        } catch (err) {
+            console.error("Error adding data:", err);
+        }
+    };
+
+    // logic for SELECT
+    const [data, setData] = useState([]);   // Initialize state to hold fetched data
     // Fetch data from the database
     useEffect(() => {
         fetchData();
     }, []);
-
     const fetchData = async () => {
         try {
             // fetch data from sqlData route
@@ -63,6 +84,7 @@ function PatientIndexPage() {
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Delete</th>
+                                <th>Update</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -80,6 +102,7 @@ function PatientIndexPage() {
                                     <th>{item.patientFirstName}</th>
                                     <th>{item.patientLastName}</th>
                                     <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.patientID)} /></th>
+                                    <th><Link to={`/sqlDataUpdate/${item.patientID}`}><RiEdit2Fill/></Link></th>
                                 </tr>
                             ))}
                         </tbody>
@@ -90,14 +113,14 @@ function PatientIndexPage() {
                         <h4>Add a New Patient</h4>
                         <div className="form-row">
                             <label for="firstName">First Name: </label>
-                            <input type="text" name="firstNname" id="firstNname" required />
+                            <input type="text" name="patientFirstName" id="firstNname" onChange = {handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="lastName">Last Name: </label>
-                            <input type="text" name="lastName" id="lastName" required />
+                            <input type="text" name="patientLastName" id="lastName" onChange = {handleInsertData} required />
                         </div>
                         <br />
-                        <button className="add-button">Add</button>
+                        <button className="add-button" onClick = {submitNewData}>Add</button>
                     </form>
                 </div>
             </div>

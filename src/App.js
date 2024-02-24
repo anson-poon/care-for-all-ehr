@@ -16,6 +16,7 @@ import ClinicalFindingsPage from './pages/ClinicalFindingsPage';
 import InsuranceNotesPage from './pages/InsuranceNotesPage';
 import UpdateProviderPage from './components/UpdateProvider';
 import UpdatePatientPage from './components/UpdatePatientPage';
+import UpdatePatientIndexPage from './components/UpdatePatientIndex';
 import { useState, useEffect, } from 'react';
 import { Link } from 'react-router';
 
@@ -47,6 +48,7 @@ function App() {
             <Route path="/insurancenotes" element={<InsuranceNotesPage />} />
             <Route path="/updateproviderpage" element={<UpdateProviderPage />} />
             <Route path="/updatepatientpage" element={<UpdatePatientPage />} />
+            <Route path="/sqlDataUpdate/:patientID" element={<UpdatePatientIndexPage />} />
           </Routes>
         </div>
       </Router>
