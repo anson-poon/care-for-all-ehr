@@ -314,7 +314,7 @@ app.delete("/sqlDataDelete/providers/:providerID", (req, res) => {
     })
 });
 
-// logic for UPDATE
+// update a Patient
 // technique to update data learned from https://github.com/safak/youtube2022/blob/react-mysql/client/src/pages/Update.jsx
 app.put("/sqlDataUpdate/:patientID", (req, res) => {
     const patientID = req.params.patientID;
@@ -330,7 +330,7 @@ app.put("/sqlDataUpdate/:patientID", (req, res) => {
     );
 })
 
-// logic for INSERT
+// add a patient
 // technique to insert data learned from https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Add.jsx
 app.post("/sqlDataInsert",(req,res)=>{
     let query ="INSERT INTO Patients (patientID, patientFirstName, patientLastName) VALUES (?)";
@@ -346,9 +346,7 @@ app.post("/sqlDataInsert",(req,res)=>{
             return res.json({data});
         }
     })
-
 });
-
 
 /*
 React app to use files from following pathways of flip server
