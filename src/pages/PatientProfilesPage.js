@@ -1,10 +1,11 @@
 import React from 'react';
-import { useState } from 'react';
+import axios from "axios";
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import { HiBell } from 'react-icons/hi2';
-import patientData from '../data/patientData';
 import { SearchBoxPatientProfiles } from '../components/SearchBox';
+// import patientData from '../data/patientData';
 
 /*
 Code citation: Code to import icons credited to https://react-icons.github.io/react-icons/
@@ -17,6 +18,52 @@ function PatientProfilesPage() {
 
     const goToUpdatePage = useNavigate();
 
+    
+    // SELECT * FROM PatientProfiles
+    const [data, setData] = useState([]);   // Initialize state to hold fetched data
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/sqlData/?table=PatientProfiles');
+            // Set the fetched data to state
+            setData(response.data); 
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
+    // DE:ETE FROM PatientProfiles WHERE patientID = ?
+    // technique to delete data credited to https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Books.jsx
+    const deleteData = async (patientID) => {
+        try {
+            await axios.delete("/sqlDataDelete/patients/" + patientID);
+            window.location.reload()
+        } catch (err){
+            console.error("Failed to delete data:", err);
+        }
+    };
+
+    // SELECT * FROM PatientProfiles WHERE userChoice = ?
+    const [userChoice, setUserChoice] = useState('');
+
+    const handleChange = (choice) => {
+        setUserChoice(choice.target.value);
+    }
+    
+    const handleSearch = async (userInput) => {
+        try {
+            const response = await axios.get(`/sqlData/searchPatientProfiles/?userChoice=${userChoice}&userInput=${userInput}`);
+            setData(response.data); 
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    }
+
     return (
         <div>
             <h3>Patient Profiles</h3>
@@ -27,8 +74,11 @@ function PatientProfilesPage() {
                 <p>This page also allows you to <b>delete</b> information for each patient from the MySQL database.</p>
                 <p>Lastly, this page also allows you to update update for each patient, including the ability to set Phone Number, Email Address, and Date of Birth as <b>NULL</b>.</p>
             </div>
-            <SearchBoxPatientProfiles />
-            <button className="SELECT-button">Get Current Information for Each Patient</button>
+            <SearchBoxPatientProfiles 
+                userChoice={userChoice} 
+                handleChange={handleChange} 
+                handleSearch={handleSearch} />
+            <button className="SELECT-button" onClick={fetchData}>Refresh Patient Profiles</button>
             <div className="flex-container">
                 <div className="flex-column1">
                     <table id="patientsdetailedinformation">
@@ -44,15 +94,15 @@ function PatientProfilesPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {patientData.map((item, index) => (
+                            {data.map((item, index) => (
                                 <tr key={index}>
                                     <th>{item.patientProfileID}</th>
-                                    <th>{item.phoneNumber}</th>
+                                    <th>{item.patientPhoneNumber}</th>
                                     <th>{item.emailAddress}</th>
                                     <th>{item.dateOfBirth}</th>
                                     <th>{item.patientID}</th>
                                     <th><RiEdit2Fill className="icon" onClick={() => goToUpdatePage("/updatepatientpage")} /></th>
-                                    <th><RiChatDeleteFill className="icon" /></th>
+                                    <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.patientID)} /></th>
                                 </tr>
                             ))}
                         </tbody>

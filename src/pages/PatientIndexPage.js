@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from "axios";
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from "axios";
@@ -41,7 +42,7 @@ function PatientIndexPage() {
     const fetchData = async () => {
         try {
             // fetch data from sqlData route
-            const response = await axios.get('/sqlData');
+            const response = await axios.get('/sqlData/?table=Patients');
             // Set the fetched data to state
             setData(response.data); 
         } catch (err) {
@@ -49,15 +50,32 @@ function PatientIndexPage() {
         }
     };
 
+    // DE:ETE FROM Patients WHERE patientID = ?
     // technique to delete data credited to https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Books.jsx
     const deleteData = async (patientID) => {
         try {
-            await axios.delete("/sqlDataDelete/" + patientID);
+            await axios.delete("/sqlDataDelete/patients/" + patientID);
             window.location.reload()
         } catch (err){
             console.error("Failed to delete data:", err);
         }
     };
+
+    // SELECT * FROM Patients WHERE userChoice = ?
+    const [userChoice, setUserChoice] = useState('');
+
+    const handleChange = (choice) => {
+        setUserChoice(choice.target.value);
+    }
+    
+    const handleSearch = async (userInput) => {
+        try {
+            const response = await axios.get(`/sqlData/searchPatient/?userChoice=${userChoice}&userInput=${userInput}`);
+            setData(response.data); 
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    }
 
     return (
         <div>
@@ -73,8 +91,11 @@ function PatientIndexPage() {
                     Details of any visit the patient may have had with provider(s) will remain unchanged.
                 </p>
             </div>
-            <SearchBoxPatientIndex />
-            <button className="SELECT-button">Refresh List of Patients</button>
+            <SearchBoxPatientIndex  
+                userChoice={userChoice} 
+                handleChange={handleChange} 
+                handleSearch={handleSearch} />
+            <button className="SELECT-button" onClick={fetchData}>Refresh List of Patients</button>
             <div className="flex-container">
                 <div className="flex-column1">
                     <table id="patientindex">
