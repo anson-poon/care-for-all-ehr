@@ -17,21 +17,24 @@ function ProviderProfilesPage() {
 
     const goToUpdatePage = useNavigate();
 
-    // SELECT * FROM ProviderProfiles
-    const [data, setData] = useState([]);   // Initialize state to hold fetched data
+    // SELECT FROM ProviderProfiles
+    const [providerProfileData, setProviderProfilesData] = useState([]);   // Initialize state to hold fetched data
+    // SELECT FROM Providers (for Inserting ID)
+    const [providersData, setProvidersData] = useState([]);
 
     useEffect(() => {
-        fetchData();
+        fetchData('ProviderProfiles', setProviderProfilesData);
+        fetchData('Providers', setProvidersData);
     }, []);
 
-    const fetchData = async () => {
+    const fetchData = async (tableName, setData) => {
         try {
-            // fetch data from sqlData route
-            const response = await axios.get('/sqlData/?table=ProviderProfiles');
+            // Fetch data from the specified table
+            const response = await axios.get(`/sqlData/?table=${tableName}`);
             // Set the fetched data to state
-            setData(response.data);
+            setData(response.data); 
         } catch (err) {
-            console.error('Error fetching data:', err);
+            console.error(`Error fetching ${tableName} data:`, err);
         }
     };
 
@@ -56,7 +59,7 @@ function ProviderProfilesPage() {
     const handleSearch = async (userInput) => {
         try {
             const response = await axios.get(`/sqlData/searchProviderProfiles/?userChoice=${userChoice}&userInput=${userInput}`);
-            setData(response.data);
+            setProviderProfilesData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -92,7 +95,7 @@ function ProviderProfilesPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((item, index) => (
+                            {providerProfileData.map((item, index) => (
                                 <tr key={index}>
                                     <th>{item.providerProfileID}</th>
                                     <th>{item.title}</th>
@@ -112,8 +115,8 @@ function ProviderProfilesPage() {
                         <div className="form-row">
                             <label for="providerID">Provider ID: </label>
                             <select name="providerID" id="providerID">
-                                {providerData.map((item, index) => (
-                                    <option value={item.providerID}>{item.providerID} ({item.providerLastName})</option>
+                                {providersData.map((item, index) => (
+                                    <option value={item.providerID}>{item.providerID}</option>
                                 ))}
                             </select>
                         </div>

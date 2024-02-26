@@ -2,7 +2,6 @@ import React from 'react';
 import axios from "axios";
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from "axios";
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import patientData from '../data/patientData';
 import { SearchBoxPatientIndex } from '../components/SearchBox';

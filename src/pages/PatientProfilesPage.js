@@ -18,26 +18,28 @@ function PatientProfilesPage() {
 
     const goToUpdatePage = useNavigate();
 
-    
-    // SELECT * FROM PatientProfiles
-    const [data, setData] = useState([]);   // Initialize state to hold fetched data
+    // SELECT FROM PatientProfiles
+    const [patientProfileData, setPatientProfilesData] = useState([]);   // Initialize state to hold fetched data
+    // SELECT FROM Patient (for Inserting ID)
+    const [patientsData, setPatientsData] = useState([]);
 
     useEffect(() => {
-        fetchData();
+        fetchData('PatientProfiles', setPatientProfilesData);
+        fetchData('Patients', setPatientsData);
     }, []);
 
-    const fetchData = async () => {
+    const fetchData = async (tableName, setData) => {
         try {
-            // fetch data from sqlData route
-            const response = await axios.get('/sqlData/?table=PatientProfiles');
+            // Fetch data from the specified table
+            const response = await axios.get(`/sqlData/?table=${tableName}`);
             // Set the fetched data to state
             setData(response.data); 
         } catch (err) {
-            console.error('Error fetching data:', err);
+            console.error(`Error fetching ${tableName} data:`, err);
         }
     };
 
-    // DE:ETE FROM PatientProfiles WHERE patientID = ?
+    // DELETE FROM PatientProfiles WHERE patientID = ?
     // technique to delete data credited to https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Books.jsx
     const deleteData = async (patientID) => {
         try {
@@ -58,7 +60,7 @@ function PatientProfilesPage() {
     const handleSearch = async (userInput) => {
         try {
             const response = await axios.get(`/sqlData/searchPatientProfiles/?userChoice=${userChoice}&userInput=${userInput}`);
-            setData(response.data); 
+            setPatientProfilesData(response.data); 
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -78,7 +80,7 @@ function PatientProfilesPage() {
                 userChoice={userChoice} 
                 handleChange={handleChange} 
                 handleSearch={handleSearch} />
-            <button className="SELECT-button" onClick={fetchData}>Refresh Patient Profiles</button>
+            <button className="SELECT-button" onClick={() => fetchData('PatientProfiles', setPatientProfilesData)}>Refresh Patient Profiles</button>
             <div className="flex-container">
                 <div className="flex-column1">
                     <table id="patientsdetailedinformation">
@@ -94,7 +96,7 @@ function PatientProfilesPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((item, index) => (
+                            {patientProfileData.map((item, index) => (
                                 <tr key={index}>
                                     <th>{item.patientProfileID}</th>
                                     <th>{item.patientPhoneNumber}</th>
@@ -114,8 +116,9 @@ function PatientProfilesPage() {
                         <div className="form-row">
                             <label for="patientID">Patient ID:</label>
                             <select name="patientID">
-                                <option value="0">0 (James)</option>
-                                <option value="1">1 (Mary)</option>
+                                {patientsData.map((item, index) => (
+                                    <option value={item.patientID}>{item.patientID}</option>
+                                ))}
                             </select>
                         </div>
                         <div className="form-row">

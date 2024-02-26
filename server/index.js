@@ -182,6 +182,7 @@ app.get('/sqlData/searchPatientProfiles', (req, res) => {
             query += 'patientID = ?';
             queryParams.push(userInput);
             break;
+        // QUERY NEED FIX
         case 'patientFullName':
             const newUserInput = userInput.split(' ');
             query += 'patientFirstName = ? AND patientLastName = ?';
@@ -270,6 +271,7 @@ app.get('/sqlData/searchProviderProfiles', (req, res) => {
             query += 'providerID = ?';
             queryParams.push(userInput);
             break;
+        // QUERY NEED FIX
         case 'providerFullName':
             const newUserInput = userInput.split(' ');
             query += 'providerFirstName = ? AND providerLastName = ?';
