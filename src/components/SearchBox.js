@@ -7,7 +7,7 @@ export function SearchBox() {
             <select name="attributes" id="attributes">
                 <option value="temp">Temp</option>
             </select>
-            <input type="text" placeholder="Temp" />
+            <input type="search" placeholder="Temp" />
             <button>Search</button>
         </div>
     );
@@ -30,7 +30,7 @@ export function SearchBoxPatientIndex({ userChoice, handleChange, handleSearch }
                 <option value="patientLastName">Last Name</option>
                 <option value="patientFullName">Patient First & Last Name</option>
             </select>
-            <input type="text" placeholder="Search Patients" value={searchValue} onChange={handleInputChange}/>
+            <input type="search" placeholder="Search Patients" value={searchValue} onChange={handleInputChange}/>
             <button onClick={() => handleSearch(searchValue)}>Search</button>
         </div>
     );
@@ -55,7 +55,7 @@ export function SearchBoxPatientProfiles({ userChoice, handleChange, handleSearc
                 <option value="patientID">Patient ID</option>
                 <option value="patientFullName">Patient First & Last Name</option>
             </select>
-            <input type="text" placeholder="Search Patient Profiles" value={searchValue} onChange={handleInputChange}/>
+            <input type="search" placeholder="Search Patient Profiles" value={searchValue} onChange={handleInputChange}/>
             <button onClick={() => handleSearch(searchValue)}>Search</button>
         </div>
     );
@@ -70,7 +70,7 @@ export function SearchBoxInsurancePolicies() {
                 <option value="patientID">Patient ID</option>
                 <option value="patientFullName">Patient First & Last Name</option>
             </select>
-            <input type="text" placeholder="Search Insurance Policies" />
+            <input type="search" placeholder="Search Insurance Policies" />
             <button>Search</button>
         </div>
     );
@@ -93,7 +93,7 @@ export function SearchBoxProviderIndex({ userChoice, handleChange, handleSearch 
                 <option value="providerLastName">Last Name</option>
                 <option value="providerFullName">Provider First & Last Name</option>
             </select>
-            <input type="text" placeholder="Search Providers" value={searchValue} onChange={handleInputChange}/>
+            <input type="search" placeholder="Search Providers" value={searchValue} onChange={handleInputChange}/>
             <button onClick={() => handleSearch(searchValue)}>Search</button>
         </div>
     );
@@ -118,7 +118,7 @@ export function SearchBoxProviderProfiles({ userChoice, handleChange, handleSear
                 <option value="providerID">Provider ID</option>
                 <option value="providerFullName">Provider First & Last Name</option>
             </select>
-            <input type="text" placeholder="Search Provider Profiles"  value={searchValue} onChange={handleInputChange}/>
+            <input type="search" placeholder="Search Provider Profiles"  value={searchValue} onChange={handleInputChange}/>
             <button onClick={() => handleSearch(searchValue)}>Search</button>
         </div>
     );
@@ -133,7 +133,7 @@ export function SearchBoxPatientProviderRelationships() {
                 <option value="patientFullName">Full Name (First and Last Name)</option>
                 <option value="providerFullName">Provider First & Last Name</option>
             </select>
-            <input type="text" placeholder="Search Patient/Provider Relationships" />
+            <input type="search" placeholder="Search Patient/Provider Relationships" />
             <button>Search</button>
         </div>
     );
@@ -150,7 +150,7 @@ export function SearchBoxVisits() {
                 <option value="insuranceID">Insurance ID</option>
                 <option value="patientFullName">Patient First & Last Name</option>
             </select>
-            <input type="text" placeholder="Search Visits" />
+            <input type="search" placeholder="Search Visits" />
             <button>Search</button>
         </div>
     );
@@ -165,7 +165,7 @@ export function SearchBoxInsuranceNotes() {
                 <option value="visitID">Visit ID</option>
                 <option value="patientFullName">Patient First & Last Name</option>
             </select>
-            <input type="text" placeholder="Search Insurance Notes" />
+            <input type="search" placeholder="Search Insurance Notes" />
             <button>Search</button>
         </div>
     );
@@ -179,7 +179,7 @@ export function SearchBoxClinicalNotes() {
                 <option value="visitID">Visit ID</option>
                 <option value="patientFullName">Patient First & Last Name</option>
             </select>
-            <input type="text" placeholder="Search Clinical Notes" />
+            <input type="search" placeholder="Search Clinical Notes" />
             <button>Search</button>
         </div>
     );
@@ -193,7 +193,7 @@ export function SearchBarClinicalFindings() {
                 <option value="clinicalNoteID">Clinical Note ID</option>
                 <option value="patientFullName">Patient First & Last Name</option>
             </select>
-            <input type="text" placeholder="Search Clinical Findings" />
+            <input type="search" placeholder="Search Clinical Findings" />
             <button>Search</button>
         </div>
     );

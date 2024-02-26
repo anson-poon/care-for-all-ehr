@@ -185,20 +185,30 @@ app.get('/sqlData/searchProvider', (req, res) => {
     console.log(userInput);
 
     let query = 'SELECT * FROM Providers WHERE ';
+    let queryParams = [];
+
     switch (userChoice) {
         case 'providerID':
             query += 'providerID = ?';
+            queryParams.push(userInput);
             break;
         case 'providerFirstName':
             query += 'providerFirstName = ?';
+            queryParams.push(userInput);
             break;
         case 'providerLastName':
             query += 'providerLastName = ?';
+            queryParams.push(userInput);
+            break;
+        case 'providerFullName':
+            const newUserInput = userInput.split(' ');
+            query += 'providerFirstName = ? AND providerLastName = ?';
+            queryParams.push(newUserInput[0], newUserInput[1])
             break;
         default:
             return res.status(400).json({ error: 'Invalid search query' });
     }
-    db.pool.query(query, [userInput], (err, data) => {
+    db.pool.query(query, queryParams, (err, data) => {
         if (err) {
             res.status(500).json({ error: 'Failed to search data' });
         } else {
