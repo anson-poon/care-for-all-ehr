@@ -119,20 +119,30 @@ app.get('/sqlData/searchPatient', (req, res) => {
     console.log(userInput);
 
     let query = 'SELECT * FROM Patients WHERE ';
+    let queryParams = [];
+
     switch (userChoice) {
         case 'patientID':
             query += 'patientID = ?';
+            queryParams.push(userInput);
             break;
         case 'patientFirstName':
             query += 'patientFirstName = ?';
+            queryParams.push(userInput);
             break;
         case 'patientLastName':
             query += 'patientLastName = ?';
+            queryParams.push(userInput);
+            break;
+        case 'patientFullName':
+            const newUserInput = userInput.split(' ');
+            query += 'patientFirstName = ? AND patientLastName = ?';
+            queryParams.push(newUserInput[0], newUserInput[1])
             break;
         default:
             return res.status(400).json({ error: 'Invalid search query' });
     }
-    db.pool.query(query, [userInput], (err, data) => {
+    db.pool.query(query, queryParams, (err, data) => {
         if (err) {
             res.status(500).json({ error: 'Failed to search data' });
         } else {
@@ -149,26 +159,38 @@ app.get('/sqlData/searchPatientProfiles', (req, res) => {
     console.log(userInput);
 
     let query = 'SELECT * FROM PatientProfiles WHERE ';
+    let queryParams = [];
+
     switch (userChoice) {
         case 'patientProfileID':
             query += 'patientProfileID = ?';
+            queryParams.push(userInput);
             break;
         case 'patientPhoneNumber':
             query += 'patientPhoneNumber = ?';
+            queryParams.push(userInput);
             break;
         case 'emailAddress':
             query += 'emailAddress = ?';
+            queryParams.push(userInput);
             break;
         case 'dateOfBirth':
             query += 'dateOfBirth = ?';
+            queryParams.push(userInput);
             break;
         case 'patientID':
             query += 'patientID = ?';
+            queryParams.push(userInput);
+            break;
+        case 'patientFullName':
+            const newUserInput = userInput.split(' ');
+            query += 'patientFirstName = ? AND patientLastName = ?';
+            queryParams.push(newUserInput[0], newUserInput[1])
             break;
         default:
             return res.status(400).json({ error: 'Invalid search query' });
     }
-    db.pool.query(query, [userInput], (err, data) => {
+    db.pool.query(query, queryParams, (err, data) => {
         if (err) {
             res.status(500).json({ error: 'Failed to search data' });
         } else {
@@ -225,26 +247,38 @@ app.get('/sqlData/searchProviderProfiles', (req, res) => {
     console.log(userInput);
 
     let query = 'SELECT * FROM ProviderProfiles WHERE ';
+    let queryParams = [];
+
     switch (userChoice) {
         case 'providerProfileID':
             query += 'providerProfileID = ?';
+            queryParams.push(userInput);
             break;
         case 'title':
             query += 'title = ?';
+            queryParams.push(userInput);
             break;
         case 'specialty':
             query += 'specialty = ?';
+            queryParams.push(userInput);
             break;
         case 'providerPhoneNumber':
             query += 'providerPhoneNumber = ?';
+            queryParams.push(userInput);
             break;
         case 'providerID':
             query += 'providerID = ?';
+            queryParams.push(userInput);
+            break;
+        case 'providerFullName':
+            const newUserInput = userInput.split(' ');
+            query += 'providerFirstName = ? AND providerLastName = ?';
+            queryParams.push(newUserInput[0], newUserInput[1])
             break;
         default:
             return res.status(400).json({ error: 'Invalid search query' });
     }
-    db.pool.query(query, [userInput], (err, data) => {
+    db.pool.query(query, queryParams, (err, data) => {
         if (err) {
             res.status(500).json({ error: 'Failed to search data' });
         } else {
