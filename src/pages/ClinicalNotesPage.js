@@ -1,3 +1,5 @@
+// Create Clinical Notes Page that uses sample data from data directory
+
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -5,9 +7,6 @@ import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import clinicalNotesData from '../data/clinicalNotesData';
 import { SearchBoxClinicalNotes } from '../components/SearchBox';
 
-/*
-Page returns function that shows clinical notes table
-*/
 function ClinicalNotesPage() {
     return (
         <div>

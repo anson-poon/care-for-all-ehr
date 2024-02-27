@@ -1,3 +1,9 @@
+/*
+React uses this file to define routes 
+Code citation: Knowledge of using extend, React.Component, and render are from reviewing the following tutorial
+https://levelup.gitconnected.com/how-to-render-react-app-using-express-server-in-node-js-a428ec4dfe2b
+*/
+
 import './App.css';
 import React from 'react';
 import axios from "axios";
@@ -20,11 +26,6 @@ import UpdatePatientIndexPage from './components/UpdatePatientIndex';
 import { useState, useEffect, } from 'react';
 import { Link } from 'react-router';
 
-/*
-Code citation:
-Knowledge of using extend, React.Component, and render are from reviewing the following tutorial:
-https://levelup.gitconnected.com/how-to-render-react-app-using-express-server-in-node-js-a428ec4dfe2b
-*/
 function App() {
   return (
     <div className="App">

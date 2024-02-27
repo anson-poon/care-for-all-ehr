@@ -1,18 +1,22 @@
+// Component that creates search box options that can be imported in Pages for all entities
+
 import React from "react";
 import { useState } from "react";
 
+// demo search box
 export function SearchBox() {
     return (
         <div className="search-box">
             <select name="attributes" id="attributes">
                 <option value="temp">Temp</option>
             </select>
-            <input type="search" placeholder="Temp" />
+            <input type="text" placeholder="Temp" />
             <button>Search</button>
         </div>
     );
 }
 
+// search box for Patient Index page
 export function SearchBoxPatientIndex({ userChoice, handleChange, handleSearch }) {
     const [searchValue, setSearchValue] = useState('');
 
@@ -36,6 +40,7 @@ export function SearchBoxPatientIndex({ userChoice, handleChange, handleSearch }
     );
 }
 
+// search box for Patient Profiles page
 export function SearchBoxPatientProfiles({ userChoice, handleChange, handleSearch }) {
     const [searchValue, setSearchValue] = useState('');
 
@@ -61,6 +66,7 @@ export function SearchBoxPatientProfiles({ userChoice, handleChange, handleSearc
     );
 }
 
+// search box for Insurance Policies page
 export function SearchBoxInsurancePolicies() {
     return (
         <div className="search-box">
@@ -76,6 +82,7 @@ export function SearchBoxInsurancePolicies() {
     );
 }
 
+// search box for Provider Index page
 export function SearchBoxProviderIndex({ userChoice, handleChange, handleSearch }) {
     const [searchValue, setSearchValue] = useState('');
 
@@ -99,6 +106,7 @@ export function SearchBoxProviderIndex({ userChoice, handleChange, handleSearch 
     );
 }
 
+// search box for Provider Profiles page
 export function SearchBoxProviderProfiles({ userChoice, handleChange, handleSearch }) {
     const [searchValue, setSearchValue] = useState('');
 
@@ -124,6 +132,7 @@ export function SearchBoxProviderProfiles({ userChoice, handleChange, handleSear
     );
 };
 
+// search box for Patient Provider Relationships (Intersection table) page
 export function SearchBoxPatientProviderRelationships() {
     return (
         <div className="search-box">
@@ -139,6 +148,7 @@ export function SearchBoxPatientProviderRelationships() {
     );
 }
 
+// search box for Visits page
 export function SearchBoxVisits() {
     return (
         <div className="search-box">
@@ -156,6 +166,7 @@ export function SearchBoxVisits() {
     );
 }
 
+// search box for Insurance Notes page
 export function SearchBoxInsuranceNotes() {
     return (
         <div className="search-box">
@@ -171,6 +182,7 @@ export function SearchBoxInsuranceNotes() {
     );
 }
 
+// search box for Clinical Notes page
 export function SearchBoxClinicalNotes() {
     return (
         <div className="search-box">
@@ -185,6 +197,7 @@ export function SearchBoxClinicalNotes() {
     );
 }
 
+// search box for Clinical Findings page
 export function SearchBarClinicalFindings() {
     return (
         <div className="search-box">

@@ -1,3 +1,8 @@
+/*
+Components that, once imported, allow for the insertion of new data on a Page for a given entity
+*/
+
+// general form to add data
 export const AddForm = () => {
     <form action="" method="get" className="add-form">
         <h4>Add Temp</h4>
@@ -9,6 +14,7 @@ export const AddForm = () => {
     </form>
 }
 
+// form for specifically Provider Index page
 export const AddFormProviderIndex = () => {
     <form action="" method="get" className="add-form">
         <h4>Add a New Provider</h4>

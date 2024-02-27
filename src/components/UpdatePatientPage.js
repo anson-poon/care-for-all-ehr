@@ -1,10 +1,9 @@
+// Component that can be imported to update a record on Patient Profiles Page
+
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-/*
-Component to update patient page
-*/
 function UpdatePatientPage () {
     
     const goBack = useNavigate();
