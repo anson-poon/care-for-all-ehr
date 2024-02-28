@@ -1,3 +1,5 @@
+// Create Clinical Finding Page that uses sample data from data directory
+
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -5,9 +7,6 @@ import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import clinicalFindingsData from '../data/clinicalFindingsData';
 import { SearchBarClinicalFindings } from '../components/SearchBox';
 
-/*
-Page returns function that shows clinical findings table
-*/
 function ClinicalFindingsPage() {
     return (
         <div>

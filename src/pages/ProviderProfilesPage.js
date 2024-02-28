@@ -1,69 +1,15 @@
+// Create Provider Profiles page that incorporates sample data from data directory
+
 import React from 'react';
-import axios from "axios";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import { SearchBoxProviderProfiles } from '../components/SearchBox';
 import providerData from '../data/providerData';
 
-/*
-Code citation: Code to import icons credited to https://react-icons.github.io/react-icons/
-*/
-
-/*
-Page returns function that shows providers table
-*/
 function ProviderProfilesPage() {
 
     const goToUpdatePage = useNavigate();
-
-    // SELECT FROM ProviderProfiles
-    const [providerProfileData, setProviderProfilesData] = useState([]);   // Initialize state to hold fetched data
-    // SELECT FROM Providers (for Inserting ID)
-    const [providersData, setProvidersData] = useState([]);
-
-    useEffect(() => {
-        fetchData('ProviderProfiles', setProviderProfilesData);
-        fetchData('Providers', setProvidersData);
-    }, []);
-
-    const fetchData = async (tableName, setData) => {
-        try {
-            // Fetch data from the specified table
-            const response = await axios.get(`/sqlData/?table=${tableName}`);
-            // Set the fetched data to state
-            setData(response.data); 
-        } catch (err) {
-            console.error(`Error fetching ${tableName} data:`, err);
-        }
-    };
-
-    // DE:ETE FROM ProviderProfiles WHERE providerID = ?
-    // technique to delete data credited to https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Books.jsx
-    const deleteData = async (providerID) => {
-        try {
-            await axios.delete("/sqlDataDelete/providers/" + providerID);
-            window.location.reload()
-        } catch (err) {
-            console.error("Failed to delete data:", err);
-        }
-    };
-
-    // SELECT * FROM ProviderProfiles WHERE userChoice = ?
-    const [userChoice, setUserChoice] = useState('');
-
-    const handleChange = (choice) => {
-        setUserChoice(choice.target.value);
-    }
-
-    const handleSearch = async (userInput) => {
-        try {
-            const response = await axios.get(`/sqlData/searchProviderProfiles/?userChoice=${userChoice}&userInput=${userInput}`);
-            setProviderProfilesData(response.data);
-        } catch (err) {
-            console.error('Error fetching data:', err);
-        }
-    }
 
     return (
         <div>
@@ -75,11 +21,8 @@ function ProviderProfilesPage() {
                 <p>This page also allows you to <b>delete</b> information for each provider from the MySQL database.</p>
                 <p>Lastly, this page also allows you to update update for each provider, including the ability to set Title, Specialty, and Phone Number as <b>NULL</b>.</p>
             </div>
-            <SearchBoxProviderProfiles
-                userChoice={userChoice}
-                handleChange={handleChange}
-                handleSearch={handleSearch} />
-            <button className="SELECT-button" onClick={fetchData}>Refresh Provider Profiles</button>
+            <SearchBoxProviderProfiles />
+            <button className="SELECT-button">Refresh Provider Profiles</button>
             <div className="flex-container">
                 <div className="flex-column1">
                     <table id="providerdetailedinformation">
@@ -95,15 +38,15 @@ function ProviderProfilesPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {providerProfileData.map((item, index) => (
+                            {providerData.map((item, index) => (
                                 <tr key={index}>
                                     <th>{item.providerProfileID}</th>
                                     <th>{item.title}</th>
                                     <th>{item.specialty}</th>
-                                    <th>{item.providerPhoneNumber}</th>
+                                    <th>{item.phoneNumber}</th>
                                     <th>{item.providerID}</th>
                                     <th><RiEdit2Fill className="icon" onClick={() => goToUpdatePage("/updateproviderpage")} /></th>
-                                    <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.providerProfileID)} /></th>
+                                    <th><RiChatDeleteFill className="icon" /></th>
                                 </tr>
                             ))}
                         </tbody>
@@ -115,8 +58,8 @@ function ProviderProfilesPage() {
                         <div className="form-row">
                             <label for="providerID">Provider ID: </label>
                             <select name="providerID" id="providerID">
-                                {providersData.map((item, index) => (
-                                    <option value={item.providerID}>{item.providerID}</option>
+                                {providerData.map((item, index) => (
+                                    <option value={item.providerID}>{item.providerID} ({item.providerLastName})</option>
                                 ))}
                             </select>
                         </div>

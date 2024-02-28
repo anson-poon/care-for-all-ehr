@@ -1,43 +1,44 @@
+// Component that allows for updating a record for Provider Index Page
+
 import React from 'react';
 import { useState } from 'react';
 import axios from "axios";
 import { useLocation, useNavigate } from 'react-router-dom';
 
-/*
-Component to update patient page
-*/
-
 function UpdatePatientIndexPage () {
     /*
-    page logic credit to https://github.com/safak/youtube2022/blob/react-mysql/client/src/pages/Update.jsx
+    Code citation: Group 70 learned how to create an update page that passes input values to 
+    Express app for delivering to MySql database from https://github.com/safak/youtube2022/tree/react-mysql
     */
-    const goBack = useNavigate();
 
+    // go back to patient index page after submission of updated data or cancelling update of data
+    const goBackToPatientIndex = useNavigate();
+
+    // construct object to hold user entered patient's first and last name
     const [patientName, setPatientName] = useState({
         patientFirstName: "",
         patientLastName: "",
       });
-      const [error,setError] = useState(false)
     
-      const location = useLocation();
-      const navigate = useNavigate();
+      //  parses URL to get patient ID
+      const urlLocation = useLocation();
+      const patientID = urlLocation.pathname.split("/")[2];
     
-      const patientID = location.pathname.split("/")[2];
-    
-      const handleChange = (e) => {
-        setPatientName((prev)=>({ ...prev, [e.target.name]:e.target.value}));
+      // set user entered values for patient first name and last name 
+      const setUpdateValues = (enteredValues) => {
+        setPatientName((currentAttributes)=>({ ...currentAttributes, [enteredValues.target.name]:enteredValues.target.value}));
       };
     
-      const handleClick = async (e) => {
-        e.preventDefault()
+      // once user submits data to update record, process data to be sent to MySQL
+      const handleSubmissionOfUpdate = async (submitUpdate) => {
+        submitUpdate.preventDefault();
         try {
-          axios.put(`/sqlDataUpdate/${patientID}`, patientName);
-          navigate("/patientindex")
+          await axios.put(`/sqlDataUpdate/${patientID}`, patientName);
+          goBackToPatientIndex("/patientindex");
         } catch (err) {
-          console.log(err);
-          setError(true);
+          console.error("Failed to update data:", err);
         }
-      };
+  };
 
     return (
         <div>
@@ -45,14 +46,14 @@ function UpdatePatientIndexPage () {
                 <h4>Update Patient Name</h4>
                 <div className="form-row">
                     <label for="patientFirstName">First Name:</label>
-                    <input type="text" name="patientFirstName" id="patientFirstName" onChange = {handleChange} />
+                    <input type="text" name="patientFirstName" id="patientFirstName" onChange = {setUpdateValues} />
                 </div>
                 <div className="form-row">
                     <label for="patientLastName">Last Name:</label>
-                    <input type="text" name="patientLastName" id="patientLastName" onChange = {handleChange} />
+                    <input type="text" name="patientLastName" id="patientLastName" onChange = {setUpdateValues} />
                 </div>
                 <br/>
-                <button className="add-button" onClick = {handleClick}>Submit</button>                <button className="add-button" onClick={() => goBack("/patients")}>Cancel</button>
+                <button className="add-button" onClick = {handleSubmissionOfUpdate}>Submit</button>                <button className="add-button" onClick={() => goBackToPatientIndex("/patientindex")}>Cancel</button>
             </form>
         </div>
     );

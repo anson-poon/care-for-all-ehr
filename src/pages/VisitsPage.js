@@ -1,3 +1,5 @@
+// Create Visits page that incorporates sample data from data directory
+
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -5,9 +7,6 @@ import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import { SearchBoxVisits } from '../components/SearchBox';
 import visitData from '../data/visitData';
 
-/*
-Page returns function that shows visits table
-*/
 function VisitsPage() {
     return (
         <div>

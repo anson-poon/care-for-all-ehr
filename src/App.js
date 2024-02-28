@@ -1,3 +1,9 @@
+/*
+React uses this file to define routes 
+Code citation: Knowledge of using extend, React.Component, and render are from reviewing the following tutorial
+https://levelup.gitconnected.com/how-to-render-react-app-using-express-server-in-node-js-a428ec4dfe2b
+*/
+
 import './App.css';
 import React from 'react';
 import axios from "axios";
@@ -17,14 +23,10 @@ import InsuranceNotesPage from './pages/InsuranceNotesPage';
 import UpdateProviderPage from './components/UpdateProvider';
 import UpdatePatientPage from './components/UpdatePatientPage';
 import UpdatePatientIndexPage from './components/UpdatePatientIndex';
+import UpdateProviderIndexPage from './components/UpdateProviderIndex';
 import { useState, useEffect, } from 'react';
 import { Link } from 'react-router';
 
-/*
-Code citation:
-Knowledge of using extend, React.Component, and render are from reviewing the following tutorial:
-https://levelup.gitconnected.com/how-to-render-react-app-using-express-server-in-node-js-a428ec4dfe2b
-*/
 function App() {
   return (
     <div className="App">
@@ -49,6 +51,7 @@ function App() {
             <Route path="/updateproviderpage" element={<UpdateProviderPage />} />
             <Route path="/updatepatientpage" element={<UpdatePatientPage />} />
             <Route path="/sqlDataUpdate/:patientID" element={<UpdatePatientIndexPage />} />
+            <Route path="/sqlDataUpdatePI/:providerID" element={<UpdateProviderIndexPage />} />
           </Routes>
         </div>
       </Router>
