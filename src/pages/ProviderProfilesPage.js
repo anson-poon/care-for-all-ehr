@@ -1,6 +1,6 @@
 /* 
 Creates Patient Index page with working CRUD methods
-Code citation:  Code to implement SELECT, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
+Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
 Code adapted to work with group 70's project.
 */
 
@@ -16,6 +16,7 @@ import providerData from '../data/providerData';
 function ProviderProfilesPage() {
 
     // implements INSERT to process new data 
+    // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     // create object to hold provider attributes
     const [attributes, setAttributes] = useState({
         providerProfileID:"",
@@ -74,6 +75,7 @@ function ProviderProfilesPage() {
     }
 
     // DELETE FROM ProviderProfiles WHERE providerID = ?
+    // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     const deleteData = async (providerID) => {
         try {
             await axios.delete("/sqlDataDeleteProviderProfiles/" + providerID);
