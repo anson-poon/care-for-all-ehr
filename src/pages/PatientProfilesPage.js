@@ -1,23 +1,21 @@
+/* 
+Creates Patient Index page with working CRUD methods
+Code citation:  Code to implement SELECT, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
+Code adapted to work with group 70's project.
+*/
+
 import React from 'react';
 import axios from "axios";
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
-import { HiBell } from 'react-icons/hi2';
 import { SearchBoxPatientProfiles } from '../components/SearchBox';
-// import patientData from '../data/patientData';
 
-/*
-Code citation: Code to import icons credited to https://react-icons.github.io/react-icons/
-*/
-
-/*
-Page returns function that shows patients table
-*/
+// Page returns function that shows patients table
 function PatientProfilesPage() {
 
-    // logic for INSERT
-    // technique to insert data learned from https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Add.jsx
+    // implements INSERT to process new data 
+    // create object to hold patient attributes
     const [attributes, setAttributes] = useState({
         patientProfileID:"",
         patientPhoneNumber:"",
@@ -25,11 +23,13 @@ function PatientProfilesPage() {
         dateOfBirth:"",
         patientID:"",
     });
-    const handleInsertData = (e) => {
-        setAttributes((prev)=>({ ...prev, [e.target.name]:e.target.value}));
+    // obtain attributes for new entry
+    const handleInsertData = (newValues) => {
+        setAttributes((currentValues)=>({ ...currentValues, [newValues.target.name]:newValues.target.value}));
     };
-    const submitNewData = async e => {
-        e.preventDefault()
+    // handle submission of new data (attributes)
+    const submitNewData = async (submit) => {
+        submit.preventDefault()
         try {
             await axios.post("/sqlDataInsertPatientProfiles", attributes)
             window.location.reload()
@@ -37,20 +37,16 @@ function PatientProfilesPage() {
             console.error("Error adding data:", err);
         }
     };
-    
-    
-    const goToUpdatePage = useNavigate();
 
     // SELECT FROM PatientProfiles
     const [patientProfileData, setPatientProfilesData] = useState([]);   // Initialize state to hold fetched data
+    
     // SELECT FROM Patient (for Inserting ID)
     const [patientsData, setPatientsData] = useState([]);
-
     useEffect(() => {
         fetchData('PatientProfiles', setPatientProfilesData);
         fetchData('Patients', setPatientsData);
     }, []);
-
     const fetchData = async (tableName, setData) => {
         try {
             // Fetch data from the specified table
@@ -62,24 +58,11 @@ function PatientProfilesPage() {
         }
     };
 
-    // DELETE FROM PatientProfiles WHERE patientID = ?
-    // technique to delete data credited to https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Books.jsx
-    const deleteData = async (patientID) => {
-        try {
-            await axios.delete("/sqlDataDelete/patients/" + patientID);
-            window.location.reload()
-        } catch (err){
-            console.error("Failed to delete data:", err);
-        }
-    };
-
     // SELECT * FROM PatientProfiles WHERE userChoice = ?
     const [userChoice, setUserChoice] = useState('');
-
     const handleChange = (choice) => {
         setUserChoice(choice.target.value);
     }
-    
     const handleSearch = async (userInput) => {
         try {
             const response = await axios.get(`/sqlData/searchPatientProfiles/?userChoice=${userChoice}&userInput=${userInput}`);
@@ -88,6 +71,16 @@ function PatientProfilesPage() {
             console.error('Error fetching data:', err);
         }
     }
+
+    // DELETE FROM PatientProfiles WHERE patientID = ?
+    const deleteData = async (patientID) => {
+        try {
+            await axios.delete("/sqlDataDeletePatientProfiles/" + patientID);
+            window.location.reload()
+        } catch (err){
+            console.error("Failed to delete data:", err);
+        }
+    };
 
     return (
         <div>
@@ -114,8 +107,8 @@ function PatientProfilesPage() {
                                 <th>Email Address</th>
                                 <th>Date of Birth</th>
                                 <th>Patient ID</th>
-                                <th>Update</th>
                                 <th>Delete</th>
+                                <th>Update</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -126,8 +119,8 @@ function PatientProfilesPage() {
                                     <th>{item.emailAddress}</th>
                                     <th>{item.dateOfBirth}</th>
                                     <th>{item.patientID}</th>
-                                    <th><RiEdit2Fill className="icon" onClick={() => goToUpdatePage("/updatepatientpage")} /></th>
                                     <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.patientID)} /></th>
+                                    <th><Link to={`/sqlDataUpdatePatientProfiles/${item.patientID}`}><RiEdit2Fill/></Link></th>
                                 </tr>
                             ))}
                         </tbody>

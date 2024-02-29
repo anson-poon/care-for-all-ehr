@@ -1,13 +1,16 @@
+// Create Patient Provider Relationships (intersection table) page that incorporates sample data from data directory
+
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import patientProviderIntersectionData from '../data/patientProviderIntersectionData';
 import {SearchBoxPatientProviderRelationships} from '../components/SearchBox';
-/*
-Page returns function that shows patient provider intersection table
-*/
+
 function PatientProviderIntersectionPage() {
+
+    const goToUpdatePage = useNavigate();
+
     return (
         <div>
             <h3>Patient/Provider Relationships</h3>
@@ -41,8 +44,8 @@ function PatientProviderIntersectionPage() {
                                 <tr key={index}>
                                     <th>{item.patientID}</th>
                                     <th>{item.providerID}</th>
-                                    <th><RiEdit2Fill className="icon" /></th>
-                                    <th><RiChatDeleteFill className="icon"/></th>
+                                    <th><RiEdit2Fill className="icon" onClick={() => goToUpdatePage("/updateproviderpage")} /></th>
+                                    <th><RiChatDeleteFill className="icon" /></th>
                                 </tr>
                             ))}
                         </tbody>

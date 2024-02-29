@@ -1,6 +1,6 @@
 /* 
-Code citation:  
-Dropdown code obtained and modified from documentation of source url:  https://www.w3schools.com/howto/howto_css_dropdown.asp 
+Component that creates a navigation bar next to logo that allows users to navigate web pages easier
+Code citation:  Dropdown code obtained and modified from documentation courtesy of w3schools:  https://www.w3schools.com/howto/howto_css_dropdown.asp 
 */
 
 import React from "react";
@@ -43,4 +43,4 @@ function Navbar() {
     );
 };
 
-export default Navbar
+export default Navbar;

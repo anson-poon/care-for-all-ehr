@@ -1,3 +1,9 @@
+/* 
+Creates Patient Index page with working CRUD methods
+Code citation:  Code to implement SELECT, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
+Code adapted to work with group 70's project.
+*/
+
 import React from 'react';
 import axios from "axios";
 import { useState, useEffect } from 'react';
@@ -7,37 +13,17 @@ import patientData from '../data/patientData';
 import { SearchBoxPatientIndex } from '../components/SearchBox';
 import { redirect } from 'react-router-dom';
 
-/*
-Page returns function that shows patient index table
-*/
+// Page returns function to show Patient Index page
 function PatientIndexPage() {
 
-    // logic for INSERT
-    // technique to insert data learned from https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Add.jsx
-    const [attributes, setAttributes] = useState({
-        patientId:"",
-        patientFirstName:"",
-        patientLastName:"",
-    });
-    const handleInsertData = (e) => {
-        setAttributes((prev)=>({ ...prev, [e.target.name]:e.target.value}));
-    };
-    const submitNewData = async e => {
-        e.preventDefault()
-        try {
-            await axios.post("/sqlDataInsert", attributes)
-            window.location.reload()
-        } catch (err) {
-            console.error("Error adding data:", err);
-        }
-    };
-
-    // logic for SELECT all
+    // implement SELECT to obtain all records for Patient Index
     const [data, setData] = useState([]);   // Initialize state to hold fetched data
+
     // Fetch data from the database
     useEffect(() => {
         fetchData();
     }, []);
+
     const fetchData = async () => {
         try {
             // fetch data from sqlData route
@@ -49,24 +35,13 @@ function PatientIndexPage() {
         }
     };
 
-    // logic for DELETE
-    // technique to delete data credited to https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Books.jsx
-    const deleteData = async (patientID) => {
-        try {
-            await axios.delete("/sqlDataDelete/patients/" + patientID);
-            window.location.reload()
-        } catch (err){
-            console.error("Failed to delete data:", err);
-        }
-    };
-
-    // logic for SELECT with search
+    // implement SELECT to obtain records based on a user's criteria for attributes
     const [userChoice, setUserChoice] = useState('');
 
     const handleChange = (choice) => {
         setUserChoice(choice.target.value);
     }
-    
+
     const handleSearch = async (userInput) => {
         try {
             const response = await axios.get(`/sqlData/searchPatient/?userChoice=${userChoice}&userInput=${userInput}`);
@@ -75,6 +50,39 @@ function PatientIndexPage() {
             console.error('Error fetching data:', err);
         }
     }
+
+    // implements INSERT to process new data 
+    // create object to hold patient attributes
+    const [attributes, setAttributes] = useState({
+        patientID:"",
+        patientFirstName:"",
+        patientLastName:"",
+    });
+    // obtain attributes for new entry
+    const handleInsertData = (newValues) => {
+        setAttributes((currentValues)=>({ ...currentValues, [newValues.target.name]:newValues.target.value}));
+    };
+    // handle submission of new data (attributes)
+    const submitNewData = async (submit) => {
+        submit.preventDefault()
+        try {
+            await axios.post("/sqlDataInsert", attributes);
+            window.location.reload();
+        } catch (err) {
+            console.error("Error adding data:", err);
+        }
+    };
+
+    // implements DELETE to remove a record
+    // handles deletion of a record for Patient Index
+    const deleteData = async (patientID) => {
+        try {
+            await axios.delete("/sqlDataDelete/" + patientID);
+            window.location.reload()
+        } catch (err){
+            console.error("Failed to delete data:", err);
+        }
+    };
 
     return (
         <div>
@@ -108,14 +116,6 @@ function PatientIndexPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* {patientData.map((item, index) => (
-                                <tr key={index}>
-                                    <th>{item.patientID}</th>
-                                    <th>{item.patientFirstName}</th>
-                                    <th>{item.patientLastName}</th>
-                                    <th><RiChatDeleteFill className="icon" /></th>
-                                </tr>
-                            ))} */}
                             {data.map((item, index) => (
                                 <tr key={index}>
                                     <th>{item.patientID}</th>

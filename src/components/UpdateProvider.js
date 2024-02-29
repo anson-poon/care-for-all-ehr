@@ -1,32 +1,65 @@
+// Component to update a record for Provider Profiles page
+
 import React from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useLocation, useNavigate } from 'react-router-dom';
 
-/*
-Component to update provider page
-*/
 function UpdateProviderPage () {
 
-    const goBack = useNavigate();
+    /*
+    Code citation: Group 70 learned how to create an update page that passes input values to 
+    Express app for delivering to MySql database from https://github.com/safak/youtube2022/tree/react-mysql
+    */
+
+    // go back to patient profiles page after submission of updated data or cancelling update of data
+    const goBackToProviderProfiles = useNavigate();
+
+    // construct object to hold user entered patient's first and last name
+    const [providerProfileAttributes, setProviderProfileAttributes] = useState({
+        title: "",
+        specialty: "",
+        providerPhoneNumber: "",
+      });
+    
+      //  parses URL to get patient ID
+      const urlLocation = useLocation();
+      const providerID = urlLocation.pathname.split("/")[2];
+    
+      // set user entered values for patient first name and last name 
+      const setUpdateValues = (enteredValues) => {
+        setProviderProfileAttributes((currentAttributes)=>({ ...currentAttributes, [enteredValues.target.name]:enteredValues.target.value}));
+      };
+    
+      // once user submits data to update record, process data to be sent to MySQL
+      const handleSubmissionOfUpdate = async (submitUpdate) => {
+        submitUpdate.preventDefault();
+        try {
+          await axios.put(`/sqlDataUpdateProviderProfiles/${providerID}`, providerProfileAttributes);
+          goBackToProviderProfiles("/providers");
+        } catch (err) {
+          console.error("Failed to update data:", err);
+        }
+  };
 
     return (
         <div>
             <form action="" method="get" className="add-form">
                 <h4>Update Provider Information</h4>
                 <div className="form-row">
-                    <label for="patientID">Title:</label>
-                    <input type="text" name="patientID" id="patientID" />
+                    <label for="title">Title:</label>
+                    <input type="text" name="title" id="title" onChange = {setUpdateValues} />
                 </div>
                 <div className="form-row">
-                    <label for="name">Speciality:</label>
-                    <input type="text" name="name" id="name" />
+                    <label for="specialty">Speciality:</label>
+                    <input type="text" name="specialty" id="specialty" onChange = {setUpdateValues} />
                 </div>
                 <div className="form-row">
-                    <label for="name">Phone Number:</label>
-                    <input type="text" name="name" id="name" />
+                    <label for="providerPhoneNumber">Phone Number:</label>
+                    <input type="text" name="providerPhoneNumber" id="providerPhoneNumber" onChange = {setUpdateValues} />
                 </div>
                 <br/>
-                <button className="add-button">Submit</button>                <button className="add-button" onClick={() => goBack("/providers")}>Cancel</button>
+                <button className="add-button" onClick = {handleSubmissionOfUpdate}>Submit</button>                <button className="add-button" onClick={() => goBackToProviderProfiles("/providers")}>Cancel</button>
             </form>
         </div>
     );
