@@ -1,16 +1,16 @@
+// Creates Home Page
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-/*
-Page returns function that shows home page
-*/
 function HomePage() {
     return (
         <div>
             <h3>Care For All</h3>
             <h4>Electronic Health Record</h4>
             <div className="page-description">
+                <p><b>At this time, List of Pages is the only entity with all CRUD functions present.</b></p>
                 <p>Care for All is an electronic health record (EHR) system that provides 100,000 healthcare organizations with a system to record patient encounters for reimbursement and continuity of care purposes.</p>
                 <p>Care for All’s database-oriented website that records Visits between Providers and Patients. With all encounters (visits) between Providers and Patients, healthcare organizations collect information on various data.</p>
                 <p>InsurancePolicies (including HMO, PPO, and EPO), InsuranceNotes, and ClinicalNotes, including ClinicalFindings, to submit for reimbursement from health insurance carriers and for continuity of care to promote patient outcomes.</p>

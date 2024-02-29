@@ -6,65 +6,29 @@ package.json also included skeleton code for start and build script from the tut
 The skeleton code in package.json was updated to relevant to this project's architecture.
 */
 
+// Use .env file for user credential to connect to MySQL database 
 require('dotenv').config();
 
 /*
-Define routes for react app
-*/
-const path = require("path");
-const express = require("express");
-const app = express();
-const cors = require('cors');
-
-/*
-Define route for database
+Require db-connector file that provides information on how to connect to MySQL database
 Code citation: starter code obtained from course guide: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%201%20-%20Connecting%20to%20a%20MySQL%20Database
 */
 const db = require('./database/db-connector');
 
-/*
-Use env port or default port on flip server of OSU
-*/
+// Use env port or default port on flip server of OSU
 const PORT = process.env.PORT || 5786;
 
+// Require path for serving react static/build files
+const path = require("path");
+
+// Instantiate express application, and allow application to obtain information from and transfer information to MySQL database
+const express = require("express");
+const app = express();
+const cors = require('cors');
 app.use(express.json())
 app.use(cors())
 
-/*
-Connect to database test
-Code citation: starter code obtained from course guide: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%201%20-%20Connecting%20to%20a%20MySQL%20Database
-*/
-
-app.get('/test', function (req, res) {
-    // Define our queries
-    let query1 = 'DROP TABLE IF EXISTS diagnostic;';
-    let query2 = 'CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);';
-    let query3 = 'INSERT INTO diagnostic (text) VALUES ("MySQL is working!")';
-    let query4 = 'SELECT * FROM diagnostic;';
-
-    // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
-
-    // DROP TABLE...
-    db.pool.query(query1, function (err, results, fields) {
-
-        // CREATE TABLE...
-        db.pool.query(query2, function (err, results, fields) {
-
-            // INSERT INTO...
-            db.pool.query(query3, function (err, results, fields) {
-
-                // SELECT *...
-                db.pool.query(query4, function (err, results, fields) {
-
-                    // Send the results to the browser
-                    res.send(JSON.stringify(results));
-                });
-            });
-        });
-    });
-});
-
-// get all entries for each table
+// All Pages:  SELECT method to get all records for each page
 app.get('/sqlData', (req, res) => {
     console.log(req.query);
     let query = 'SELECT * FROM ';
@@ -110,9 +74,9 @@ app.get('/sqlData', (req, res) => {
             res.json(data); // Send the fetched data as JSON response
         }
     });
-})
+});
 
-// search Patients by an attribute
+// Patient Index:  SELECT records from Patients based on certain attributes
 app.get('/sqlData/searchPatient', (req, res) => {
     const { userChoice, userInput } = req.query;
 
@@ -150,9 +114,9 @@ app.get('/sqlData/searchPatient', (req, res) => {
             return res.json(data);
         }
     })
-})
+});
 
-// search PatientProfiles by an attribute
+// Patient Profiles:  SELECT records from PatientProfiles based on certain attributes
 app.get('/sqlData/searchPatientProfiles', (req, res) => {
     const { userChoice, userInput } = req.query;
 
@@ -201,7 +165,7 @@ app.get('/sqlData/searchPatientProfiles', (req, res) => {
     })
 })
 
-// search a Provider by an attribute
+// Providers Page:  SELECT records from Providers based on certain attributes
 app.get('/sqlData/searchProvider', (req, res) => {
     const { userChoice, userInput } = req.query;
 
@@ -239,9 +203,9 @@ app.get('/sqlData/searchProvider', (req, res) => {
             return res.json(data);
         }
     })
-})
+});
 
-// search a ProviderProfile by an attribute
+// ProviderProfiles: SELECT records from ProviderProfiles based on certain attributes 
 app.get('/sqlData/searchProviderProfiles', (req, res) => {
     const { userChoice, userInput } = req.query;
 
@@ -288,68 +252,168 @@ app.get('/sqlData/searchProviderProfiles', (req, res) => {
             return res.json(data);
         }
     })
-})
+});
 
-// technique to delete data credited to https://codewithmarish.com/post/full-stack-crud-app
-app.delete("/sqlDataDelete/patients/:patientID", (req, res) => {
+/* 
+PatientIndex Page:  Logic to DELETE a record based on patientID
+Code citation:  Technique Group 70 used to learn to delete data credited to https://github.com/safak/youtube2022/tree/react-mysql
+*/
+app.delete("/sqlDataDelete/:patientID", (req, res) => {
     let patientID = req.params.patientID;
-    let query = 'DELETE FROM Patients WHERE patientID = ?';
-    db.pool.query(query, [patientID], (err, data) => {
+    db.pool.query("DELETE FROM Patients WHERE patientID = ?", [patientID], (err, data) => {
         if (err) {
             res.status(500).json({ error: 'Failed to delete data' });
         } else {
-            return res.json({ data });
+            console.log("DELETE FROM Patients WHERE patientID = " + patientID);
+            res.send(data); // Proceed with deletion of the specific row from PatientIndex
         }
     })
 });
 
-app.delete("/sqlDataDelete/providers/:providerID", (req, res) => {
+/* 
+PatientProfiles Page:  Logic to DELETE a record based on patientID
+Code citation:  Technique Group 70 used to learn to delete data credited to https://github.com/safak/youtube2022/tree/react-mysql
+*/
+app.delete("/sqlDataDeletePatientProfiles/:patientID", (req, res) => {
+    let patientID = req.params.patientID;
+    db.pool.query("DELETE FROM PatientProfiles WHERE patientID = ?", [patientID], (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to delete data' });
+        } else {
+            console.log("DELETE FROM PatientProfiles WHERE patientID = " + patientID);
+            res.send(data); // Proceed with deletion of the specific row from PatientProfiles
+        }
+    })
+});
+
+/* 
+ProviderProfiles Page:  Logic to DELETE a record based on providerID
+Code citation:  Technique Group 70 used to learn to delete data credited to https://github.com/safak/youtube2022/tree/react-mysql
+*/
+app.delete("/sqlDataDeleteProviderProfiles/:providerID", (req, res) => {
     let providerID = req.params.providerID;
-    let query = 'DELETE FROM Providers WHERE providerID = ?';
-    db.pool.query(query, [providerID], (err, data) => {
+    db.pool.query("DELETE FROM ProviderProfiles WHERE providerID = ?", [providerID], (err, data) => {
         if (err) {
             res.status(500).json({ error: 'Failed to delete data' });
         } else {
-            return res.json({ data });
+            console.log("DELETE FROM ProviderProfiles WHERE providerID = " + providerID);
+            res.send(data); // Proceed with deletion of the specific row from ProviderProfiles
         }
     })
 });
 
-// update a Patient
-// technique to update data learned from https://github.com/safak/youtube2022/blob/react-mysql/client/src/pages/Update.jsx
+/*
+ProviderIndex Page:  Logic to DELETE a record based on providerID
+Code citation:  Code modified from base of DELETE code for Patient Index page
+*/
+app.delete("/sqlDataDeletePI/:providerID", (req, res) => {
+    let providerID = req.params.providerID;
+    db.pool.query("DELETE FROM Providers WHERE providerID = ?", [providerID], (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to delete data' });
+        } else {
+            console.log("DELETE FROM Providers WHERE providerID = " + providerID);
+            res.send(data); // Proceed with deletion of the specific row from Provider Index
+        }
+    })
+});
+
+/*
+PatientIndex Page:  Logic to UPDATE a record based on patientID
+Code citation:  Technique Group 70 used to learn to update data credited to https://github.com/safak/youtube2022/tree/react-mysql
+*/
 app.put("/sqlDataUpdate/:patientID", (req, res) => {
-    const patientID = req.params.patientID;
-    const patientFirstName = req.body.patientFirstName;
-    const patientLastName = req.body.patientLastName;
+    let patientID = req.params.patientID;
+    let patientFirstName = req.body.patientFirstName;
+    let patientLastName = req.body.patientLastName;
     db.pool.query("UPDATE Patients SET patientFirstName = ?, patientLastName = ? WHERE patientID = ?", [patientFirstName, patientLastName, patientID], (err, result) => {
         if (err) {
-            console.log(err);
+            res.status(500).json({ error: 'Failed to update data' });
         } else {
-            res.send(result);
-        }
-    }
-    );
-})
-
-// add a patient
-// technique to insert data learned from https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Add.jsx
-app.post("/sqlDataInsert",(req,res)=>{
-    let query ="INSERT INTO Patients (patientID, patientFirstName, patientLastName) VALUES (?)";
-    let attributes = [
-        req.body.patientID,
-        req.body.patientFirstName,
-        req.body.patientLastName,
-    ]
-    db.pool.query(query,[attributes],(err,data)=>{
-        if(err) {
-            res.status(500).json({ error: 'Failed to delete data' });
-        } else {    
-            return res.json({data});
+            console.log("UPDATE Patients SET patientFirstName = " + patientFirstName + " patientLastName = " + patientLastName + " WHERE patientID = " + patientID)
+            res.send(result); // Proceed with updating the specific entity's instance attributes
         }
     })
 });
 
-// add a patient profile
+/*
+PatientProfiles Page:  Logic to UPDATE a record based on patientID
+Code citation:  Technique Group 70 used to learn to update data credited to https://github.com/safak/youtube2022/tree/react-mysql
+*/
+app.put("/sqlDataUpdatePatientProfiles/:patientID", (req, res) => {
+    let patientID = req.params.patientID;
+    let patientPhoneNumber = req.body.patientPhoneNumber;
+    let emailAddress = req.body.emailAddress;
+    let dateOfBirth = req.body.dateOfBirth;
+    db.pool.query("UPDATE PatientProfiles SET patientPhoneNumber = ?, emailAddress = ?, dateOfBirth = ? WHERE patientID = ?", [patientPhoneNumber, emailAddress, dateOfBirth, patientID], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to update data' });
+        } else {
+            console.log("UPDATE PatientProfiles SET patientPhoneNumber = " + patientPhoneNumber + " emailAddress = " + emailAddress + " dateOfBirth" + dateOfBirth + " WHERE patientID = " + patientID)
+            res.send(result); // Proceed with updating the specific entity's instance attributes
+        }
+    })
+});
+
+/*
+ProviderProfiles Page:  Logic to UPDATE a record based on providerID
+Code citation:  Technique Group 70 used to learn to update data credited to https://github.com/safak/youtube2022/tree/react-mysql
+*/
+app.put("/sqlDataUpdateProviderProfiles/:providerID", (req, res) => {
+    let providerID = req.params.providerID;
+    let title = req.body.title;
+    let specialty = req.body.specialty;
+    let providerPhoneNumber = req.body.providerPhoneNumber;
+    db.pool.query("UPDATE ProviderProfiles SET title = ?, specialty = ?, providerPhoneNumber = ? WHERE providerID = ?", [title, specialty, providerPhoneNumber, providerID], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to update data' });
+        } else {
+            console.log("UPDATE ProviderProfiles SET title = " + title + " specialty = " + specialty + " providerPhoneNumber = " + providerPhoneNumber + " WHERE providerID = " + providerID)
+            res.send(result); // Proceed with updating the specific entity's instance attributes
+        }
+    })
+});
+
+/*
+ProviderIndex Page:  Logic to UPDATE a record based on providerID
+Code citation:  Code modified from base of UPDATE code for Patient Index page
+*/
+app.put("/sqlDataUpdatePI/:providerID", (req, res) => {
+    let providerID = req.params.providerID;
+    let providerFirstName = req.body.providerFirstName;
+    let providerLastName = req.body.providerLastName;
+    db.pool.query("UPDATE Providers SET providerFirstName = ?, providerLastName = ? WHERE providerID = ?", [providerFirstName, providerLastName, providerID], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to update data' });
+        } else {
+            console.log("UPDATE Providers SET providerFirstName = " + providerFirstName + " providerLastName = " + providerLastName + " WHERE providerID = " + providerID)
+            res.send(result); // Proceed with updating the specific entity's instance attributes
+        }
+    })
+});
+
+/*
+PatientIndex Page:  Logic to INSERT, or add, a new record to entity
+Code citation:  Technique Group 70 used to learn to insert data credited to https://github.com/safak/youtube2022/tree/react-mysql
+*/
+app.post("/sqlDataInsert",(req,res)=>{
+    let patientID = req.body.patientID;
+    let patientFirstName = req.body.patientFirstName;
+    let patientLastName = req.body.patientLastName;
+    db.pool.query("INSERT INTO Patients (patientID, patientFirstName, patientLastName) VALUES (?, ?, ?)", [patientID, patientFirstName, patientLastName], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to update data' });
+        } else {
+            console.log("INSERT INTO Patients (patientFirstName, patientLastName) VALUES (" + patientFirstName + ", " + patientLastName + ")");
+            res.send(result); // Proceed with updating the specific entity's instance attributes
+        }
+    })
+});
+
+/*
+PatientProfiles Page:  Logic to INSERT, or add, a new record to entity
+Code citation:  Technique Group 70 used to learn to insert data credited to https://github.com/safak/youtube2022/tree/react-mysql
+*/
 app.post("/sqlDataInsertPatientProfiles",(req,res)=>{
     let query ="INSERT INTO PatientProfiles (patientProfileID, patientPhoneNumber, emailAddress, dateOfBirth, patientID) VALUES (?)";
     let attributes = [
@@ -367,14 +431,16 @@ app.post("/sqlDataInsertPatientProfiles",(req,res)=>{
         if(err) {
             res.status(500).json({ error: 'Failed to delete data' });
         } else {    
+            console.log(attributes.patientProfileID, attributes.patientPhoneNumber, attributes.emailAddress, attributes.dateOfBirth, attributes.patientID)
             return res.json({data});
         }
     })
 });
 
-// add a provider
-
-// add a provider profile
+/*
+ProviderProfiles Page:  Logic to INSERT, or add, a new record to entity
+Code citation:  Technique Group 70 used to learn to insert data credited to https://github.com/safak/youtube2022/tree/react-mysql
+*/
 app.post("/sqlDataInsertProviderProfiles",(req,res)=>{
     let query ="INSERT INTO ProviderProfiles (providerProfileID, title, specialty, providerPhoneNumber, providerID) VALUES (?)";
     let attributes = [
@@ -394,22 +460,33 @@ app.post("/sqlDataInsertProviderProfiles",(req,res)=>{
 });
 
 /*
-React app to use files from following pathways of flip server
+ProviderIndex Page:  Logic to INSERT, or add, a new record based on providerID
+Code citation:  Code modified from base of INSERT code for Patient Index page
 */
+app.post("/sqlDataInsertPI",(req,res)=>{
+    let providerID = req.body.providerID;
+    let providerFirstName = req.body.providerFirstName;
+    let providerLastName = req.body.providerLastName;
+    db.pool.query("INSERT INTO Providers (providerID, providerFirstName, providerLastName) VALUES (?, ?, ?)", [providerID, providerFirstName, providerLastName], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to insert data' });
+        } else {
+            console.log("INSERT INTO Providers (providerFirstName, providerLastName) VALUES (" + providerFirstName + ", " + providerLastName + ")");
+            res.send(result); // Proceed with updating the specific entity's instance attributes
+        }
+    })
+});
+
+// Define route for Express to serve static/build React version
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
 
-/* 
-If above routes are unable to locate relevant files, then:
-Catch-all route that serves the static React app
-*/
+// Catch-all route that serves static React app if relevant files are not in above paths
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "build", "index.html"));
 });
 
-/*
-Terminal message to inform developer the server running React app is up and running
-*/
+// Terminal message to inform developer the Express server is running at port
 app.listen(PORT, () => {
-    console.log(`Node server is now running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });

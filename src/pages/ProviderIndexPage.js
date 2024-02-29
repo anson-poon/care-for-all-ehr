@@ -1,18 +1,20 @@
+// Create Provider Index page that incorporates sample data from data directory
+
 import React from 'react';
-import axios from "axios";
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect} from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import providerData from '../data/providerData';
 import { SearchBoxProviderIndex } from '../components/SearchBox';
+import { AddFormProviderIndex } from '../components/AddForm';
+import axios from "axios";
 
-/*
-Page returns function that shows provider index table
-*/
 function ProviderIndexPage() {
+
+    // implement SELECT to obtain all records for Provider Index
     const [data, setData] = useState([]);   // Initialize state to hold fetched data
 
-    // SELECT * FROM Providers
+    // Fetch data from the database
     useEffect(() => {
         fetchData();
     }, []);
@@ -22,30 +24,19 @@ function ProviderIndexPage() {
             // fetch data from sqlData route
             const response = await axios.get('/sqlData/?table=Providers');
             // Set the fetched data to state
-            setData(response.data);
+            setData(response.data); 
         } catch (err) {
             console.error('Error fetching data:', err);
         }
     };
 
-    // DE:ETE FROM Providers WHERE providerID = ?
-    // technique to delete data credited to https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Books.jsx
-    const deleteData = async (providerID) => {
-        try {
-            await axios.delete("/sqlDataDelete/providers/" + providerID);
-            window.location.reload()
-        } catch (err){
-            console.error("Failed to delete data:", err);
-        }
-    };
-
-    // SELECT * FROM Providers WHERE userChoice = ?
+    // implement SELECT to obtain records based on a user's criteria for attributes
     const [userChoice, setUserChoice] = useState('');
 
     const handleChange = (choice) => {
         setUserChoice(choice.target.value);
     }
-    
+
     const handleSearch = async (userInput) => {
         try {
             const response = await axios.get(`/sqlData/searchProvider/?userChoice=${userChoice}&userInput=${userInput}`);
@@ -54,6 +45,39 @@ function ProviderIndexPage() {
             console.error('Error fetching data:', err);
         }
     }
+
+    // implements INSERT to process new data 
+    // create object to hold provider attributes
+    const [attributes, setAttributes] = useState({
+        providerID:"",
+        providerFirstName:"",
+        providerLastName:"",
+    });
+    // obtain attributes for new entry
+    const handleInsertData = (newValues) => {
+        setAttributes((currentValues)=>({ ...currentValues, [newValues.target.name]:newValues.target.value}));
+    };
+    // handle submission of new data (attributes)
+    const submitNewData = async (submit) => {
+        submit.preventDefault()
+        try {
+            await axios.post("/sqlDataInsertPI", attributes);
+            window.location.reload();
+        } catch (err) {
+            console.error("Error adding data:", err);
+        }
+    };
+
+    // implements DELETE to remove a record
+    // handles deletion of a record for Provider Index
+    const deleteData = async (providerID) => {
+        try {
+            await axios.delete("/sqlDataDeletePI/" + providerID);
+            window.location.reload()
+        } catch (err){
+            console.error("Failed to delete data:", err);
+        }
+    };
 
     return (
         <div>
@@ -70,9 +94,9 @@ function ProviderIndexPage() {
                 </p>
             </div>
             <SearchBoxProviderIndex 
-                userChoice={userChoice} 
-                handleChange={handleChange} 
-                handleSearch={handleSearch} />
+                userChoice={userChoice}
+                handleChange={handleChange}
+                handleSearch={handleSearch}/>
             <button className="SELECT-button" onClick={fetchData}>Refresh List of Providers</button>
             <div className="flex-container">
                 <div className="flex-column1">
@@ -83,6 +107,7 @@ function ProviderIndexPage() {
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Delete</th>
+                                <th>Update</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -91,7 +116,8 @@ function ProviderIndexPage() {
                                     <th>{item.providerID}</th>
                                     <th>{item.providerFirstName}</th>
                                     <th>{item.providerLastName}</th>
-                                    <th><RiChatDeleteFill className="icon"  onClick={() => deleteData(item.providerID)}/></th>
+                                    <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.providerID)} /></th>
+                                    <th><Link to={`/sqlDataUpdatePI/${item.providerID}`}><RiEdit2Fill/></Link></th>
                                 </tr>
                             ))}
                         </tbody>
@@ -102,14 +128,14 @@ function ProviderIndexPage() {
                         <h4>Add a New Provider</h4>
                         <div className="form-row">
                             <label for="firstName">First Name: </label>
-                            <input type="text" name="firstName" id="firstName" required />
+                            <input type="text" name="providerFirstName" id="firstproviderFirstNameName" onChange = {handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="lastName">Last Name: </label>
-                            <input type="text" name="lastName" id="lastName" required />
+                            <input type="text" name="providerLastName" id="providerLastName" onChange = {handleInsertData} required />
                         </div>
                         <br />
-                        <button className="add-button">Add</button>
+                        <button className="add-button" onClick = {submitNewData}>Add</button>
                     </form>
                 </div>
             </div>

@@ -1,18 +1,14 @@
+// Create Provider Profiles page that incorporates sample data from data directory
+
 import React from 'react';
 import axios from "axios";
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import { SearchBoxProviderProfiles } from '../components/SearchBox';
 import providerData from '../data/providerData';
 
-/*
-Code citation: Code to import icons credited to https://react-icons.github.io/react-icons/
-*/
 
-/*
-Page returns function that shows providers table
-*/
 function ProviderProfilesPage() {
 
     // logic for INSERT
@@ -36,19 +32,16 @@ function ProviderProfilesPage() {
             console.error("Error adding data:", err);
         }
     };
-
-    const goToUpdatePage = useNavigate();
-
+    
     // SELECT FROM ProviderProfiles
-    const [providerProfileData, setProviderProfilesData] = useState([]);   // Initialize state to hold fetched data
-    // SELECT FROM Providers (for Inserting ID)
-    const [providersData, setProvidersData] = useState([]);
-
+    const [providerProfileData, setProviderProfileData] = useState([]);   // Initialize state to hold fetched data
+    
+    // SELECT FROM Provider (for Inserting ID)
+    const [providerData, setProviderData] = useState([]);
     useEffect(() => {
-        fetchData('ProviderProfiles', setProviderProfilesData);
-        fetchData('Providers', setProvidersData);
+        fetchData('ProviderProfiles', setProviderProfileData);
+        fetchData('Providers', setProviderData);
     }, []);
-
     const fetchData = async (tableName, setData) => {
         try {
             // Fetch data from the specified table
@@ -60,32 +53,29 @@ function ProviderProfilesPage() {
         }
     };
 
-    // DE:ETE FROM ProviderProfiles WHERE providerID = ?
-    // technique to delete data credited to https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Books.jsx
-    const deleteData = async (providerID) => {
-        try {
-            await axios.delete("/sqlDataDelete/providers/" + providerID);
-            window.location.reload()
-        } catch (err) {
-            console.error("Failed to delete data:", err);
-        }
-    };
-
     // SELECT * FROM ProviderProfiles WHERE userChoice = ?
     const [userChoice, setUserChoice] = useState('');
-
     const handleChange = (choice) => {
         setUserChoice(choice.target.value);
     }
-
     const handleSearch = async (userInput) => {
         try {
-            const response = await axios.get(`/sqlData/searchProviderProfiles/?userChoice=${userChoice}&userInput=${userInput}`);
-            setProviderProfilesData(response.data);
+            const response = await axios.get(`/sqlData/searchProviderProfiles?userChoice=${userChoice}&userInput=${userInput}`);
+            setProviderProfileData(response.data); 
         } catch (err) {
             console.error('Error fetching data:', err);
         }
     }
+
+    // DELETE FROM ProviderProfiles WHERE providerID = ?
+    const deleteData = async (providerID) => {
+        try {
+            await axios.delete("/sqlDataDeleteProviderProfiles/" + providerID);
+            window.location.reload()
+        } catch (err){
+            console.error("Failed to delete data:", err);
+        }
+    };
 
     return (
         <div>
@@ -97,11 +87,11 @@ function ProviderProfilesPage() {
                 <p>This page also allows you to <b>delete</b> information for each provider from the MySQL database.</p>
                 <p>Lastly, this page also allows you to update update for each provider, including the ability to set Title, Specialty, and Phone Number as <b>NULL</b>.</p>
             </div>
-            <SearchBoxProviderProfiles
-                userChoice={userChoice}
-                handleChange={handleChange}
+            <SearchBoxProviderProfiles 
+                userChoice={userChoice} 
+                handleChange={handleChange} 
                 handleSearch={handleSearch} />
-            <button className="SELECT-button" onClick={fetchData}>Refresh Provider Profiles</button>
+            <button className="SELECT-button" onClick={() => fetchData('ProviderProfiles', setProviderProfileData)}>Refresh Provider Profiles</button>
             <div className="flex-container">
                 <div className="flex-column1">
                     <table id="providerdetailedinformation">
@@ -112,8 +102,8 @@ function ProviderProfilesPage() {
                                 <th>Specialty</th>
                                 <th>Phone Number</th>
                                 <th>Provider ID</th>
-                                <th>Update</th>
                                 <th>Delete</th>
+                                <th>Update</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -124,8 +114,8 @@ function ProviderProfilesPage() {
                                     <th>{item.specialty}</th>
                                     <th>{item.providerPhoneNumber}</th>
                                     <th>{item.providerID}</th>
-                                    <th><RiEdit2Fill className="icon" onClick={() => goToUpdatePage("/updateproviderpage")} /></th>
-                                    <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.providerProfileID)} /></th>
+                                    <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.providerID)} /></th>
+                                    <th><Link to={`/sqlDataUpdateProviderProfiles/${item.providerID}`}><RiEdit2Fill/></Link></th>
                                 </tr>
                             ))}
                         </tbody>
@@ -133,11 +123,11 @@ function ProviderProfilesPage() {
                 </div>
                 <div className="flex-column2">
                     <form action="" method="get" className="add-form">
-                        <h4>Add Provider Profile:</h4>
+                    <h4>Add Provider Profile:</h4>
                         <div className="form-row">
                             <label for="providerID">Provider ID: </label>
                             <select name="providerID" id="providerID" onChange = {handleInsertData} required>
-                                {providersData.map((item, index) => (
+                                {providerData.map((item, index) => (
                                     <option value={item.providerID}>{item.providerID}</option>
                                 ))}
                             </select>

@@ -1,3 +1,5 @@
+// Creates Insurance Policies page that uses sample data from data directory
+
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -5,9 +7,6 @@ import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import insurancePoliciesData from '../data/insurancePoliciesData';
 import { SearchBoxInsurancePolicies } from '../components/SearchBox';
 
-/*
-Page returns function that shows insurance policies table
-*/
 function InsurancePoliciesPage() {
     return (
         <div>
