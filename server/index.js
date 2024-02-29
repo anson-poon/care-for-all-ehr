@@ -15,8 +15,6 @@ const path = require("path");
 const express = require("express");
 const app = express();
 const cors = require('cors');
-app.use(express.json())
-app.use(cors())
 
 /*
 Define route for database
@@ -28,6 +26,9 @@ const db = require('./database/db-connector');
 Use env port or default port on flip server of OSU
 */
 const PORT = process.env.PORT || 5786;
+
+app.use(express.json())
+app.use(cors())
 
 /*
 Connect to database test
@@ -338,6 +339,24 @@ app.post("/sqlDataInsert",(req,res)=>{
         req.body.patientID,
         req.body.patientFirstName,
         req.body.patientLastName,
+    ]
+    db.pool.query(query,[attributes],(err,data)=>{
+        if(err) {
+            res.status(500).json({ error: 'Failed to delete data' });
+        } else {    
+            return res.json({data});
+        }
+    })
+});
+
+app.post("/sqlDataInsertPatientProfiles",(req,res)=>{
+    let query ="INSERT INTO PatientProfiles (patientProfileID, patientPhoneNumber, emailAddress, dateOfBirth, patientID) VALUES (?)";
+    let attributes = [
+        req.body.patientProfileID,
+        req.body.patientPhoneNumber,
+        req.body.emailAddress,
+        req.body.dateOfBirth,
+        req.body.patientID
     ]
     db.pool.query(query,[attributes],(err,data)=>{
         if(err) {
