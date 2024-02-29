@@ -32,7 +32,7 @@ function PatientIndexPage() {
         }
     };
 
-    // logic for SELECT
+    // logic for SELECT all
     const [data, setData] = useState([]);   // Initialize state to hold fetched data
     // Fetch data from the database
     useEffect(() => {
@@ -49,7 +49,7 @@ function PatientIndexPage() {
         }
     };
 
-    // DE:ETE FROM Patients WHERE patientID = ?
+    // logic for DELETE
     // technique to delete data credited to https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Books.jsx
     const deleteData = async (patientID) => {
         try {
@@ -60,7 +60,7 @@ function PatientIndexPage() {
         }
     };
 
-    // SELECT * FROM Patients WHERE userChoice = ?
+    // logic for SELECT with search
     const [userChoice, setUserChoice] = useState('');
 
     const handleChange = (choice) => {

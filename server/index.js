@@ -349,6 +349,7 @@ app.post("/sqlDataInsert",(req,res)=>{
     })
 });
 
+// add a patient profile
 app.post("/sqlDataInsertPatientProfiles",(req,res)=>{
     let query ="INSERT INTO PatientProfiles (patientProfileID, patientPhoneNumber, emailAddress, dateOfBirth, patientID) VALUES (?)";
     let attributes = [
@@ -358,6 +359,10 @@ app.post("/sqlDataInsertPatientProfiles",(req,res)=>{
         req.body.dateOfBirth,
         req.body.patientID
     ]
+
+    console.log(req.body.patientID);
+    console.log(req.body.patientPhoneNumber);
+
     db.pool.query(query,[attributes],(err,data)=>{
         if(err) {
             res.status(500).json({ error: 'Failed to delete data' });

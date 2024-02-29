@@ -16,6 +16,29 @@ Page returns function that shows patients table
 */
 function PatientProfilesPage() {
 
+    // logic for INSERT
+    // technique to insert data learned from https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/blob/main/frontend/src/pages/Add.jsx
+    const [attributes, setAttributes] = useState({
+        patientProfileID:"",
+        patientPhoneNumber:"",
+        emailAddress:"",
+        dateOfBirth:"",
+        patientID:"",
+    });
+    const handleInsertData = (e) => {
+        setAttributes((prev)=>({ ...prev, [e.target.name]:e.target.value}));
+    };
+    const submitNewData = async e => {
+        e.preventDefault()
+        try {
+            await axios.post("/sqlDataInsertPatientProfiles", attributes)
+            window.location.reload()
+        } catch (err) {
+            console.error("Error adding data:", err);
+        }
+    };
+    
+    
     const goToUpdatePage = useNavigate();
 
     // SELECT FROM PatientProfiles
@@ -115,26 +138,26 @@ function PatientProfilesPage() {
                         <h4>Add Patient Profile:</h4>
                         <div className="form-row">
                             <label for="patientID">Patient ID:</label>
-                            <select name="patientID">
+                            <select name="patientID" onChange = {handleInsertData} required>
                                 {patientsData.map((item, index) => (
                                     <option value={item.patientID}>{item.patientID}</option>
                                 ))}
                             </select>
                         </div>
                         <div className="form-row">
-                            <label for="phoneNumber">Phone Number: </label>
-                            <input type="text" name="phoneNumber" id="phoneNumber" required />
+                            <label for="patientPhoneNumber">Phone Number: </label>
+                            <input type="text" name="patientPhoneNumber" id="patientPhoneNumber" onChange = {handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="emailAddress">Email Address: </label>
-                            <input type="text" name="emailAddress" id="emailAddress" required />
+                            <input type="text" name="emailAddress" id="emailAddress" onChange = {handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="dateOfBirth">Date of Birth: </label>
-                            <input type="text" name="dateOfBirth" id="dateOfBirth" required />
+                            <input type="text" name="dateOfBirth" id="dateOfBirth" onChange = {handleInsertData} required />
                         </div>
                         <br />
-                        <button className="add-button">Add</button>
+                        <button className="add-button" onClick = {submitNewData}>Add</button>
                     </form>
                 </div>
             </div>
