@@ -32,6 +32,8 @@ function PatientProviderIntersectionPage() {
                             <tr>
                                 <th>Patient ID</th>
                                 <th>Provider ID</th>
+                                <th>Update</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,6 +41,8 @@ function PatientProviderIntersectionPage() {
                                 <tr key={index}>
                                     <th>{item.patientID}</th>
                                     <th>{item.providerID}</th>
+                                    <th><RiEdit2Fill className="icon" /></th>
+                                    <th><RiChatDeleteFill className="icon"/></th>
                                 </tr>
                             ))}
                         </tbody>
