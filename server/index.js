@@ -372,6 +372,27 @@ app.post("/sqlDataInsertPatientProfiles",(req,res)=>{
     })
 });
 
+// add a provider
+
+// add a provider profile
+app.post("/sqlDataInsertProviderProfiles",(req,res)=>{
+    let query ="INSERT INTO ProviderProfiles (providerProfileID, title, specialty, providerPhoneNumber, providerID) VALUES (?)";
+    let attributes = [
+        req.body.providerProfileID,
+        req.body.title,
+        req.body.specialty,
+        req.body.providerPhoneNumber,
+        req.body.providerID
+    ]
+    db.pool.query(query,[attributes],(err,data)=>{
+        if(err) {
+            res.status(500).json({ error: 'Failed to delete data' });
+        } else {    
+            return res.json({data});
+        }
+    })
+});
+
 /*
 React app to use files from following pathways of flip server
 */

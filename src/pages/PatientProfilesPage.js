@@ -138,7 +138,7 @@ function PatientProfilesPage() {
                         <h4>Add Patient Profile:</h4>
                         <div className="form-row">
                             <label for="patientID">Patient ID:</label>
-                            <select name="patientID" onChange = {handleInsertData} required>
+                            <select name="patientID" id="providerID" onChange = {handleInsertData} required>
                                 {patientsData.map((item, index) => (
                                     <option value={item.patientID}>{item.patientID}</option>
                                 ))}
