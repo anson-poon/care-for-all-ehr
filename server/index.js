@@ -49,8 +49,8 @@ app.get('/sqlData', (req, res) => {
         case 'ProviderProfiles':
             query += 'ProviderProfiles';
             break;
-        case 'PatientProviderRelationships':
-            query += 'PatientProviderRelationships';
+        case 'Patients_has_Providers':
+            query = 'SELECT CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID, CONCAT(Providers.providerID, " ", "(", Providers.providerFirstName, " ", Providers.providerLastName, ")") as providerID FROM Patients JOIN Patients_has_Providers ON Patients.patientID = Patients_has_Providers.patientID JOIN Providers ON Providers.providerID = Patients_has_Providers.providerID';
             break;
         case 'Visits':
             query += 'Visits';
@@ -74,6 +74,46 @@ app.get('/sqlData', (req, res) => {
             res.json(data); // Send the fetched data as JSON response
         }
     });
+});
+
+// Patient Provider Intersection: SELECT records from Patient Provider Intersection based on certain attributes
+app.get('/sqlData/searchPatientProviderRelationships', (req, res) => {
+    const { userChoice, userInput } = req.query;
+
+    console.log(userChoice);
+    console.log(userInput);
+
+    let queryParams = [];
+
+    switch (userChoice) {
+        case 'patientID':
+            query = 'SELECT CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID, CONCAT(Providers.providerID, " ", "(", Providers.providerFirstName, " ", Providers.providerLastName, ")") as providerID FROM Patients JOIN Patients_has_Providers ON Patients.patientID = Patients_has_Providers.patientID JOIN Providers ON Providers.providerID = Patients_has_Providers.providerID WHERE Patients.patientID = ?';
+            queryParams.push(userInput);
+            break;
+        case 'providerID':
+            query = 'SELECT CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID, CONCAT(Providers.providerID, " ", "(", Providers.providerFirstName, " ", Providers.providerLastName, ")") as providerID FROM Patients JOIN Patients_has_Providers ON Patients.patientID = Patients_has_Providers.patientID JOIN Providers ON Providers.providerID = Patients_has_Providers.providerID WHERE Providers.providerID = ?';
+            queryParams.push(userInput);
+            break;
+        case 'patientFullName':
+            const newPatientUserInput = userInput.split(' ');
+            query = 'SELECT CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID, CONCAT(Providers.providerID, " ", "(", Providers.providerFirstName, " ", Providers.providerLastName, ")") as providerID FROM Patients JOIN Patients_has_Providers ON Patients.patientID = Patients_has_Providers.patientID JOIN Providers ON Providers.providerID = Patients_has_Providers.providerID WHERE Patients.patientFirstName = ? and Patients.patientLastName = ?';            
+            queryParams.push(newPatientUserInput[0], newPatientUserInput[1])
+            break;    
+        case 'providerFullName':
+            const newProviderUserInput = userInput.split(' ');
+            query = 'SELECT CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID, CONCAT(Providers.providerID, " ", "(", Providers.providerFirstName, " ", Providers.providerLastName, ")") as providerID FROM Patients JOIN Patients_has_Providers ON Patients.patientID = Patients_has_Providers.patientID JOIN Providers ON Providers.providerID = Patients_has_Providers.providerID WHERE Providers.providerFirstName = ? and Providers.providerLastName = ?';
+            queryParams.push(newProviderUserInput[0], newProviderUserInput[1])
+            break; 
+        default:
+            return res.status(400).json({ error: 'Invalid search query' });
+    }
+    db.pool.query(query, queryParams, (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to search data' });
+        } else {
+            return res.json(data);
+        }
+    })
 });
 
 // Patient Index:  SELECT records from Patients based on certain attributes
@@ -319,6 +359,23 @@ app.delete("/sqlDataDeletePI/:providerID", (req, res) => {
 });
 
 /*
+Patients_has_Providers Page:  Logic to DELETE a record based on patientID and providerID
+Code citation:  Code modified from base of DELETE code for Patient Index page
+*/
+app.delete("/sqlDataDeletePHP/:patientID/:providerID", (req, res) => {
+    let patientID = req.params.patientID;
+    let providerID = req.params.providerID;
+    db.pool.query("DELETE FROM Patients_has_Providers WHERE patientID = ? AND providerID = ?", [patientID, providerID], (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to delete data' });
+        } else {
+            console.log("DELETE FROM Patients_has_Providers WHERE patientID = " + patientID + " " + "AND" + " " + "providerID = " + providerID);
+            res.send(data); // Proceed with deletion of the specific row from Provider Index
+        }
+    })
+});
+
+/*
 PatientIndex Page:  Logic to UPDATE a record based on patientID
 Code citation:  Technique Group 70 used to learn to update data credited to https://github.com/safak/youtube2022/tree/react-mysql
 */
@@ -393,6 +450,25 @@ app.put("/sqlDataUpdatePI/:providerID", (req, res) => {
 });
 
 /*
+Patients_has_Providers Page:  Logic to UPDATE a record based on patientID
+Code citation:  Technique Group 70 used to learn to update data credited to https://github.com/safak/youtube2022/tree/react-mysql
+*/
+app.put("/sqlDataUpdatePHP/:patientID/:providerID", (req, res) => {
+    let oldPatientID = req.params.patientID;
+    let oldProviderID = req.params.providerID;
+    let newPatientID = req.body.newPatientID;
+    let newProviderID = req.body.newProviderID;
+    db.pool.query("UPDATE Patients_has_Providers SET patientID = ?, providerID = ? WHERE Patients_has_Providers.patientID = ? AND Patients_has_Providers.providerID = ?", [newPatientID, newProviderID, oldPatientID, oldProviderID], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to update data' });
+        } else {
+            console.log("UPDATE Patients_has_Providers SET patientID = " + newPatientID + " providerID = " + newProviderID + " WHERE patientID = " + oldPatientID + " " + "AND providerID = " + oldProviderID)
+            res.send(result); // Proceed with updating the specific entity's instance attributes
+        }
+    })
+});
+
+/*
 PatientIndex Page:  Logic to INSERT, or add, a new record to entity
 Code citation:  Technique Group 70 used to learn to insert data credited to https://github.com/safak/youtube2022/tree/react-mysql
 */
@@ -429,6 +505,27 @@ app.post("/sqlDataInsertPatientProfiles",(req,res)=>{
         } else {    
             console.log("INSERT INTO PatientProfiles (patientID, patientPhoneNumber, emailAddress, dateOfBirth) VALUES (" 
             + req.body.patientID + ", " + req.body.patientPhoneNumber + ", " + req.body.emailAddress + ", " + req.body.dateOfBirth + ")");
+            return res.json({data});
+        }
+    })
+});
+
+/*
+Patients_has_Providers Page:  Logic to INSERT, or add, a new record to entity
+Code citation:  Technique Group 70 used to learn to insert data credited to https://github.com/safak/youtube2022/tree/react-mysql
+*/
+app.post("/sqlDataInsertPatientHasProviders",(req,res)=>{
+    let query ="INSERT INTO Patients_has_Providers (patientID, providerID) VALUES (?)";
+    let attributes = [
+        req.body.patientID,
+        req.body.providerID,
+    ]
+    db.pool.query(query,[attributes],(err,data)=>{
+        if(err) {
+            res.status(500).json({ error: 'Failed to delete data' });
+        } else {    
+            console.log("INSERT INTO Patients_has_Providers (patientID, providerID) VALUES (" 
+            + req.body.patientID + ", " + req.body.providerID + ")");
             return res.json({data});
         }
     })

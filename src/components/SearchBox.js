@@ -133,20 +133,28 @@ export function SearchBoxProviderProfiles({ userChoice, handleChange, handleSear
 };
 
 // search box for Patient Provider Relationships (Intersection table) page
-export function SearchBoxPatientProviderRelationships() {
+export function SearchBoxPatientProviderRelationships({ userChoice, handleChange, handleSearch }) {
+    const [searchValue, setSearchValue] = useState('');
+
+    // handle user input
+    const handleInputChange = (event) => {
+        setSearchValue(event.target.value);
+    };
+
     return (
         <div className="search-box">
-            <select name="attributes" id="attributes">
+            <select name="attributes" id="attributes" value = {userChoice} onChange = {handleChange}>
+            <option value="" selected disabled hidden>Choose Attribute</option>
                 <option value="patientID">Patient ID</option>
                 <option value="providerID">Provider ID</option>
-                <option value="patientFullName">Full Name (First and Last Name)</option>
-                <option value="providerFullName">Provider First & Last Name</option>
+                <option value="patientFullName">Patient (First and Last Name)</option>
+                <option value="providerFullName">Provider (First & Last Name)</option>
             </select>
-            <input type="search" placeholder="Search Patient/Provider Relationships" />
-            <button>Search</button>
+            <input type="search" placeholder="Search Patient/Provider Relationships" value = {searchValue} onChange = {handleInputChange} />
+            <button onClick = {() => handleSearch(searchValue)}>Search</button>
         </div>
     );
-}
+};
 
 // search box for Visits page
 export function SearchBoxVisits() {
