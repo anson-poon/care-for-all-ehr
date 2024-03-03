@@ -84,6 +84,7 @@ app.get('/sqlData/searchPatientProviderRelationships', (req, res) => {
     console.log(userInput);
 
     let queryParams = [];
+    let query ="";
 
     switch (userChoice) {
         case 'patientID':
