@@ -5,14 +5,13 @@ Code adapted to work with group 70's project.
 */
 
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import providerData from '../data/providerData';
 import { SearchBoxProviderIndex } from '../components/SearchBox';
 import { AddFormProviderIndex } from '../components/AddForm';
 import axios from "axios";
-import SearchDropdown from '../components/SearchDropdown';
 
 function ProviderIndexPage() {
 
@@ -29,7 +28,7 @@ function ProviderIndexPage() {
             // fetch data from sqlData route
             const response = await axios.get('/sqlData/?table=Providers');
             // Set the fetched data to state
-            setData(response.data);
+            setData(response.data); 
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -45,35 +44,23 @@ function ProviderIndexPage() {
     const handleSearch = async (userInput) => {
         try {
             const response = await axios.get(`/sqlData/searchProvider/?userChoice=${userChoice}&userInput=${userInput}`);
-            setData(response.data);
+            setData(response.data); 
         } catch (err) {
             console.error('Error fetching data:', err);
         }
     }
 
-    // Handling search ID dropdown
-    const handleSelect = async (selectionValue) => {
-        try {
-            let searchRoute = "searchProvider"; // hardcoded to search from ProviderProfiles
-            let selection = "providerID";        // hardcoded to search by providerProfileID
-            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
-            setData(response.data);
-        } catch (err) {
-            console.error('Error fetching data:', err);
-        }
-    };
-
     // implements INSERT to process new data 
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     // create object to hold provider attributes
     const [attributes, setAttributes] = useState({
-        providerID: "",
-        providerFirstName: "",
-        providerLastName: "",
+        providerID:"",
+        providerFirstName:"",
+        providerLastName:"",
     });
     // obtain attributes for new entry
     const handleInsertData = (newValues) => {
-        setAttributes((currentValues) => ({ ...currentValues, [newValues.target.name]: newValues.target.value }));
+        setAttributes((currentValues)=>({ ...currentValues, [newValues.target.name]:newValues.target.value}));
     };
     // handle submission of new data (attributes)
     const submitNewData = async (submit) => {
@@ -93,7 +80,7 @@ function ProviderIndexPage() {
         try {
             await axios.delete("/sqlDataDeletePI/" + providerID);
             window.location.reload()
-        } catch (err) {
+        } catch (err){
             console.error("Failed to delete data:", err);
         }
     };
@@ -112,17 +99,10 @@ function ProviderIndexPage() {
                     Details of any visit the provider may have had with patient(s) will remain unchanged.
                 </p>
             </div>
-            <div className='search-container'>
-                <SearchDropdown
-                    tableName="Providers"
-                    idProperty="providerID"
-                    onSelect={handleSelect} />
-                <SearchBoxProviderIndex
-                    userChoice={userChoice}
-                    handleChange={handleChange}
-                    handleSearch={handleSearch} />
-            </div>
-
+            <SearchBoxProviderIndex 
+                userChoice={userChoice}
+                handleChange={handleChange}
+                handleSearch={handleSearch}/>
             <button className="SELECT-button" onClick={fetchData}>Refresh List of Providers</button>
             <div className="flex-container">
                 <div className="flex-column1">
@@ -143,7 +123,7 @@ function ProviderIndexPage() {
                                     <th>{item.providerFirstName}</th>
                                     <th>{item.providerLastName}</th>
                                     <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.providerID)} /></th>
-                                    <th><Link to={`/sqlDataUpdatePI/${item.providerID}`}><RiEdit2Fill /></Link></th>
+                                    <th><Link to={`/sqlDataUpdatePI/${item.providerID}`}><RiEdit2Fill/></Link></th>
                                 </tr>
                             ))}
                         </tbody>
@@ -154,14 +134,14 @@ function ProviderIndexPage() {
                         <h4>Add a New Provider</h4>
                         <div className="form-row">
                             <label for="firstName">First Name: </label>
-                            <input type="text" name="providerFirstName" id="firstproviderFirstNameName" onChange={handleInsertData} required />
+                            <input type="text" name="providerFirstName" id="firstproviderFirstNameName" onChange = {handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="lastName">Last Name: </label>
-                            <input type="text" name="providerLastName" id="providerLastName" onChange={handleInsertData} required />
+                            <input type="text" name="providerLastName" id="providerLastName" onChange = {handleInsertData} required />
                         </div>
                         <br />
-                        <button className="add-button" onClick={submitNewData}>Add</button>
+                        <button className="add-button" onClick = {submitNewData}>Add</button>
                     </form>
                 </div>
             </div>

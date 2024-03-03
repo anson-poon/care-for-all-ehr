@@ -41,12 +41,12 @@ function ProviderProfilesPage() {
     };
 
     // SELECT FROM ProviderProfiles
-    const [providerProfileData, setProviderProfilesData] = useState([]);   // Initialize state to hold fetched data
+    const [providerProfileData, setProviderProfileData] = useState([]);   // Initialize state to hold fetched data
 
     // SELECT FROM Provider (for Inserting ID)
     const [providerData, setProviderData] = useState([]);
     useEffect(() => {
-        fetchData('ProviderProfiles', setProviderProfilesData);
+        fetchData('ProviderProfiles', setProviderProfileData);
         fetchData('Providers', setProviderData);
     }, []);
     
@@ -69,7 +69,7 @@ function ProviderProfilesPage() {
     const handleSearch = async (userInput) => {
         try {
             const response = await axios.get(`/sqlData/searchProviderProfiles?userChoice=${userChoice}&userInput=${userInput}`);
-            setProviderProfilesData(response.data);
+            setProviderProfileData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -81,7 +81,7 @@ function ProviderProfilesPage() {
             let searchRoute = "searchProviderProfiles"; // hardcoded to search from ProviderProfiles
             let selection = "providerProfileID";        // hardcoded to search by providerProfileID
             const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
-            setProviderProfilesData(response.data);
+            setProviderProfileData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -118,7 +118,7 @@ function ProviderProfilesPage() {
                     handleChange={handleChange}
                     handleSearch={handleSearch} />
             </div>
-            <button className="SELECT-button" onClick={() => fetchData('ProviderProfiles', setProviderProfilesData)}>Refresh Provider Profiles</button>
+            <button className="SELECT-button" onClick={() => fetchData('ProviderProfiles', setProviderProfileData)}>Refresh Provider Profiles</button>
             <div className="flex-container">
                 <div className="flex-column1">
                     <table id="providerdetailedinformation">

@@ -6,12 +6,12 @@ Code adapted to work with group 70's project.
 
 import React from 'react';
 import axios from "axios";
-import moment from "moment";
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import patientData from '../data/patientData';
 import { SearchBoxVisits } from '../components/SearchBox';
+import { SearchDropdown } from '../components/SearchDropdown';
 import { redirect } from 'react-router-dom';
 
 function VisitsPage() {
@@ -50,6 +50,18 @@ function VisitsPage() {
                 console.error('Error fetching data:', err);
             }
         }
+
+        // Handling search ID dropdown
+        const handleSelect = async (selectionValue) => {
+            try {
+                let searchRoute = "searchVisits"; // hardcoded to search from Visits
+                let selection = "patientID";        // hardcoded to search by patientID
+                const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+                setData(response.data);
+            } catch (err) {
+                console.error('Error fetching data:', err);
+            }
+        };
     
         // implements INSERT to process new data 
         // Code to implement INSERT learned from https://github.com/safak/youtube2022/tree/react-mysql. 
@@ -90,10 +102,16 @@ function VisitsPage() {
                 <p>Failure to meet these requirements will result in an error if the creation of the new visit is attempted.</p>
                 <p><b>Special Note</b>:  When a provider is selected, then the appropriate form will automatically generate the patients that have a relationship with the provider. Then once the patient is selected, then the form will also automatically generate insurance policies that have been associated with the specific patient.</p>
             </div>
-            <SearchBoxVisits 
-                userChoice={userChoice} 
-                handleChange={handleChange} 
-                handleSearch={handleSearch} />
+            <div className='search-container'>
+                <SearchDropdown
+                    tableName="Visits"
+                    idProperty="patientID"
+                    onSelect={handleSelect} />
+                <SearchBoxVisits
+                    userChoice={userChoice}
+                    handleChange={handleChange}
+                    handleSearch={handleSearch} />
+            </div>
             <button className="SELECT-button" onClick={fetchData}>Refresh Visits</button>
             <div className="flex-container">
                 <div className="flex-column1">
@@ -111,7 +129,7 @@ function VisitsPage() {
                             {data.map((item, index) => (
                                 <tr key={index}>
                                     <th>{item.visitID}</th>
-                                    <th>{moment(item.visitDateTime).utc().format("YYYY-MM-DD (HH:mm:ss)")}</th>
+                                    <th>{item.visitDateTime}</th>
                                     <th>{item.providerID}</th>
                                     <th>{item.patientID}</th>
                                     <th>{item.insuranceID}</th>
