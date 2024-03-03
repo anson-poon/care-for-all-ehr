@@ -20,17 +20,15 @@ function UpdateProviderIndexPage() {
     providerLastName: "",
   });
 
-  const [providerData, setProviderData] = useState({});   // Initialize state to hold fetched prepopulated data
-
   //  parses URL to get provider ID
   const urlLocation = useLocation();
   const providerID = urlLocation.pathname.split("/")[2];
 
+  // Fetch data to prepopulate the form
   useEffect(() => {
     fetchProviderData();
   }, []);
 
-  // Fetch data to prepopulate the form
   const fetchProviderData = async () => {
     try {
       const response = await axios.get('/sqlData/?table=Providers');
@@ -41,7 +39,6 @@ function UpdateProviderIndexPage() {
 
       // If exist, set state with that provider's first/last name
       if (specificProvider) {
-        setProviderData(specificProvider);
         setProviderName({
           providerFirstName: specificProvider.providerFirstName,
           providerLastName: specificProvider.providerLastName
