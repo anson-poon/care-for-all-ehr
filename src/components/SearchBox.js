@@ -28,7 +28,7 @@ export function SearchBoxPatientIndex({ userChoice, handleChange, handleSearch }
     return (
         <div className="search-box">
             <select name="selectPatient" value={userChoice} onChange={handleChange}>
-                <option value="" selected disabled hidden>Choose Attribute</option>
+                <option value="" selected disabled hidden>Search By Attribute</option>
                 <option value="patientID">Patient ID</option>
                 <option value="patientFirstName">First Name</option>
                 <option value="patientLastName">Last Name</option>
@@ -52,7 +52,7 @@ export function SearchBoxPatientProfiles({ userChoice, handleChange, handleSearc
     return (
         <div className="search-box">
             <select name="selectPatientProfile" value={userChoice} onChange={handleChange}>
-                <option value="" selected disabled hidden>Choose Attribute</option>
+                <option value="" selected disabled hidden>Search By Attribute</option>
                 <option value="patientProfileID">Patient Profile ID</option>
                 <option value="patientPhoneNumber">Phone Number</option>
                 <option value="emailAddress">Email Address</option>
@@ -79,13 +79,13 @@ export function SearchBoxInsurancePolicies({ userChoice, handleChange, handleSea
     return (
         <div className="search-box">
             <select name="attributes" id="attributes" value={userChoice} onChange={handleChange}>
-                <option value="" selected disabled hidden>Choose Attribute</option>
+                <option value="" selected disabled hidden>Search By Attribute</option>
                 <option value="insuranceID">Insurance ID</option>
                 <option value="insuranceType">Insurance Type</option>
                 <option value="patientID">Patient ID</option>
                 <option value="patientFullName">Patient First & Last Name</option>
             </select>
-            <input type="search" placeholder="Search Insurance Policies"  value={searchValue} onChange={handleInputChange} />
+            <input type="search" placeholder="Search Insurance Policies" value={searchValue} onChange={handleInputChange} />
             <button onClick={() => handleSearch(searchValue)}>Search</button>
         </div>
     );
@@ -103,7 +103,7 @@ export function SearchBoxProviderIndex({ userChoice, handleChange, handleSearch 
     return (
         <div className="search-box">
             <select name="selectProvider" value={userChoice} onChange={handleChange}>
-                <option value="" selected disabled hidden>Choose Attribute</option>
+                <option value="" selected disabled hidden>Search By Attribute</option>
                 <option value="providerID">Provider ID</option>
                 <option value="providerFirstName">First Name</option>
                 <option value="providerLastName">Last Name</option>
@@ -151,7 +151,7 @@ export function SearchBoxPatientProviderRelationships({ userChoice, handleChange
     return (
         <div className="search-box">
             <select name="attributes" id="attributes" value={userChoice} onChange={handleChange}>
-                <option value="" selected disabled hidden>Choose Attribute</option>
+                <option value="" selected disabled hidden>Search By Attribute</option>
                 <option value="patientID">Patient ID</option>
                 <option value="providerID">Provider ID</option>
                 <option value="patientFullName">Patient (First and Last Name)</option>
@@ -174,8 +174,8 @@ export function SearchBoxVisits({ userChoice, handleChange, handleSearch }) {
 
     return (
         <div className="search-box">
-            <select name="attributes" id="attributes" value = {userChoice} onChange = {handleChange}>
-            <option value="" selected disabled hidden>Choose Attribute</option>
+            <select name="attributes" id="attributes" value={userChoice} onChange={handleChange}>
+                <option value="" selected disabled hidden>Search By Attribute</option>
                 <option value="visitID">Visit ID</option>
                 <option value="visitDateTime">Date & Time</option>
                 <option value="providerID">Provider ID</option>
@@ -183,8 +183,8 @@ export function SearchBoxVisits({ userChoice, handleChange, handleSearch }) {
                 <option value="insuranceID">Insurance ID</option>
                 <option value="patientFullName">Patient First & Last Name</option>
             </select>
-            <input type="search" placeholder="Search Visits"  value = {searchValue} onChange = {handleInputChange} />
-            <button onClick = {() => handleSearch(searchValue)}>Search</button>
+            <input type="search" placeholder="Search Visits" value={searchValue} onChange={handleInputChange} />
+            <button onClick={() => handleSearch(searchValue)}>Search</button>
         </div>
     );
 }
