@@ -6,6 +6,7 @@ Code adapted to work with group 70's project.
 
 import React from 'react';
 import axios from "axios";
+import moment from "moment";
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
@@ -129,7 +130,7 @@ function VisitsPage() {
                             {data.map((item, index) => (
                                 <tr key={index}>
                                     <th>{item.visitID}</th>
-                                    <th>{item.visitDateTime}</th>
+                                    <th>{moment(item.visitDateTime).utc().format("YYYY-MM-DD (HH:mm:ss)")}</th>
                                     <th>{item.providerID}</th>
                                     <th>{item.patientID}</th>
                                     <th>{item.insuranceID}</th>

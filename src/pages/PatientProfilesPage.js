@@ -6,6 +6,7 @@ Code adapted to work with group 70's project.
 
 import React from 'react';
 import axios from "axios";
+import moment from "moment";
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
@@ -121,7 +122,7 @@ function PatientProfilesPage() {
                                     <th>{item.patientProfileID}</th>
                                     <th>{item.patientPhoneNumber}</th>
                                     <th>{item.emailAddress}</th>
-                                    <th>{item.dateOfBirth}</th>
+                                    <th>{moment(item.dateOfBirth).utc().format('YYYY-MM-DD')}</th>
                                     <th>{item.patientID}</th>
                                     <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.patientID)} /></th>
                                     <th><Link to={`/sqlDataUpdatePatientProfiles/${item.patientID}`}><RiEdit2Fill/></Link></th>
@@ -151,7 +152,7 @@ function PatientProfilesPage() {
                         </div>
                         <div className="form-row">
                             <label for="dateOfBirth">Date of Birth: </label>
-                            <input type="text" name="dateOfBirth" id="dateOfBirth" onChange = {handleInsertData} required />
+                            <input type="date" name="dateOfBirth" id="dateOfBirth" onChange = {handleInsertData} required />
                         </div>
                         <br />
                         <button className="add-button" onClick = {submitNewData}>Add</button>
