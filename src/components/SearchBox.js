@@ -29,7 +29,6 @@ export function SearchBoxPatientIndex({ userChoice, handleChange, handleSearch }
         <div className="search-box">
             <select name="selectPatient" value={userChoice} onChange={handleChange}>
                 <option value="" selected disabled hidden>Search by Attribute</option>
-                <option value="patientID">Patient ID</option>
                 <option value="patientFirstName">First Name</option>
                 <option value="patientLastName">Last Name</option>
                 <option value="patientFullName">Patient First & Last Name</option>
@@ -53,7 +52,6 @@ export function SearchBoxPatientProfiles({ userChoice, handleChange, handleSearc
         <div className="search-box">
             <select name="selectPatientProfile" value={userChoice} onChange={handleChange}>
                 <option value="" selected disabled hidden>Search by Attribute</option>
-                <option value="patientProfileID">Patient Profile ID</option>
                 <option value="patientPhoneNumber">Phone Number</option>
                 <option value="emailAddress">Email Address</option>
                 <option value="dateOfBirth">Date of Birth</option>
