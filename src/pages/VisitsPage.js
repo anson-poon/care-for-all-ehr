@@ -1,13 +1,80 @@
-// Create Visits page that incorporates sample data from data directory
+/* 
+Creates Visits page with working SELECT and INSERT methods.
+Code citation:  Code to implement INSERT learned from https://github.com/safak/youtube2022/tree/react-mysql. 
+Code adapted to work with group 70's project.
+*/
 
 import React from 'react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import patientData from '../data/patientData';
 import { SearchBoxVisits } from '../components/SearchBox';
-import visitData from '../data/visitData';
+import { redirect } from 'react-router-dom';
 
 function VisitsPage() {
+
+        // implement SELECT to obtain all records for Visits
+        const [data, setData] = useState([]);   // Initialize state to hold fetched data
+
+        // Fetch data from the database
+        useEffect(() => {
+            fetchData();
+        }, []);
+    
+        const fetchData = async () => {
+            try {
+                // fetch data from sqlData route
+                const response = await axios.get('/sqlData/?table=Visits');
+                // Set the fetched data to state
+                setData(response.data); 
+            } catch (err) {
+                console.error('Error fetching data:', err);
+            }
+        };
+    
+        // implement SELECT to obtain records based on a user's criteria for attributes
+        const [userChoice, setUserChoice] = useState('');
+    
+        const handleChange = (choice) => {
+            setUserChoice(choice.target.value);
+        }
+    
+        const handleSearch = async (userInput) => {
+            try {
+                const response = await axios.get(`/sqlData/searchVisits/?userChoice=${userChoice}&userInput=${userInput}`);
+                setData(response.data); 
+            } catch (err) {
+                console.error('Error fetching data:', err);
+            }
+        }
+    
+        // implements INSERT to process new data 
+        // Code to implement INSERT learned from https://github.com/safak/youtube2022/tree/react-mysql. 
+        // create object to hold patient attributes
+        const [attributes, setAttributes] = useState({
+            visitID: "",
+            visitDateTime: "",
+            providerID: "",
+            patientID: "",
+            insuranceID: "",
+        });
+        // obtain attributes for new entry
+        const handleInsertData = (newValues) => {
+            setAttributes((currentValues)=>({ ...currentValues, [newValues.target.name]:newValues.target.value}));
+        };
+        // handle submission of new data (attributes)
+        const submitNewData = async (submit) => {
+            submit.preventDefault()
+            try {
+                await axios.post("/sqlDataInsertVisits", attributes);
+                window.location.reload();
+            } catch (err) {
+                console.error("Error adding data:", err);
+            }
+        };
+
     return (
         <div>
             <h3>Visits</h3>
@@ -22,8 +89,11 @@ function VisitsPage() {
                 <p>Failure to meet these requirements will result in an error if the creation of the new visit is attempted.</p>
                 <p><b>Special Note</b>:  When a provider is selected, then the appropriate form will automatically generate the patients that have a relationship with the provider. Then once the patient is selected, then the form will also automatically generate insurance policies that have been associated with the specific patient.</p>
             </div>
-            <SearchBoxVisits />
-            <button className="SELECT-button">Refresh Visits</button>
+            <SearchBoxVisits 
+                userChoice={userChoice} 
+                handleChange={handleChange} 
+                handleSearch={handleSearch} />
+            <button className="SELECT-button" onClick={fetchData}>Refresh Visits</button>
             <div className="flex-container">
                 <div className="flex-column1">
                     <table id="visits">
@@ -37,10 +107,10 @@ function VisitsPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {visitData.map((item, index) => (
+                            {data.map((item, index) => (
                                 <tr key={index}>
                                     <th>{item.visitID}</th>
-                                    <th>{item.dateTime}</th>
+                                    <th>{item.visitDateTime}</th>
                                     <th>{item.providerID}</th>
                                     <th>{item.patientID}</th>
                                     <th>{item.insuranceID}</th>
@@ -53,32 +123,38 @@ function VisitsPage() {
                     <form action="" method="get" className="add-form">
                         <h4>Add a New Visit</h4>
                         <div className="form-row">
-                            <label for="visitDateTime">Date and Time: </label>
-                            <input type="datetime-local" name="visitDateTime" id="visitDateTime" required />
+                            <label for="visitDateTime">Date & Time of Visit: </label>
+                            <input type="text" name="visitDateTime" id="visitDateTime" onChange = {handleInsertData} required />
                         </div>
                         <div className="form-row">
-                            <label for="providerID">Provider ID:  </label>
-                            <select name="providerID">
-                                <option value="5">5 (Avery)</option>
-                                <option value="6">6 (Roy)</option>
-                            </select>
+                        <label for="providerID">Provider ID: </label>        
+                        <select name="providerID" id="providerID" onChange = {handleInsertData} required>
+                            <option value="" selected disabled hidden>Choose Attribute</option>
+                            {data.map((item, index) => (
+                                <option value={item.providerID}>{item.providerID}</option>
+                            ))}
+                        </select>
                         </div>
                         <div className="form-row">
-                            <label for="patientID">Patient ID:  </label>
-                            <select name="patientID">
-                                <option value="0">0 (James)</option>
-                                <option value="1">1 (Mary)</option>
-                            </select>
+                        <label for="patientID">Patient ID: </label>    
+                        <select name="patientID" id="patientID" onChange = {handleInsertData} required>
+                            <option value="" selected disabled hidden>Choose Attribute</option>
+                            {data.map((item, index) => (
+                                <option value={item.patientID}>{item.patientID}</option>
+                            ))}
+                        </select>
                         </div>
                         <div className="form-row">
-                            <label for="insuranceID">Insurance ID: </label>
-                            <select name="insuranceID">
-                                <option value="11">11 (Anthem PPO)</option>
-                                <option value="14">14 (Blue Cross Blue Shield HMO)</option>
-                            </select>
+                        <label for="insuranceID">Insurance ID: </label>
+                        <select name="insuranceID" id="insuranceID" onChange = {handleInsertData} required>
+                            <option value="" selected disabled hidden>Choose Attribute</option>
+                            {data.map((item, index) => (
+                                <option value={item.insuranceID}>{item.insuranceID}</option>
+                            ))}
+                        </select>
                         </div>
                         <br />
-                        <button className="add-button">Add</button>
+                        <button className="add-button" onClick = {submitNewData}>Add</button>
                     </form>
                 </div>
             </div>
