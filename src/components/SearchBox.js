@@ -157,19 +157,27 @@ export function SearchBoxPatientProviderRelationships({ userChoice, handleChange
 };
 
 // search box for Visits page
-export function SearchBoxVisits() {
+export function SearchBoxVisits({ userChoice, handleChange, handleSearch }) {
+    const [searchValue, setSearchValue] = useState('');
+
+    // handle user input
+    const handleInputChange = (event) => {
+        setSearchValue(event.target.value);
+    };
+
     return (
         <div className="search-box">
-            <select name="attributes" id="attributes">
+            <select name="attributes" id="attributes" value = {userChoice} onChange = {handleChange}>
+            <option value="" selected disabled hidden>Choose Attribute</option>
                 <option value="visitID">Visit ID</option>
-                <option value="dateTime">Date & Time</option>
+                <option value="visitDateTime">Date & Time</option>
                 <option value="providerID">Provider ID</option>
                 <option value="patientID">Patient ID</option>
                 <option value="insuranceID">Insurance ID</option>
                 <option value="patientFullName">Patient First & Last Name</option>
             </select>
-            <input type="search" placeholder="Search Visits" />
-            <button>Search</button>
+            <input type="search" placeholder="Search Visits"  value = {searchValue} onChange = {handleInputChange} />
+            <button onClick = {() => handleSearch(searchValue)}>Search</button>
         </div>
     );
 }

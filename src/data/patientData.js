@@ -1,4 +1,4 @@
-const patientData = [
+/*const patientData = [
     {
       patientProfileID: 1,
       patientFirstName: 'James',
@@ -91,5 +91,5 @@ const patientData = [
     }
   ];
   
-  export default patientData;
+  export default patientData;*/
   
