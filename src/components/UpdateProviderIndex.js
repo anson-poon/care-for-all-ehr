@@ -80,7 +80,6 @@ function UpdateProviderIndexPage() {
           <label for="providerLastName">Last Name:</label>
           <input type="text" name="providerLastName" id="providerLastName" value={providerName.providerLastName} onChange={setUpdateValues} />
         </div>
-        <p>{providerData.providerFirstName}</p>
         <br />
         <button className="add-button" onClick={handleSubmissionOfUpdate}>Submit</button>             <button className="add-button" onClick={() => goBackToProviderIndex("/providerindex")}>Cancel</button>
       </form>
