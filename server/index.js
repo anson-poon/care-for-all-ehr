@@ -148,9 +148,9 @@ app.get('/sqlData/searchInsurancePolicies', (req, res) => {
             break;
         case 'patientFullName':
             const newPatientUserInput = userInput.split(' ');
-            query = 'SELECT insuranceID, insuranceType, CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID FROM InsurancePolicies JOIN Patients ON InsurancePolicies.patientID = Patients.patientID WHERE Patients.patientFirstName = ? and Patients.patientLastName = ?';            
+            query = 'SELECT insuranceID, insuranceType, CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID FROM InsurancePolicies JOIN Patients ON InsurancePolicies.patientID = Patients.patientID WHERE Patients.patientFirstName = ? and Patients.patientLastName = ?';
             queryParams.push(newPatientUserInput[0], newPatientUserInput[1])
-            break;    
+            break;
         default:
             return res.status(400).json({ error: 'Invalid search query' });
     }
@@ -171,6 +171,7 @@ app.get('/sqlData/searchPatientProviderRelationships', (req, res) => {
     console.log(userInput);
 
     let queryParams = [];
+    let query = "";
 
     switch (userChoice) {
         case 'patientID':
@@ -183,14 +184,14 @@ app.get('/sqlData/searchPatientProviderRelationships', (req, res) => {
             break;
         case 'patientFullName':
             const newPatientUserInput = userInput.split(' ');
-            query = 'SELECT CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID, CONCAT(Providers.providerID, " ", "(", Providers.providerFirstName, " ", Providers.providerLastName, ")") as providerID FROM Patients JOIN Patients_has_Providers ON Patients.patientID = Patients_has_Providers.patientID JOIN Providers ON Providers.providerID = Patients_has_Providers.providerID WHERE Patients.patientFirstName = ? and Patients.patientLastName = ?';            
+            query = 'SELECT CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID, CONCAT(Providers.providerID, " ", "(", Providers.providerFirstName, " ", Providers.providerLastName, ")") as providerID FROM Patients JOIN Patients_has_Providers ON Patients.patientID = Patients_has_Providers.patientID JOIN Providers ON Providers.providerID = Patients_has_Providers.providerID WHERE Patients.patientFirstName = ? and Patients.patientLastName = ?';
             queryParams.push(newPatientUserInput[0], newPatientUserInput[1])
-            break;    
+            break;
         case 'providerFullName':
             const newProviderUserInput = userInput.split(' ');
             query = 'SELECT CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID, CONCAT(Providers.providerID, " ", "(", Providers.providerFirstName, " ", Providers.providerLastName, ")") as providerID FROM Patients JOIN Patients_has_Providers ON Patients.patientID = Patients_has_Providers.patientID JOIN Providers ON Providers.providerID = Patients_has_Providers.providerID WHERE Providers.providerFirstName = ? and Providers.providerLastName = ?';
             queryParams.push(newProviderUserInput[0], newProviderUserInput[1])
-            break; 
+            break;
         default:
             return res.status(400).json({ error: 'Invalid search query' });
     }
@@ -415,9 +416,9 @@ app.get('/sqlData/searchVisits', (req, res) => {
             break;
         case 'patientFullName':
             const newPatientUserInput = userInput.split(' ');
-            query += 'Patients.patientFirstName = ? AND Patients.patientLastName = ?';            
+            query += 'Patients.patientFirstName = ? AND Patients.patientLastName = ?';
             queryParams.push(newPatientUserInput[0], newPatientUserInput[1])
-            break;    
+            break;
         default:
             return res.status(400).json({ error: 'Invalid search query' });
     }
@@ -608,7 +609,7 @@ app.put("/sqlDataUpdatePHP/:patientID/:providerID", (req, res) => {
 PatientIndex Page:  Logic to INSERT, or add, a new record to entity
 Code citation:  Technique Group 70 used to learn to insert data credited to https://github.com/safak/youtube2022/tree/react-mysql
 */
-app.post("/sqlDataInsert",(req,res)=>{
+app.post("/sqlDataInsert", (req, res) => {
     let patientID = req.body.patientID;
     let patientFirstName = req.body.patientFirstName;
     let patientLastName = req.body.patientLastName;
@@ -626,8 +627,8 @@ app.post("/sqlDataInsert",(req,res)=>{
 PatientProfiles Page:  Logic to INSERT, or add, a new record to entity
 Code citation:  Technique Group 70 used to learn to insert data credited to https://github.com/safak/youtube2022/tree/react-mysql
 */
-app.post("/sqlDataInsertPatientProfiles",(req,res)=>{
-    let query ="INSERT INTO PatientProfiles (patientProfileID, patientPhoneNumber, emailAddress, dateOfBirth, patientID) VALUES (?)";
+app.post("/sqlDataInsertPatientProfiles", (req, res) => {
+    let query = "INSERT INTO PatientProfiles (patientProfileID, patientPhoneNumber, emailAddress, dateOfBirth, patientID) VALUES (?)";
     let attributes = [
         req.body.patientProfileID,
         req.body.patientPhoneNumber,
@@ -635,13 +636,13 @@ app.post("/sqlDataInsertPatientProfiles",(req,res)=>{
         req.body.dateOfBirth,
         req.body.patientID
     ]
-    db.pool.query(query,[attributes],(err,data)=>{
-        if(err) {
+    db.pool.query(query, [attributes], (err, data) => {
+        if (err) {
             res.status(500).json({ error: 'Failed to delete data' });
-        } else {    
-            console.log("INSERT INTO PatientProfiles (patientID, patientPhoneNumber, emailAddress, dateOfBirth) VALUES (" 
-            + req.body.patientID + ", " + req.body.patientPhoneNumber + ", " + req.body.emailAddress + ", " + req.body.dateOfBirth + ")");
-            return res.json({data});
+        } else {
+            console.log("INSERT INTO PatientProfiles (patientID, patientPhoneNumber, emailAddress, dateOfBirth) VALUES ("
+                + req.body.patientID + ", " + req.body.patientPhoneNumber + ", " + req.body.emailAddress + ", " + req.body.dateOfBirth + ")");
+            return res.json({ data });
         }
     })
 });
@@ -650,19 +651,19 @@ app.post("/sqlDataInsertPatientProfiles",(req,res)=>{
 Patients_has_Providers Page:  Logic to INSERT, or add, a new record to entity
 Code citation:  Technique Group 70 used to learn to insert data credited to https://github.com/safak/youtube2022/tree/react-mysql
 */
-app.post("/sqlDataInsertPatientHasProviders",(req,res)=>{
-    let query ="INSERT INTO Patients_has_Providers (patientID, providerID) VALUES (?)";
+app.post("/sqlDataInsertPatientHasProviders", (req, res) => {
+    let query = "INSERT INTO Patients_has_Providers (patientID, providerID) VALUES (?)";
     let attributes = [
         req.body.patientID,
         req.body.providerID,
     ]
-    db.pool.query(query,[attributes],(err,data)=>{
-        if(err) {
+    db.pool.query(query, [attributes], (err, data) => {
+        if (err) {
             res.status(500).json({ error: 'Failed to delete data' });
-        } else {    
-            console.log("INSERT INTO Patients_has_Providers (patientID, providerID) VALUES (" 
-            + req.body.patientID + ", " + req.body.providerID + ")");
-            return res.json({data});
+        } else {
+            console.log("INSERT INTO Patients_has_Providers (patientID, providerID) VALUES ("
+                + req.body.patientID + ", " + req.body.providerID + ")");
+            return res.json({ data });
         }
     })
 });
@@ -671,8 +672,8 @@ app.post("/sqlDataInsertPatientHasProviders",(req,res)=>{
 ProviderProfiles Page:  Logic to INSERT, or add, a new record to entity
 Code citation:  Technique Group 70 used to learn to insert data credited to https://github.com/safak/youtube2022/tree/react-mysql
 */
-app.post("/sqlDataInsertProviderProfiles",(req,res)=>{
-    let query ="INSERT INTO ProviderProfiles (providerProfileID, title, specialty, providerPhoneNumber, providerID) VALUES (?)";
+app.post("/sqlDataInsertProviderProfiles", (req, res) => {
+    let query = "INSERT INTO ProviderProfiles (providerProfileID, title, specialty, providerPhoneNumber, providerID) VALUES (?)";
     let attributes = [
         req.body.providerProfileID,
         req.body.title,
@@ -680,13 +681,13 @@ app.post("/sqlDataInsertProviderProfiles",(req,res)=>{
         req.body.providerPhoneNumber,
         req.body.providerID
     ]
-    db.pool.query(query,[attributes],(err,data)=>{
-        if(err) {
+    db.pool.query(query, [attributes], (err, data) => {
+        if (err) {
             res.status(500).json({ error: 'Failed to delete data' });
-        } else {    
-            console.log("INSERT INTO ProviderProfiles (providerID, title, specialty, providerPhoneNumber) VALUES (" 
-            + req.body.providerID + ", " + req.body.title + ", " + req.body.specialty + ", " + req.body.providerPhoneNumber + ")");
-            return res.json({data});
+        } else {
+            console.log("INSERT INTO ProviderProfiles (providerID, title, specialty, providerPhoneNumber) VALUES ("
+                + req.body.providerID + ", " + req.body.title + ", " + req.body.specialty + ", " + req.body.providerPhoneNumber + ")");
+            return res.json({ data });
         }
     })
 });
@@ -695,7 +696,7 @@ app.post("/sqlDataInsertProviderProfiles",(req,res)=>{
 ProviderIndex Page:  Logic to INSERT, or add, a new record based on providerID
 Code citation:  Code modified from base of INSERT code for Patient Index page
 */
-app.post("/sqlDataInsertPI",(req,res)=>{
+app.post("/sqlDataInsertPI", (req, res) => {
     let providerID = req.body.providerID;
     let providerFirstName = req.body.providerFirstName;
     let providerLastName = req.body.providerLastName;
@@ -713,7 +714,7 @@ app.post("/sqlDataInsertPI",(req,res)=>{
 Visits Page:  Logic to INSERT, or add, a new visit 
 Code citation:  Code modified from base of INSERT code for Patient Index page
 */
-app.post("/sqlDataInsertVisits",(req,res)=>{
+app.post("/sqlDataInsertVisits", (req, res) => {
     let attributes = [
         req.body.visitID,
         req.body.visitDateTime,
@@ -722,12 +723,12 @@ app.post("/sqlDataInsertVisits",(req,res)=>{
         req.body.insuranceID
     ]
     let query = 'INSERT INTO Visits (visitID, visitDateTime, providerID, patientID, insuranceID) VALUES (?)';
-    db.pool.query(query, [attributes], (err,data)=>{
-        if(err) {
+    db.pool.query(query, [attributes], (err, data) => {
+        if (err) {
             res.status(500).json({ error: 'Failed to delete data' });
-        } else {    
-            console.log("INSERT INTO Visits (visitDateTime, providerID, patientID, insuranceID) VALUES (" + req.body.visitDateTime + ", " + req.body.providerID + ", " + req.body.patientID + ", " + req.body.insuranceID +")");
-            return res.json({data});
+        } else {
+            console.log("INSERT INTO Visits (visitDateTime, providerID, patientID, insuranceID) VALUES (" + req.body.visitDateTime + ", " + req.body.providerID + ", " + req.body.patientID + ", " + req.body.insuranceID + ")");
+            return res.json({ data });
         }
     })
 });
@@ -736,19 +737,19 @@ app.post("/sqlDataInsertVisits",(req,res)=>{
 Insurance Policy Page:  Logic to INSERT, or add, a new insurance policy 
 Code citation:  Code modified from base of INSERT code for Patient Index page
 */
-app.post("/sqlDataInsertInsurancePolicies",(req,res)=>{
+app.post("/sqlDataInsertInsurancePolicies", (req, res) => {
     let attributes = [
         req.body.insuranceID,
         req.body.insuranceType,
         req.body.patientID
     ]
     let query = 'INSERT INTO InsurancePolicies (insuranceID, insuranceType, patientID) VALUES (?)';
-    db.pool.query(query, [attributes], (err,data)=>{
-        if(err) {
+    db.pool.query(query, [attributes], (err, data) => {
+        if (err) {
             res.status(500).json({ error: 'Failed to delete data' });
-        } else {    
+        } else {
             console.log("INSERT INTO InsurancePolicies (insuranceID, insuranceType, patientID) VALUES (" + req.body.insuranceID + ", " + req.body.insuranceType + ", " + req.body.patientID + ")");
-            return res.json({data});
+            return res.json({ data });
         }
     })
 });
@@ -757,20 +758,20 @@ app.post("/sqlDataInsertInsurancePolicies",(req,res)=>{
 Insurance Notes Page:  Logic to INSERT, or add, a new insurance note 
 Code citation:  Code modified from base of INSERT code for Patient Index page
 */
-app.post("/sqlDataInsertInsuranceNotes",(req,res)=>{
+app.post("/sqlDataInsertInsuranceNotes", (req, res) => {
     let attributes = [
         req.body.insuranceNoteID,
         req.body.reimbursementCode,
         req.body.visitID
     ]
     let query = 'INSERT INTO InsuranceNotes (insuranceNoteID, reimbursementCode, visitID) VALUES (?)';
-    db.pool.query(query, [attributes], (err,data)=>{
-        if(err) {
+    db.pool.query(query, [attributes], (err, data) => {
+        if (err) {
             console.log(err)
             res.status(500).json({ error: 'Failed to delete data' });
-        } else {    
+        } else {
             console.log("INSERT INTO InsuranceNotes (insuranceNoteID, reimbursementCode, visitID) VALUES (" + req.body.insuranceNoteID + ", " + req.body.reimbursementCode + ", " + req.body.visitID + ")");
-            return res.json({data});
+            return res.json({ data });
         }
     })
 });

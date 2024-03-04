@@ -5,7 +5,6 @@ import axios from "axios";
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
-import patientData from '../data/patientData';
 import { SearchBoxInsuranceNotes } from '../components/SearchBox';
 import { SearchDropdown } from '../components/SearchDropdown';
 import { redirect } from 'react-router-dom';
@@ -22,7 +21,7 @@ function InsuranceNotesPage() {
             // fetch data from sqlData route
             const response = await axios.get('/sqlData/searchVisitWithoutInsuranceNote');
             // Set the fetched data to state
-            setNote(response.data); 
+            setNote(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -41,7 +40,7 @@ function InsuranceNotesPage() {
             // fetch data from sqlData route
             const response = await axios.get('/sqlData/?table=InsuranceNotes');
             // Set the fetched data to state
-            setData(response.data); 
+            setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -57,7 +56,7 @@ function InsuranceNotesPage() {
     const handleSearch = async (userInput) => {
         try {
             const response = await axios.get(`/sqlData/searchInsuranceNotes/?userChoice=${userChoice}&userInput=${userInput}`);
-            setData(response.data); 
+            setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -81,11 +80,11 @@ function InsuranceNotesPage() {
     const [attributes, setAttributes] = useState({
         insuranceNoteID: "",
         reimbursementCode: "",
-        visitID: "", 
+        visitID: "",
     });
     // obtain attributes for new entry
     const handleInsertData = (newValues) => {
-        setAttributes((currentValues)=>({ ...currentValues, [newValues.target.name]:newValues.target.value}));
+        setAttributes((currentValues) => ({ ...currentValues, [newValues.target.name]: newValues.target.value }));
     };
     // handle submission of new data (attributes)
     const submitNewData = async (submit) => {
@@ -144,19 +143,19 @@ function InsuranceNotesPage() {
                         <h4>Add an Insurance Note for a New Visit</h4>
                         <div className="form-row">
                             <label for="reimbursementCode">Reimbursement Code: </label>
-                            <input type="text" name="reimbursementCode" id="reimbursementCode" onChange = {handleInsertData} required />
+                            <input type="text" name="reimbursementCode" id="reimbursementCode" onChange={handleInsertData} required />
                         </div>
                         <div className="form-row">
-                            <label for="visitID">Visit ID: </label>    
-                            <select name="visitID" id="visitID" onChange = {handleInsertData} required>
-                            <option value="" selected disabled hidden>Choose Attribute</option>
+                            <label for="visitID">Visit ID: </label>
+                            <select name="visitID" id="visitID" onChange={handleInsertData} required>
+                                <option value="" selected disabled hidden>Choose Attribute</option>
                                 {noNote.map((item, index) => (
                                     <option value={item.visitID}>{item.visitID}</option>
                                 ))}
                             </select>
                         </div>
                         <br />
-                        <button className="add-button" onClick = {submitNewData}>Add</button>
+                        <button className="add-button" onClick={submitNewData}>Add</button>
                     </form>
                 </div>
             </div>

@@ -11,6 +11,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import patientData from '../data/patientData';
 import { SearchBoxPatientIndex } from '../components/SearchBox';
+import { SearchDropdown } from '../components/SearchDropdown';
 import { redirect } from 'react-router-dom';
 
 // Page returns function to show Patient Index page
@@ -29,7 +30,7 @@ function PatientIndexPage() {
             // fetch data from sqlData route
             const response = await axios.get('/sqlData/?table=Patients');
             // Set the fetched data to state
-            setData(response.data); 
+            setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -45,23 +46,35 @@ function PatientIndexPage() {
     const handleSearch = async (userInput) => {
         try {
             const response = await axios.get(`/sqlData/searchPatient/?userChoice=${userChoice}&userInput=${userInput}`);
-            setData(response.data); 
+            setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
     }
 
+    // Handling search ID dropdown
+    const handleSelect = async (selectionValue) => {
+        try {
+            let searchRoute = "searchPatient";  // hardcoded to search from Patients
+            let selection = "patientID";        // hardcoded to search by patientID
+            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            setData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
     // implements INSERT to process new data 
     // Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     // create object to hold patient attributes
     const [attributes, setAttributes] = useState({
-        patientID:"",
-        patientFirstName:"",
-        patientLastName:"",
+        patientID: "",
+        patientFirstName: "",
+        patientLastName: "",
     });
     // obtain attributes for new entry
     const handleInsertData = (newValues) => {
-        setAttributes((currentValues)=>({ ...currentValues, [newValues.target.name]:newValues.target.value}));
+        setAttributes((currentValues) => ({ ...currentValues, [newValues.target.name]: newValues.target.value }));
     };
     // handle submission of new data (attributes)
     const submitNewData = async (submit) => {
@@ -81,7 +94,7 @@ function PatientIndexPage() {
         try {
             await axios.delete("/sqlDataDelete/" + patientID);
             window.location.reload()
-        } catch (err){
+        } catch (err) {
             console.error("Failed to delete data:", err);
         }
     };
@@ -100,10 +113,16 @@ function PatientIndexPage() {
                     Details of any visit the patient may have had with provider(s) will remain unchanged.
                 </p>
             </div>
-            <SearchBoxPatientIndex  
-                userChoice={userChoice} 
-                handleChange={handleChange} 
-                handleSearch={handleSearch} />
+            <div className='search-container'>
+                <SearchDropdown
+                    tableName="Patients"
+                    idProperty="patientID"
+                    onSelect={handleSelect} />
+                <SearchBoxPatientIndex
+                    userChoice={userChoice}
+                    handleChange={handleChange}
+                    handleSearch={handleSearch} />
+            </div>
             <button className="SELECT-button" onClick={fetchData}>Refresh List of Patients</button>
             <div className="flex-container">
                 <div className="flex-column1">
@@ -124,7 +143,7 @@ function PatientIndexPage() {
                                     <th>{item.patientFirstName}</th>
                                     <th>{item.patientLastName}</th>
                                     <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.patientID)} /></th>
-                                    <th><Link to={`/sqlDataUpdate/${item.patientID}`}><RiEdit2Fill/></Link></th>
+                                    <th><Link to={`/sqlDataUpdate/${item.patientID}`}><RiEdit2Fill /></Link></th>
                                 </tr>
                             ))}
                         </tbody>
@@ -135,14 +154,14 @@ function PatientIndexPage() {
                         <h4>Add a New Patient</h4>
                         <div className="form-row">
                             <label for="firstName">First Name: </label>
-                            <input type="text" name="patientFirstName" id="firstNname" onChange = {handleInsertData} required />
+                            <input type="text" name="patientFirstName" id="firstNname" onChange={handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="lastName">Last Name: </label>
-                            <input type="text" name="patientLastName" id="lastName" onChange = {handleInsertData} required />
+                            <input type="text" name="patientLastName" id="lastName" onChange={handleInsertData} required />
                         </div>
                         <br />
-                        <button className="add-button" onClick = {submitNewData}>Add</button>
+                        <button className="add-button" onClick={submitNewData}>Add</button>
                     </form>
                 </div>
             </div>

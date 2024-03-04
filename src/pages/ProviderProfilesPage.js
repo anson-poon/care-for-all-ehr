@@ -49,7 +49,7 @@ function ProviderProfilesPage() {
         fetchData('ProviderProfiles', setProviderProfileData);
         fetchData('Providers', setProviderData);
     }, []);
-    
+
     const fetchData = async (tableName, setData) => {
         try {
             // Fetch data from the specified table
