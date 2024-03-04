@@ -144,7 +144,7 @@ function VisitsPage() {
                         <h4>Add a New Visit</h4>
                         <div className="form-row">
                             <label for="visitDateTime">Date & Time of Visit: </label>
-                            <input type="text" name="visitDateTime" id="visitDateTime" onChange={handleInsertData} required />
+                            <input type="datetime-local" name="visitDateTime" id="visitDateTime" onChange={handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="providerID">Provider ID: </label>
