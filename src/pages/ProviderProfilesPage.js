@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import { SearchBoxProviderProfiles } from '../components/SearchBox';
-import providerData from '../data/providerData';
+import { SearchDropdown } from '../components/SearchDropdown';
 
 
 function ProviderProfilesPage() {
@@ -19,15 +19,15 @@ function ProviderProfilesPage() {
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     // create object to hold provider attributes
     const [attributes, setAttributes] = useState({
-        providerProfileID:"",
-        title:"",
-        specialty:"",
-        providerPhoneNumber:"",
-        providerID:"",
+        providerProfileID: "",
+        title: "",
+        specialty: "",
+        providerPhoneNumber: "",
+        providerID: "",
     });
     // obtain attributes for new entry
     const handleInsertData = (newValues) => {
-        setAttributes((currentValues)=>({ ...currentValues, [newValues.target.name]:newValues.target.value}));
+        setAttributes((currentValues) => ({ ...currentValues, [newValues.target.name]: newValues.target.value }));
     };
     // obtain attributes for new entry
     const submitNewData = async (submit) => {
@@ -39,22 +39,23 @@ function ProviderProfilesPage() {
             console.error("Error adding data:", err);
         }
     };
-    
+
     // SELECT FROM ProviderProfiles
     const [providerProfileData, setProviderProfileData] = useState([]);   // Initialize state to hold fetched data
-    
+
     // SELECT FROM Provider (for Inserting ID)
     const [providerData, setProviderData] = useState([]);
     useEffect(() => {
         fetchData('ProviderProfiles', setProviderProfileData);
         fetchData('Providers', setProviderData);
     }, []);
+    
     const fetchData = async (tableName, setData) => {
         try {
             // Fetch data from the specified table
             const response = await axios.get(`/sqlData/?table=${tableName}`);
             // Set the fetched data to state
-            setData(response.data); 
+            setData(response.data);
         } catch (err) {
             console.error(`Error fetching ${tableName} data:`, err);
         }
@@ -68,11 +69,23 @@ function ProviderProfilesPage() {
     const handleSearch = async (userInput) => {
         try {
             const response = await axios.get(`/sqlData/searchProviderProfiles?userChoice=${userChoice}&userInput=${userInput}`);
-            setProviderProfileData(response.data); 
+            setProviderProfileData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
     }
+
+    // Handling search ID dropdown
+    const handleSelect = async (selectionValue) => {
+        try {
+            let searchRoute = "searchProviderProfiles"; // hardcoded to search from ProviderProfiles
+            let selection = "providerProfileID";        // hardcoded to search by providerProfileID
+            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            setProviderProfileData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
 
     // DELETE FROM ProviderProfiles WHERE providerID = ?
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
@@ -80,7 +93,7 @@ function ProviderProfilesPage() {
         try {
             await axios.delete("/sqlDataDeleteProviderProfiles/" + providerID);
             window.location.reload()
-        } catch (err){
+        } catch (err) {
             console.error("Failed to delete data:", err);
         }
     };
@@ -95,10 +108,16 @@ function ProviderProfilesPage() {
                 <p>This page also allows you to <b>delete</b> information for each provider from the MySQL database.</p>
                 <p>Lastly, this page also allows you to update update for each provider, including the ability to set Title, Specialty, and Phone Number as <b>NULL</b>.</p>
             </div>
-            <SearchBoxProviderProfiles 
-                userChoice={userChoice} 
-                handleChange={handleChange} 
-                handleSearch={handleSearch} />
+            <div className='search-container'>
+                <SearchDropdown
+                    tableName="ProviderProfiles"
+                    idProperty="providerProfileID"
+                    onSelect={handleSelect} />
+                <SearchBoxProviderProfiles
+                    userChoice={userChoice}
+                    handleChange={handleChange}
+                    handleSearch={handleSearch} />
+            </div>
             <button className="SELECT-button" onClick={() => fetchData('ProviderProfiles', setProviderProfileData)}>Refresh Provider Profiles</button>
             <div className="flex-container">
                 <div className="flex-column1">
@@ -123,7 +142,7 @@ function ProviderProfilesPage() {
                                     <th>{item.providerPhoneNumber}</th>
                                     <th>{item.providerID}</th>
                                     <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.providerID)} /></th>
-                                    <th><Link to={`/sqlDataUpdateProviderProfiles/${item.providerID}`}><RiEdit2Fill/></Link></th>
+                                    <th><Link to={`/sqlDataUpdateProviderProfiles/${item.providerID}`}><RiEdit2Fill /></Link></th>
                                 </tr>
                             ))}
                         </tbody>
@@ -131,10 +150,10 @@ function ProviderProfilesPage() {
                 </div>
                 <div className="flex-column2">
                     <form action="" method="get" className="add-form">
-                    <h4>Add Provider Profile:</h4>
+                        <h4>Add Provider Profile:</h4>
                         <div className="form-row">
                             <label for="providerID">Provider ID: </label>
-                            <select name="providerID" id="providerID" onChange = {handleInsertData} required>
+                            <select name="providerID" id="providerID" onChange={handleInsertData} required>
                                 {providerData.map((item, index) => (
                                     <option value={item.providerID}>{item.providerID}</option>
                                 ))}
@@ -142,18 +161,18 @@ function ProviderProfilesPage() {
                         </div>
                         <div className="form-row">
                             <label for="title">Title: </label>
-                            <input type="text" name="title" id="title" onChange = {handleInsertData} required />
+                            <input type="text" name="title" id="title" onChange={handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="specialty">Specialty: </label>
-                            <input type="text" name="specialty" id="specialty" onChange = {handleInsertData} required />
+                            <input type="text" name="specialty" id="specialty" onChange={handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="providerPhoneNumber">Phone Number: </label>
-                            <input type="text" name="providerPhoneNumber" id="providerPhoneNumber" onChange = {handleInsertData} required />
+                            <input type="text" name="providerPhoneNumber" id="providerPhoneNumber" onChange={handleInsertData} required />
                         </div>
                         <br />
-                        <button className="add-button" onClick = {submitNewData}>Add</button>
+                        <button className="add-button" onClick={submitNewData}>Add</button>
                     </form>
                 </div>
             </div>

@@ -6,10 +6,13 @@ Code adapted to work with group 70's project.
 
 import React from 'react';
 import axios from "axios";
+import moment from "moment";
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import { SearchBoxPatientProfiles } from '../components/SearchBox';
+import { SearchDown } from '../components/SearchDropdown';
+import { SearchDropdown } from '../components/SearchDropdown';
 
 // Page returns function that shows patients table
 function PatientProfilesPage() {
@@ -18,15 +21,15 @@ function PatientProfilesPage() {
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     // create object to hold patient attributes
     const [attributes, setAttributes] = useState({
-        patientProfileID:"",
-        patientPhoneNumber:"",
-        emailAddress:"",
-        dateOfBirth:"",
-        patientID:"",
+        patientProfileID: "",
+        patientPhoneNumber: "",
+        emailAddress: "",
+        dateOfBirth: "",
+        patientID: "",
     });
     // obtain attributes for new entry
     const handleInsertData = (newValues) => {
-        setAttributes((currentValues)=>({ ...currentValues, [newValues.target.name]:newValues.target.value}));
+        setAttributes((currentValues) => ({ ...currentValues, [newValues.target.name]: newValues.target.value }));
     };
     // handle submission of new data (attributes)
     const submitNewData = async (submit) => {
@@ -41,7 +44,7 @@ function PatientProfilesPage() {
 
     // SELECT FROM PatientProfiles
     const [patientProfileData, setPatientProfilesData] = useState([]);   // Initialize state to hold fetched data
-    
+
     // SELECT FROM Patient (for Inserting ID)
     const [patientsData, setPatientsData] = useState([]);
     useEffect(() => {
@@ -53,7 +56,7 @@ function PatientProfilesPage() {
             // Fetch data from the specified table
             const response = await axios.get(`/sqlData/?table=${tableName}`);
             // Set the fetched data to state
-            setData(response.data); 
+            setData(response.data);
         } catch (err) {
             console.error(`Error fetching ${tableName} data:`, err);
         }
@@ -67,11 +70,24 @@ function PatientProfilesPage() {
     const handleSearch = async (userInput) => {
         try {
             const response = await axios.get(`/sqlData/searchPatientProfiles/?userChoice=${userChoice}&userInput=${userInput}`);
-            setPatientProfilesData(response.data); 
+            setPatientProfilesData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
     }
+
+    // Handling search ID dropdown
+    const handleSelect = async (selectionValue) => {
+        try {
+            let searchRoute = "searchPatientProfiles"; // hardcoded to search from ProviderProfiles
+            let selection = "patientProfileID";        // hardcoded to search by providerProfileID
+            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            setPatientProfilesData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
 
     // DELETE FROM PatientProfiles WHERE patientID = ?
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
@@ -79,7 +95,7 @@ function PatientProfilesPage() {
         try {
             await axios.delete("/sqlDataDeletePatientProfiles/" + patientID);
             window.location.reload()
-        } catch (err){
+        } catch (err) {
             console.error("Failed to delete data:", err);
         }
     };
@@ -94,10 +110,17 @@ function PatientProfilesPage() {
                 <p>This page also allows you to <b>delete</b> information for each patient from the MySQL database.</p>
                 <p>Lastly, this page also allows you to update update for each patient, including the ability to set Phone Number, Email Address, and Date of Birth as <b>NULL</b>.</p>
             </div>
-            <SearchBoxPatientProfiles 
-                userChoice={userChoice} 
-                handleChange={handleChange} 
-                handleSearch={handleSearch} />
+
+            <div className='search-container'>
+                <SearchDropdown
+                    tableName="PatientProfiles"
+                    idProperty="patientProfileID"
+                    onSelect={handleSelect} />
+                <SearchBoxPatientProfiles
+                    userChoice={userChoice}
+                    handleChange={handleChange}
+                    handleSearch={handleSearch} />
+            </div>
             <button className="SELECT-button" onClick={() => fetchData('PatientProfiles', setPatientProfilesData)}>Refresh Patient Profiles</button>
             <div className="flex-container">
                 <div className="flex-column1">
@@ -119,10 +142,10 @@ function PatientProfilesPage() {
                                     <th>{item.patientProfileID}</th>
                                     <th>{item.patientPhoneNumber}</th>
                                     <th>{item.emailAddress}</th>
-                                    <th>{item.dateOfBirth}</th>
+                                    <th>{moment(item.dateOfBirth).utc().format('YYYY-MM-DD')}</th>
                                     <th>{item.patientID}</th>
                                     <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.patientID)} /></th>
-                                    <th><Link to={`/sqlDataUpdatePatientProfiles/${item.patientID}`}><RiEdit2Fill/></Link></th>
+                                    <th><Link to={`/sqlDataUpdatePatientProfiles/${item.patientID}`}><RiEdit2Fill /></Link></th>
                                 </tr>
                             ))}
                         </tbody>
@@ -133,7 +156,7 @@ function PatientProfilesPage() {
                         <h4>Add Patient Profile:</h4>
                         <div className="form-row">
                             <label for="patientID">Patient ID:</label>
-                            <select name="patientID" id="providerID" onChange = {handleInsertData} required>
+                            <select name="patientID" id="providerID" onChange={handleInsertData} required>
                                 {patientsData.map((item, index) => (
                                     <option value={item.patientID}>{item.patientID}</option>
                                 ))}
@@ -141,18 +164,18 @@ function PatientProfilesPage() {
                         </div>
                         <div className="form-row">
                             <label for="patientPhoneNumber">Phone Number: </label>
-                            <input type="text" name="patientPhoneNumber" id="patientPhoneNumber" onChange = {handleInsertData} required />
+                            <input type="text" name="patientPhoneNumber" id="patientPhoneNumber" onChange={handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="emailAddress">Email Address: </label>
-                            <input type="text" name="emailAddress" id="emailAddress" onChange = {handleInsertData} required />
+                            <input type="text" name="emailAddress" id="emailAddress" onChange={handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="dateOfBirth">Date of Birth: </label>
-                            <input type="text" name="dateOfBirth" id="dateOfBirth" onChange = {handleInsertData} required />
+                            <input type="date" name="dateOfBirth" id="dateOfBirth" onChange={handleInsertData} required />
                         </div>
                         <br />
-                        <button className="add-button" onClick = {submitNewData}>Add</button>
+                        <button className="add-button" onClick={submitNewData}>Add</button>
                     </form>
                 </div>
             </div>
