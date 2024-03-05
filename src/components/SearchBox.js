@@ -232,16 +232,23 @@ export function SearchBoxClinicalNotes({ userChoice, handleChange, handleSearch 
 }
 
 // search box for Clinical Findings page
-export function SearchBarClinicalFindings() {
+export function SearchBarClinicalFindings({ userChoice, handleChange, handleSearch }) {
+    const [searchValue, setSearchValue] = useState('');
+
+    // handle user input
+    const handleInputChange = (event) => {
+        setSearchValue(event.target.value);
+    };
     return (
         <div className="search-box">
-            <select name="attributes" id="attributes">
+            <select name="attributes" id="attributes" value={userChoice} onChange={handleChange}>
+                <option value="" selected disabled hidden>Search By Attribute</option>
                 <option value="clinicalFindingID">Clinical Finding ID</option>
                 <option value="clinicalNoteID">Clinical Note ID</option>
                 <option value="patientFullName">Patient First & Last Name</option>
             </select>
-            <input type="search" placeholder="Search Clinical Findings" />
-            <button>Search</button>
+            <input type="search" placeholder="Search Clinical Findings" value={searchValue} onChange={handleInputChange} />
+            <button onClick={() => handleSearch(searchValue)}>Search</button>
         </div>
     );
 }
