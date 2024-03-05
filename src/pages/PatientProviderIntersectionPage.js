@@ -8,6 +8,7 @@ import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import patientData from '../data/patientData';
 import { SearchBoxPatientProviderRelationships } from '../components/SearchBox';
 import { redirect } from 'react-router-dom';
+import { SearchDropdown } from '../components/SearchDropdown';
 
 
 function PatientProviderIntersectionPage() {
@@ -18,12 +19,12 @@ function PatientProviderIntersectionPage() {
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     // create object to hold patient attributes
     const [attributes, setAttributes] = useState({
-        patientID:"",
-        providerID:"",
+        patientID: "",
+        providerID: "",
     });
     // obtain attributes for new entry
     const handleInsertData = (newValues) => {
-        setAttributes((currentValues)=>({ ...currentValues, [newValues.target.name]:newValues.target.value}));
+        setAttributes((currentValues) => ({ ...currentValues, [newValues.target.name]: newValues.target.value }));
     };
     // handle submission of new data (attributes)
     const submitNewData = async (submit) => {
@@ -49,7 +50,7 @@ function PatientProviderIntersectionPage() {
             // fetch data from sqlData route
             const response = await axios.get('/sqlData/?table=Patients_has_Providers');
             // Set the fetched data to state
-            setData(response.data); 
+            setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -66,11 +67,23 @@ function PatientProviderIntersectionPage() {
         try {
             const response = await axios.get(`/sqlData/searchPatientProviderRelationships/?userChoice=${userChoice}&userInput=${userInput}`);
             console.log(response.data)
-            setData(response.data); 
+            setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
     }
+
+    // Handling search ID dropdown
+    const handleSelect = async (selectionValue) => {
+        try {
+            let searchRoute = "searchPatient";  // hardcoded to search from Patients
+            let selection = "patientID";        // hardcoded to search by patientID
+            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            setData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
 
     // DELETE FROM PatientProfiles WHERE patientID = ?
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
@@ -78,7 +91,7 @@ function PatientProviderIntersectionPage() {
         try {
             await axios.delete("/sqlDataDeletePHP/" + patientID + "/" + providerID);
             window.location.reload()
-        } catch (err){
+        } catch (err) {
             console.error("Failed to delete data:", err);
         }
     };
@@ -98,10 +111,16 @@ function PatientProviderIntersectionPage() {
                 </ol>
                 <p><b>Special Note</b>:  Once a relationship has been defined between a patient and a provider, then a visit entry can be created on List of Visits page to represent a visit occurred between the two entities.</p>
             </div>
-            <SearchBoxPatientProviderRelationships 
-                userChoice={userChoice} 
-                handleChange={handleChange} 
-                handleSearch={handleSearch} />
+            <div className='search-container'>
+                <SearchDropdown
+                    tableName="Patients_has_Providers"
+                    idProperty="patientID"
+                    onSelect={handleSelect} />
+                <SearchBoxPatientProviderRelationships
+                    userChoice={userChoice}
+                    handleChange={handleChange}
+                    handleSearch={handleSearch} />
+            </div>
             <button className="SELECT-button" onClick={fetchData}>Refresh Patient/Provider Relationships</button>
             <div className="flex-container">
                 <div className="flex-column1">
@@ -120,7 +139,7 @@ function PatientProviderIntersectionPage() {
                                     <th>{item.patientID}</th>
                                     <th>{item.providerID}</th>
                                     <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.patientID, item.providerID)} /></th>
-                                    <th><Link to={`/sqlDataUpdatePHP/${item.patientID}/${item.providerID}`}><RiEdit2Fill/></Link></th>
+                                    <th><Link to={`/sqlDataUpdatePHP/${item.patientID}/${item.providerID}`}><RiEdit2Fill /></Link></th>
                                 </tr>
                             ))}
                         </tbody>
@@ -130,21 +149,21 @@ function PatientProviderIntersectionPage() {
                     <form action="" method="get" className="add-form">
                         <h4>Add a Relationship Between a Patient and a Provider</h4>
                         <div className="form-row">
-                        <select name="patientID" id="providerID" onChange = {handleInsertData} required>
+                            <select name="patientID" id="providerID" onChange={handleInsertData} required>
                                 {data.map((item, index) => (
                                     <option value={item.patientID}>{item.patientID}</option>
                                 ))}
                             </select>
                         </div>
                         <div className="form-row">
-                        <select name="providerID" id="providerID" onChange = {handleInsertData} required>
+                            <select name="providerID" id="providerID" onChange={handleInsertData} required>
                                 {data.map((item, index) => (
                                     <option value={item.providerID}>{item.providerID}</option>
                                 ))}
                             </select>
                         </div>
                         <br />
-                        <button className="add-button" onClick = {submitNewData}>Add</button>
+                        <button className="add-button" onClick={submitNewData}>Add</button>
                     </form>
                 </div>
             </div>
