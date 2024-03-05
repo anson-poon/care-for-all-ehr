@@ -375,7 +375,7 @@ select {
 .add-button {
   padding: 0.5em 2em;
   font-size: 1rem;
-  background-color: rgba(76,175,80);
+  background-color: rgb(99, 188, 102);
   color: white;
   border: none;
   border-radius: 10px;
