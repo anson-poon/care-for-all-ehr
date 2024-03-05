@@ -59,10 +59,10 @@ app.get('/sqlData', (req, res) => {
             query = 'SELECT insuranceNoteID, reimbursementCode, CONCAT(Visits.visitID, " { Visit on ", Visits.visitDateTime, " between Provider ID ", Visits.providerID, " [", Providers.providerFirstName, " ", Providers.providerLastName, "] and Patient ID ", Visits.patientID, " [", Patients.patientFirstName, " ", Patients.patientLastName, "] }" ) as visitID FROM InsuranceNotes JOIN Visits ON InsuranceNotes.visitID = Visits.visitID  JOIN Providers ON Visits.providerID = Providers.providerID JOIN Patients ON Visits.patientID = Patients.patientID';
             break;
         case 'ClinicalNotes':
-            query += 'ClinicalNotes';
+            query = 'SELECT clinicalNoteID, lengthOfVisit, CONCAT(Visits.visitID, " { Visit on ", Visits.visitDateTime, " between Provider ID ", Visits.providerID, " [", Providers.providerFirstName, " ", Providers.providerLastName, "] and Patient ID ", Visits.patientID, " [", Patients.patientFirstName, " ", Patients.patientLastName, "] }" ) as visitID FROM ClinicalNotes JOIN Visits ON ClinicalNotes.visitID = Visits.visitID  JOIN Providers ON Visits.providerID = Providers.providerID JOIN Patients ON Visits.patientID = Patients.patientID';
             break;
         case 'ClinicalFindings':
-            query += 'ClinicalFindings';
+            query = 'SELECT clinicalFindingID, chiefComplaint, patientBloodPressure, patientHeartRate, patientTemperature, patientRespiratoryRate, narrativeTreatmentPlan, CONCAT(ClinicalNotes.clinicalNoteID, " { Visit on ", Visits.visitDateTime, " between Provider ID ", Visits.providerID, " [", Providers.providerFirstName, " ", Providers.providerLastName, "] and Patient ID ", Visits.patientID, " [", Patients.patientFirstName, " ", Patients.patientLastName, "] }" ) as clinicalNoteID FROM ClinicalFindings JOIN ClinicalNotes ON ClinicalFindings.clinicalNoteID = ClinicalNotes.clinicalNoteID JOIN Visits ON ClinicalNotes.visitID = Visits.visitID JOIN Providers ON Visits.providerID = Providers.providerID JOIN Patients ON Visits.patientID = Patients.patientID';
             break;
         default:
             return res.status(400).json({ error: 'Invalid table' });
@@ -74,6 +74,102 @@ app.get('/sqlData', (req, res) => {
             res.json(data); // Send the fetched data as JSON response
         }
     });
+});
+
+// Clinical Findings: SELECT records from Clinical Notes that have not been associated with a Clinical Findings note yet
+app.get('/sqlData/searchClinicalNotesWithoutClinicalFindings', (req, res) => {
+    let query = 'SELECT CONCAT(ClinicalNotes.clinicalNoteID, " { Visit on ", Visits.visitDateTime, " between Provider ID ", Visits.providerID, " [", Providers.providerFirstName, " ", Providers.providerLastName, "] and Patient ID ", Visits.patientID, " [", Patients.patientFirstName, " ", Patients.patientLastName, "] }" ) as clinicalNoteID FROM ClinicalNotes LEFT JOIN ClinicalFindings ON ClinicalNotes.clinicalNoteID =  ClinicalFindings.clinicalNoteID LEFT JOIN Visits on ClinicalNotes.visitID = Visits.visitID LEFT JOIN Providers on Visits.providerID = Providers.providerID  LEFT JOIN Patients on Visits.patientID = Patients.patientID WHERE ClinicalFindings.clinicalNoteID IS NULL';
+    db.pool.query(query, (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to search data' });
+        } else {
+            return res.json(data);
+        }
+    })
+});
+
+// Clinical Findings: SELECT records from Clinical Findings based on certain attributes
+app.get('/sqlData/searchClinicalFindings', (req, res) => {
+    const { userChoice, userInput } = req.query;
+
+    console.log(userChoice);
+    console.log(userInput);
+
+    let query = 'SELECT clinicalFindingID, chiefComplaint, patientBloodPressure, patientHeartRate, patientTemperature, patientRespiratoryRate, narrativeTreatmentPlan, CONCAT(ClinicalNotes.clinicalNoteID, " { Visit on ", Visits.visitDateTime, " between Provider ID ", Visits.providerID, " [", Providers.providerFirstName, " ", Providers.providerLastName, "] and Patient ID ", Visits.patientID, " [", Patients.patientFirstName, " ", Patients.patientLastName, "] }" ) as clinicalNoteID FROM ClinicalFindings JOIN ClinicalNotes ON ClinicalFindings.clinicalNoteID = ClinicalNotes.clinicalNoteID JOIN Visits ON ClinicalNotes.visitID = Visits.visitID JOIN Providers ON Visits.providerID = Providers.providerID JOIN Patients ON Visits.patientID = Patients.patientID WHERE ';
+    let queryParams = [];
+
+    switch (userChoice) {
+        case 'clinicalFindingID':
+            query += 'ClinicalFindings.clinicalFindingID = ?';
+            queryParams.push(userInput);
+            break;
+        case 'clinicalNoteID':
+            query += 'ClinicalFindings.clinicalNoteID = ?';
+            queryParams.push(userInput);
+            break;
+        case 'patientFullName':
+            const newPatientUserInput = userInput.split(' ');
+            query = 'SELECT clinicalFindingID, chiefComplaint, patientBloodPressure, patientHeartRate, patientTemperature, patientRespiratoryRate, narrativeTreatmentPlan, CONCAT(Visits.visitID, " { Visit on ", Visits.visitDateTime, " between Provider ID ", Visits.providerID, " [", Providers.providerFirstName, " ", Providers.providerLastName, "] and Patient ID ", Visits.patientID, " [", Patients.patientFirstName, " ", Patients.patientLastName, "] }" ) as clinicalNoteID FROM ClinicalFindings JOIN ClinicalNotes ON ClinicalFindings.clinicalNoteID = ClinicalNotes.clinicalNoteID JOIN Visits ON ClinicalNotes.visitID = Visits.visitID JOIN Providers ON Visits.providerID = Providers.providerID JOIN Patients ON Visits.patientID = Patients.patientID WHERE Patients.patientFirstName = ? AND Patients.patientLastName = ?';
+            queryParams.push(newPatientUserInput[0], newPatientUserInput[1])
+            break;
+        default:
+            return res.status(400).json({ error: 'Invalid search query' });
+    }
+    db.pool.query(query, queryParams, (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to search data' });
+        } else {
+            return res.json(data);
+        }
+    })
+});
+
+// Clinical Notes: SELECT records from Visits that have not been associated with a Clinical Note yet
+app.get('/sqlData/searchVisitWithoutClinicalNote', (req, res) => {
+    let query = 'SELECT CONCAT(Visits.visitID, " { Visit on ", Visits.visitDateTime, " between Provider ID ", Visits.providerID, " [", Providers.providerFirstName, " ", Providers.providerLastName, "] and Patient ID ", Visits.patientID, " [", Patients.patientFirstName, " ", Patients.patientLastName, "] }" ) as visitID FROM Visits LEFT JOIN ClinicalNotes on Visits.visitID = ClinicalNotes.visitID LEFT JOIN Providers on Visits.providerID = Providers.providerID LEFT JOIN Patients on Visits.patientID = Patients.patientID WHERE ClinicalNotes.visitID IS NULL';
+    db.pool.query(query, (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to search data' });
+        } else {
+            return res.json(data);
+        }
+    })
+});
+
+// Clinical Notes: SELECT records from Clinical Notes based on certain attributes
+app.get('/sqlData/searchClinicalNotes', (req, res) => {
+    const { userChoice, userInput } = req.query;
+
+    console.log(userChoice);
+    console.log(userInput);
+
+    let query = 'SELECT clinicalNoteID, lengthOfVisit, CONCAT(Visits.visitID, " { Visit on ", Visits.visitDateTime, " between Provider ID ", Visits.providerID, " [", Providers.providerFirstName, " ", Providers.providerLastName, "] and Patient ID ", Visits.patientID, " [", Patients.patientFirstName, " ", Patients.patientLastName, "] }" ) as visitID FROM ClinicalNotes JOIN Visits ON ClinicalNotes.visitID = Visits.visitID  JOIN Providers ON Visits.providerID = Providers.providerID JOIN Patients ON Visits.patientID = Patients.patientID WHERE ';
+    let queryParams = [];
+
+    switch (userChoice) {
+        case 'clinicalNoteID':
+            query += 'clinicalNoteID = ?';
+            queryParams.push(userInput);
+            break;
+        case 'visitID':
+            query += 'ClinicalNotes.visitID = ?'
+            queryParams.push(userInput);
+            break;
+        case 'patientFullName':
+            const newPatientUserInput = userInput.split(' ');
+            query = 'SELECT clinicalNoteID, lengthOfVisit, CONCAT(Visits.visitID, " { Visit on ", Visits.visitDateTime, " between Provider ID ", Visits.providerID, " [", Providers.providerFirstName, " ", Providers.providerLastName, "] and Patient ID ", Visits.patientID, " [", Patients.patientFirstName, " ", Patients.patientLastName, "] }" ) as visitID FROM ClinicalNotes JOIN Visits ON ClinicalNotes.visitID = Visits.visitID JOIN Providers ON Visits.providerID = Providers.providerID JOIN Patients ON Visits.patientID = Patients.patientID WHERE Patients.patientFirstName = ? and Patients.patientLastName = ?';
+            queryParams.push(newPatientUserInput[0], newPatientUserInput[1])
+            break;
+        default:
+            return res.status(400).json({ error: 'Invalid search query' });
+    }
+    db.pool.query(query, queryParams, (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to search data' });
+        } else {
+            return res.json(data);
+        }
+    })
 });
 
 // Insurance Notes: SELECT records from Visits that have not been associated with an Insurance Note yet
@@ -771,6 +867,55 @@ app.post("/sqlDataInsertInsuranceNotes", (req, res) => {
             res.status(500).json({ error: 'Failed to delete data' });
         } else {
             console.log("INSERT INTO InsuranceNotes (insuranceNoteID, reimbursementCode, visitID) VALUES (" + req.body.insuranceNoteID + ", " + req.body.reimbursementCode + ", " + req.body.visitID + ")");
+            return res.json({ data });
+        }
+    })
+});
+
+/*
+Clinical Notes Page:  Logic to INSERT, or add, a new clinical note 
+Code citation:  Code modified from base of INSERT code for Patient Index page
+*/
+app.post("/sqlDataInsertClinicalNotes", (req, res) => {
+    let attributes = [
+        req.body.clinicalNoteID,
+        req.body.lengthOfVisit,
+        req.body.visitID
+    ]
+    let query = 'INSERT INTO ClinicalNotes (clinicalNoteID, lengthOfVisit, visitID) VALUES (?)';
+    db.pool.query(query, [attributes], (err, data) => {
+        if (err) {
+            console.log(err)
+            res.status(500).json({ error: 'Failed to delete data' });
+        } else {
+            console.log("INSERT INTO ClinicalNotes (clinicalNoteID, lengthOfVisit, visitID) VALUES (" + req.body.clinicalNoteID + ", " + req.body.lengthOfVisit + ", " + req.body.visitID + ")");
+            return res.json({ data });
+        }
+    })
+});
+
+/*
+Clinical Findings Page:  Logic to INSERT, or add, a new clinical findings note 
+Code citation:  Code modified from base of INSERT code for Patient Index page
+*/
+app.post("/sqlDataInsertClinicalFindings", (req, res) => {
+    let attributes = [
+        req.body.clinicalFindingID,
+        req.body.chiefComplaint,
+        req.body.patientBloodPressure,
+        req.body.patientHeartRate,
+        req.body.patientTemperature,
+        req.body.patientRespiratoryRate,
+        req.body.narrativeTreatmentPlan,
+        req.body.clinicalNoteID
+    ]
+    let query = 'INSERT INTO ClinicalFindings (clinicalFindingID, chiefComplaint, patientBloodPressure, patientHeartRate, patientTemperature, patientRespiratoryRate, narrativeTreatmentPlan, clinicalNoteID) VALUES (?)';
+    db.pool.query(query, [attributes], (err, data) => {
+        if (err) {
+            console.log(err)
+            res.status(500).json({ error: 'Failed to delete data' });
+        } else {
+            console.log("INSERT INTO ClinicalFindings (clinicalFindingID, chiefComplaint, patientBloodPressure, patientHeartRate, patientTemperature, patientRespiratoryRate, narrativeTreatmentPlan, clinicalNoteID) VALUES (" + req.body.clinicalFindingID + ", " + req.body.chiefComplaint + ", " + req.body.patientBloodPressure + ", " + req.body.patientHeartRate + ", " + req.body.patientRespiratoryRate + ", " + req.body.narrativeTreatmentPlan + ", " + req.body.clinicalNoteID + ")");
             return res.json({ data });
         }
     })
