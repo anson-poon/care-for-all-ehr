@@ -210,16 +210,23 @@ export function SearchBoxInsuranceNotes({ userChoice, handleChange, handleSearch
 }
 
 // search box for Clinical Notes page
-export function SearchBoxClinicalNotes() {
+export function SearchBoxClinicalNotes({ userChoice, handleChange, handleSearch }) {
+    const [searchValue, setSearchValue] = useState('');
+
+    // handle user input
+    const handleInputChange = (event) => {
+        setSearchValue(event.target.value);
+    };
     return (
         <div className="search-box">
-            <select name="attributes" id="attributes">
+            <select name="attributes" id="attributes" value={userChoice} onChange={handleChange}>
+                <option value="" selected disabled hidden>Search By Attribute</option>
                 <option value="clinicalNoteID">Clinical Note ID</option>
                 <option value="visitID">Visit ID</option>
                 <option value="patientFullName">Patient First & Last Name</option>
             </select>
-            <input type="search" placeholder="Search Clinical Notes" />
-            <button>Search</button>
+            <input type="search" placeholder="Search Clinical Notes" value={searchValue} onChange={handleInputChange} />
+            <button onClick={() => handleSearch(searchValue)}>Search</button>
         </div>
     );
 }

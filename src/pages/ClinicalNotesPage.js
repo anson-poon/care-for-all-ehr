@@ -1,13 +1,103 @@
 // Create Clinical Notes Page that uses sample data from data directory
 
 import React from 'react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
-import clinicalNotesData from '../data/clinicalNotesData';
 import { SearchBoxClinicalNotes } from '../components/SearchBox';
+import { SearchDropdown } from '../components/SearchDropdown';
+import { redirect } from 'react-router-dom';
 
 function ClinicalNotesPage() {
+
+    // implement SELECT to obtain records for Visits that have not been associated with a clinical note
+    const [noNote, setNote] = useState([]);
+    useEffect(() => {
+        fetchVisitWithoutNote();
+    }, []);
+    const fetchVisitWithoutNote = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/sqlData/searchVisitWithoutClinicalNote');
+            // Set the fetched data to state
+            setNote(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
+    // implement SELECT to obtain all records for Clinical Notes
+    const [data, setData] = useState([]);   // Initialize state to hold fetched data
+
+    // Fetch data from the database
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/sqlData/?table=ClinicalNotes');
+            // Set the fetched data to state
+            setData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
+    // implement SELECT to obtain records based on a user's criteria for attributes
+    const [userChoice, setUserChoice] = useState('');
+
+    const handleChange = (choice) => {
+        setUserChoice(choice.target.value);
+    }
+
+    const handleSearch = async (userInput) => {
+        try {
+            const response = await axios.get(`/sqlData/searchClinicalNotes/?userChoice=${userChoice}&userInput=${userInput}`);
+            setData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    }
+
+    // Handling search ID dropdown
+    const handleSelect = async (selectionValue) => {
+        try {
+            let searchRoute = "searchClinicalNotes"; // hardcoded to search from Insurance Notes
+            let selection = "visitID";        // hardcoded to search by visitID
+            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            setData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
+    // implements INSERT to process new data 
+    // Code to implement INSERT learned from https://github.com/safak/youtube2022/tree/react-mysql. 
+    // create object to hold patient attributes
+    const [attributes, setAttributes] = useState({
+        clinicalNoteID: "",
+        lengthOfVisit: "",
+        visitID: "",
+    });
+    // obtain attributes for new entry
+    const handleInsertData = (newValues) => {
+        setAttributes((currentValues) => ({ ...currentValues, [newValues.target.name]: newValues.target.value }));
+    };
+    // handle submission of new data (attributes)
+    const submitNewData = async (submit) => {
+        submit.preventDefault()
+        try {
+            console.log(attributes)
+            await axios.post("/sqlDataInsertClinicalNotes", attributes);
+            window.location.reload();
+        } catch (err) {
+            console.error("Error adding data:", err);
+        }
+    };
+
     return (
         <div>
             <h3>Clinical Notes</h3>
@@ -16,8 +106,17 @@ function ClinicalNotesPage() {
                 <p>Available information for each clinical note includes Clinical Note ID, Length of Visit, and Visit ID.</p>
                 <p>Lastly, this page allows you to <b>insert</b>, or <b>add</b> information about a clinical note for only new visits.</p>
             </div>
-            <SearchBoxClinicalNotes />
-            <button className="SELECT-button">Get Current Information for Clinical Notes</button>
+            <div className='search-container'>
+                <SearchDropdown
+                    tableName="ClinicalNotes"
+                    idProperty="visitID"
+                    onSelect={handleSelect} />
+                <SearchBoxClinicalNotes
+                    userChoice={userChoice}
+                    handleChange={handleChange}
+                    handleSearch={handleSearch} />
+            </div>
+            <button className="SELECT-button" onClick={fetchData}>Get Current Information for Clinical Notes</button>
 
             <div className="flex-container">
                 <div className="flex-column1">
@@ -30,7 +129,7 @@ function ClinicalNotesPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {clinicalNotesData.map((item, index) => (
+                            {data.map((item, index) => (
                                 <tr key={index}>
                                     <th>{item.clinicalNoteID}</th>
                                     <th>{item.lengthOfVisit}</th>
@@ -44,18 +143,20 @@ function ClinicalNotesPage() {
                     <form action="" method="get" className="add-form">
                         <h4>Add a New Clinical Note</h4>
                         <div className="form-row">
-                            <label for="visitID">Length of Visit</label>
-                            <input type="text" name="visitID" id="visitID" required />
+                            <label for="lengthOfVisit">Length of Visit</label>
+                            <input type="text" name="lengthOfVisit" id="lengthOfVisit" onChange={handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="visitID">Visit ID: </label>
-                            <select name="visitID">
-                                <option value="2">2 (between Patient Jacob and Provider Alex)</option>
-                                <option value="3">3 (between Patient Rapheal and Provider Tiffany)</option>
+                            <select name="visitID" id="visitID" onChange={handleInsertData} required>
+                                <option value="" selected disabled hidden>Choose Attribute</option>
+                                {noNote.map((item, index) => (
+                                    <option value={item.visitID}>{item.visitID}</option>
+                                ))}
                             </select>
                         </div>
                         <br />
-                        <button className="add-button">Add</button>
+                        <button className="add-button" onClick={submitNewData}>Add</button>
                     </form>
                 </div>
             </div>
