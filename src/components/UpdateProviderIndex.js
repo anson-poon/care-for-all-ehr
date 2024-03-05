@@ -68,7 +68,7 @@ function UpdateProviderIndexPage() {
 
   return (
     <div>
-      <form action="" method="get" className="add-form">
+      <form action="" method="get" className="update-form">
         <h4>Update Provider Name</h4>
         <div className="form-row">
           <label for="providerFirstName">First Name:</label>

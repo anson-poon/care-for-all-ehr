@@ -72,7 +72,7 @@ function UpdatePatientPage() {
 
   return (
     <div>
-      <form action="" method="get" className="add-form">
+      <form action="" method="get" className="update-form">
         <h4>Update Patient Information</h4>
         <div className="form-row">
           <label for="patientPhoneNumber">Phone Number:</label>
