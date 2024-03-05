@@ -149,6 +149,7 @@ function PatientProviderIntersectionPage() {
                     <form action="" method="get" className="add-form">
                         <h4>Add a Relationship Between a Patient and a Provider</h4>
                         <div className="form-row">
+                            <label for="patientID">Patient ID:</label>
                             <select name="patientID" id="providerID" onChange={handleInsertData} required>
                                 {data.map((item, index) => (
                                     <option value={item.patientID}>{item.patientID}</option>
@@ -156,6 +157,7 @@ function PatientProviderIntersectionPage() {
                             </select>
                         </div>
                         <div className="form-row">
+                            <label for="providerID">Provider ID:</label>
                             <select name="providerID" id="providerID" onChange={handleInsertData} required>
                                 {data.map((item, index) => (
                                     <option value={item.providerID}>{item.providerID}</option>

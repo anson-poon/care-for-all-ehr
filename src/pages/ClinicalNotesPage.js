@@ -116,7 +116,7 @@ function ClinicalNotesPage() {
                     handleChange={handleChange}
                     handleSearch={handleSearch} />
             </div>
-            <button className="SELECT-button" onClick={fetchData}>Get Current Information for Clinical Notes</button>
+            <button className="SELECT-button" onClick={fetchData}>Refresh Clinical Notes</button>
 
             <div className="flex-container">
                 <div className="flex-column1">

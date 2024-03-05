@@ -110,8 +110,8 @@ function ClinicalFindingsPage() {
                 <p>This page allows you to <b>get</b> and <b>refresh</b> information on clinical findings that have been associated with existing clinical note IDs in the MySQL database.</p>
                 <p>Available information for each clinical findings note includes Clinical Finding ID, Chief Complaint, Patient Blood Pressure, Patient Heart Rate, Patient Temperature, Patient Respiratory Rate, Treatment Plan, and Clinical Note ID.</p>
                 <p>Lastly, this page allows you to <b>insert</b>, or <b>add</b> information on clinical findings for only a new clinical note ID.</p>
-            </div>    
-                <div className='search-container'>
+            </div>
+            <div className='search-container'>
                 <SearchDropdown
                     tableName="ClinicalFindings"
                     idProperty="clinicalNoteID"
@@ -121,7 +121,7 @@ function ClinicalFindingsPage() {
                     handleChange={handleChange}
                     handleSearch={handleSearch} />
             </div>
-            <button className="SELECT-button" onClick={fetchData}>Get Current Information for Clinical Findings</button>
+            <button className="SELECT-button" onClick={fetchData}>Refresh Clinical Findings</button>
 
             <div className="flex-container">
                 <div className="flex-column1">
@@ -163,23 +163,23 @@ function ClinicalFindingsPage() {
                         </div>
                         <div className="form-row">
                             <label for="patientBloodPressure">Patient Blood Pressure: </label>
-                            <input type="text" name="patientBloodPressure" id="patientBloodPressure" onChange={handleInsertData}  required />
+                            <input type="text" name="patientBloodPressure" id="patientBloodPressure" onChange={handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="patientHeartRate">Patient Heart Rate: </label>
-                            <input type="text" name="patientHeartRate" id="patientHeartRate" onChange={handleInsertData}  required />
+                            <input type="text" name="patientHeartRate" id="patientHeartRate" onChange={handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="patientTemperature">Patient Temperature: </label>
-                            <input type="text" name="patientTemperature" id="patientTemperature" onChange={handleInsertData}  required />
+                            <input type="text" name="patientTemperature" id="patientTemperature" onChange={handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="patientRespiratoryRate">Patient Respiratory Rate: </label>
-                            <input type="text" name="patientRespiratoryRate" id="patientRespiratoryRate" onChange={handleInsertData}  required />
+                            <input type="text" name="patientRespiratoryRate" id="patientRespiratoryRate" onChange={handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="narrativeTreatmentPlan">Narrative Treatment Plan: </label>
-                            <input type="text" name="narrativeTreatmentPlan" id="narrativeTreatmentPlan" onChange={handleInsertData}  required />
+                            <input type="text" name="narrativeTreatmentPlan" id="narrativeTreatmentPlan" onChange={handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="clinicalNoteID">Clinical Note ID: </label>
