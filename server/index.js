@@ -38,7 +38,7 @@ app.get('/sqlData', (req, res) => {
             query += 'Patients';
             break;
         case 'PatientProfiles':
-            query += 'PatientProfiles';
+            query = 'SELECT patientProfileID, patientPhoneNumber, emailAddress, dateOfBirth, CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID FROM PatientProfiles JOIN Patients ON PatientProfiles.patientID = Patients.patientID';
             break;
         case 'InsurancePolicies':
             query = 'SELECT insuranceID, insuranceType, CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID FROM InsurancePolicies JOIN Patients ON InsurancePolicies.patientID = Patients.patientID';
@@ -47,7 +47,7 @@ app.get('/sqlData', (req, res) => {
             query += 'Providers';
             break;
         case 'ProviderProfiles':
-            query += 'ProviderProfiles';
+            query = 'SELECT providerProfileID, title, specialty, providerPhoneNumber, CONCAT(Providers.providerID, " ", "(", Providers.providerFirstName, " ", Providers.providerLastName, ")") as providerID FROM Providers JOIN ProviderProfiles ON ProviderProfiles.providerID = Providers.providerID';
             break;
         case 'Patients_has_Providers':
             query = 'SELECT CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID, CONCAT(Providers.providerID, " ", "(", Providers.providerFirstName, " ", Providers.providerLastName, ")") as providerID FROM Patients JOIN Patients_has_Providers ON Patients.patientID = Patients_has_Providers.patientID JOIN Providers ON Providers.providerID = Patients_has_Providers.providerID';
@@ -340,6 +340,18 @@ app.get('/sqlData/searchPatient', (req, res) => {
     })
 });
 
+// Patient Profiles: SELECT records from Patients that have not been associated with a Patient Profile yet
+app.get('/sqlData/searchfetchPatientsWithoutPatientProfile', (req, res) => {
+    let query = 'SELECT CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID FROM Patients LEFT JOIN PatientProfiles ON PatientProfiles.patientID = Patients.patientID WHERE PatientProfiles.patientID IS NULL';
+    db.pool.query(query, (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to search data' });
+        } else {
+            return res.json(data);
+        }
+    })
+});
+
 // Patient Profiles:  SELECT records from PatientProfiles based on certain attributes
 app.get('/sqlData/searchPatientProfiles', (req, res) => {
     const { userChoice, userInput } = req.query;
@@ -347,7 +359,7 @@ app.get('/sqlData/searchPatientProfiles', (req, res) => {
     console.log(userChoice);
     console.log(userInput);
 
-    let query = 'SELECT * FROM PatientProfiles WHERE ';
+    let query = 'SELECT patientProfileID, patientPhoneNumber, emailAddress, dateOfBirth, CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID FROM PatientProfiles JOIN Patients ON PatientProfiles.patientID = Patients.patientID WHERE ';
     let queryParams = [];
 
     switch (userChoice) {
@@ -368,14 +380,13 @@ app.get('/sqlData/searchPatientProfiles', (req, res) => {
             queryParams.push(userInput);
             break;
         case 'patientID':
-            query += 'patientID = ?';
+            query += 'PatientProfiles.patientID = ?';
             queryParams.push(userInput);
             break;
-        // QUERY NEED FIX
         case 'patientFullName':
-            const newUserInput = userInput.split(' ');
-            query += 'patientFirstName = ? AND patientLastName = ?';
-            queryParams.push(newUserInput[0], newUserInput[1])
+            const newPatientUserInput = userInput.split(' ');
+            query = 'SELECT patientProfileID, patientPhoneNumber, emailAddress, dateOfBirth, CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID FROM PatientProfiles JOIN Patients ON PatientProfiles.patientID = Patients.patientID WHERE Patients.patientFirstName = ? AND Patients.patientLastName = ?';
+            queryParams.push(newPatientUserInput[0], newPatientUserInput[1])
             break;
         default:
             return res.status(400).json({ error: 'Invalid search query' });
@@ -429,6 +440,18 @@ app.get('/sqlData/searchProvider', (req, res) => {
     })
 });
 
+// Provider Profiles: SELECT records from Providers that have not been associated with a Provider Profile yet
+app.get('/sqlData/searchfetchProvidersWithoutProviderProfile', (req, res) => {
+    let query = 'SELECT CONCAT(Providers.providerID, " ", "(", Providers.providerFirstName, " ", Providers.providerLastName, ")") as providerID FROM Providers LEFT JOIN ProviderProfiles ON ProviderProfiles.providerID = Providers.providerID WHERE ProviderProfiles.providerID IS NULL';
+    db.pool.query(query, (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to search data' });
+        } else {
+            return res.json(data);
+        }
+    })
+});
+
 // ProviderProfiles: SELECT records from ProviderProfiles based on certain attributes 
 app.get('/sqlData/searchProviderProfiles', (req, res) => {
     const { userChoice, userInput } = req.query;
@@ -436,7 +459,7 @@ app.get('/sqlData/searchProviderProfiles', (req, res) => {
     console.log(userChoice);
     console.log(userInput);
 
-    let query = 'SELECT * FROM ProviderProfiles WHERE ';
+    let query = 'SELECT providerProfileID, title, specialty, providerPhoneNumber, CONCAT(Providers.providerID, " ", "(", Providers.providerFirstName, " ", Providers.providerLastName, ")") as providerID FROM Providers JOIN ProviderProfiles ON ProviderProfiles.providerID = Providers.providerID WHERE ';
     let queryParams = [];
 
     switch (userChoice) {
@@ -457,14 +480,13 @@ app.get('/sqlData/searchProviderProfiles', (req, res) => {
             queryParams.push(userInput);
             break;
         case 'providerID':
-            query += 'providerID = ?';
+            query += 'Providers.providerID = ?';
             queryParams.push(userInput);
             break;
-        // QUERY NEED FIX
         case 'providerFullName':
-            const newUserInput = userInput.split(' ');
-            query += 'providerFirstName = ? AND providerLastName = ?';
-            queryParams.push(newUserInput[0], newUserInput[1])
+            const newPatientUserInput = userInput.split(' ');
+            query = 'SELECT providerProfileID, title, specialty, providerPhoneNumber, CONCAT(Providers.providerID, " ", "(", Providers.providerFirstName, " ", Providers.providerLastName, ")") as providerID FROM Providers JOIN ProviderProfiles ON ProviderProfiles.providerID = Providers.providerID WHERE Providers.providerFirstName = ? AND Providers.providerLastName = ?';
+            queryParams.push(newPatientUserInput[0], newPatientUserInput[1])
             break;
         default:
             return res.status(400).json({ error: 'Invalid search query' });
