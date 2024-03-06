@@ -28,15 +28,21 @@ const cors = require('cors');
 app.use(express.json())
 app.use(cors())
 
+const patientIndexRoute = require('./routes/patientIndexRoutes');
+// const patientProfileRoute = require('./routes/patientProfileRoutes');
+
+app.use('/patient-index', patientIndexRoute);
+// app.use('/patient-profile', patientProfileRoute);
+
 // All Pages:  SELECT method to get all records for each page
 app.get('/sqlData', (req, res) => {
     console.log(req.query);
     let query = 'SELECT * FROM ';
 
     switch (req.query.table) {
-        case 'Patients':
-            query += 'Patients';
-            break;
+        // case 'Patients':
+        //     query += 'Patients';
+        //     break;
         case 'PatientProfiles':
             query = 'SELECT patientProfileID, patientPhoneNumber, emailAddress, dateOfBirth, CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID FROM PatientProfiles JOIN Patients ON PatientProfiles.patientID = Patients.patientID';
             break;
