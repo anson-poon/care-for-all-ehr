@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database/db-connector');
 
-router.get('/patient-index/data', (req, res) => {
+router.get('/data', (req, res) => {
     let query = 'SELECT * FROM Patients';
     db.pool.query(query, (err, data) => {
         if (err) {

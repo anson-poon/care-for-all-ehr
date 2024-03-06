@@ -97,6 +97,8 @@ function PatientIndexPage() {
         }
     };
 
+    console.log(data);
+
     return (
         <div>
             <h3>List of Patients</h3>
