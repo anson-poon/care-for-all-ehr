@@ -28,15 +28,19 @@ const cors = require('cors');
 app.use(express.json())
 app.use(cors())
 
+const patientIndexRoute = require('./routes/patientIndexRoutes');
+
+app.use('/', patientIndexRoute);
+
 // All Pages:  SELECT method to get all records for each page
 app.get('/sqlData', (req, res) => {
     console.log(req.query);
     let query = 'SELECT * FROM ';
 
     switch (req.query.table) {
-        case 'Patients':
-            query += 'Patients';
-            break;
+        // case 'Patients':
+        //     query += 'Patients';
+        //     break;
         case 'PatientProfiles':
             query += 'PatientProfiles';
             break;

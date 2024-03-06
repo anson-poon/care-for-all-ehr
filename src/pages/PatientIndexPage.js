@@ -7,12 +7,10 @@ Code adapted to work with group 70's project.
 import React from 'react';
 import axios from "axios";
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
-import patientData from '../data/patientData';
 import { SearchBoxPatientIndex } from '../components/SearchBox';
 import { SearchDropdown } from '../components/SearchDropdown';
-import { redirect } from 'react-router-dom';
 
 // Page returns function to show Patient Index page
 function PatientIndexPage() {
@@ -28,7 +26,7 @@ function PatientIndexPage() {
     const fetchData = async () => {
         try {
             // fetch data from sqlData route
-            const response = await axios.get('/sqlData/?table=Patients');
+            const response = await axios.get('/patient-index/data');
             // Set the fetched data to state
             setData(response.data);
         } catch (err) {
@@ -115,7 +113,7 @@ function PatientIndexPage() {
             </div>
             <div className='search-container'>
                 <SearchDropdown
-                    tableName="Patients"
+                    route="patient-index"
                     idProperty="patientID"
                     onSelect={handleSelect} />
                 <SearchBoxPatientIndex
