@@ -16,6 +16,22 @@ import { SearchDropdown } from '../components/SearchDropdown';
 // Page returns function that shows patients table
 function PatientProfilesPage() {
 
+    // implement SELECT to obtain records for Patients that have not been associated with a Patient Profile yet
+    const [noNote, setNote] = useState([]);
+    useEffect(() => {
+        fetchPatientsWithoutPatientProfile();
+    }, []);
+    const fetchPatientsWithoutPatientProfile = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/sqlData/searchfetchPatientsWithoutPatientProfile');
+            // Set the fetched data to state
+            setNote(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
     // implements INSERT to process new data 
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     // create object to hold patient attributes
@@ -79,7 +95,7 @@ function PatientProfilesPage() {
     const handleSelect = async (selectionValue) => {
         try {
             let searchRoute = "searchPatientProfiles"; // hardcoded to search from ProviderProfiles
-            let selection = "patientProfileID";        // hardcoded to search by providerProfileID
+            let selection = "patientID";        // hardcoded to search by providerProfileID
             const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
             setPatientProfilesData(response.data);
         } catch (err) {
@@ -112,7 +128,7 @@ function PatientProfilesPage() {
             <div className='search-container'>
                 <SearchDropdown
                     tableName="PatientProfiles"
-                    idProperty="patientProfileID"
+                    idProperty="patientID"
                     onSelect={handleSelect} />
                 <SearchBoxPatientProfiles
                     userChoice={userChoice}
@@ -153,9 +169,10 @@ function PatientProfilesPage() {
                     <form action="" method="get" className="add-form">
                         <h4>Add Patient Profile:</h4>
                         <div className="form-row">
-                            <label for="patientID">Patient ID:</label>
-                            <select name="patientID" id="providerID" onChange={handleInsertData} required>
-                                {patientsData.map((item, index) => (
+                            <label for="patientID">Patient ID: </label>
+                            <select name="patientID" id="patientID" onChange={handleInsertData} required>
+                                <option value="" selected disabled hidden>Choose Attribute</option>
+                                {noNote.map((item, index) => (
                                     <option value={item.patientID}>{item.patientID}</option>
                                 ))}
                             </select>

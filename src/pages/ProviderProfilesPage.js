@@ -15,6 +15,22 @@ import { SearchDropdown } from '../components/SearchDropdown';
 
 function ProviderProfilesPage() {
 
+    // implement SELECT to obtain records for Providers that have not been associated with a Provider Profile yet
+    const [noNote, setNote] = useState([]);
+    useEffect(() => {
+        fetchProviderssWithoutProviderProfile();
+    }, []);
+    const fetchProviderssWithoutProviderProfile = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/sqlData/searchfetchProvidersWithoutProviderProfile');
+            // Set the fetched data to state
+            setNote(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
     // implements INSERT to process new data 
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     // create object to hold provider attributes
@@ -79,7 +95,7 @@ function ProviderProfilesPage() {
     const handleSelect = async (selectionValue) => {
         try {
             let searchRoute = "searchProviderProfiles"; // hardcoded to search from ProviderProfiles
-            let selection = "providerProfileID";        // hardcoded to search by providerProfileID
+            let selection = "providerID";        // hardcoded to search by providerProfileID
             const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
             setProviderProfileData(response.data);
         } catch (err) {
@@ -111,7 +127,7 @@ function ProviderProfilesPage() {
             <div className='search-container'>
                 <SearchDropdown
                     tableName="ProviderProfiles"
-                    idProperty="providerProfileID"
+                    idProperty="providerID"
                     onSelect={handleSelect} />
                 <SearchBoxProviderProfiles
                     userChoice={userChoice}
@@ -153,8 +169,9 @@ function ProviderProfilesPage() {
                         <h4>Add Provider Profile:</h4>
                         <div className="form-row">
                             <label for="providerID">Provider ID: </label>
-                            <select name="providerID" id="providerID" onChange={handleInsertData} required>
-                                {providerData.map((item, index) => (
+                            <select name="providerID" id="patientID" onChange={handleInsertData} required>
+                                <option value="" selected disabled hidden>Choose Attribute</option>
+                                {noNote.map((item, index) => (
                                     <option value={item.providerID}>{item.providerID}</option>
                                 ))}
                             </select>
