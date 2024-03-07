@@ -307,44 +307,44 @@ app.get('/sqlData/searchPatientProviderRelationships', (req, res) => {
 });
 
 // Patient Index:  SELECT records from Patients based on certain attributes
-app.get('/sqlData/searchPatient', (req, res) => {
-    const { userChoice, userInput } = req.query;
+// app.get('/sqlData/searchPatient', (req, res) => {
+//     const { userChoice, userInput } = req.query;
 
-    console.log(userChoice);
-    console.log(userInput);
+//     console.log(userChoice);
+//     console.log(userInput);
 
-    let query = 'SELECT * FROM Patients WHERE ';
-    let queryParams = [];
+//     let query = 'SELECT * FROM Patients WHERE ';
+//     let queryParams = [];
 
-    switch (userChoice) {
-        case 'patientID':
-            query += 'patientID = ?';
-            queryParams.push(userInput);
-            break;
-        case 'patientFirstName':
-            query += 'patientFirstName = ?';
-            queryParams.push(userInput);
-            break;
-        case 'patientLastName':
-            query += 'patientLastName = ?';
-            queryParams.push(userInput);
-            break;
-        case 'patientFullName':
-            const newUserInput = userInput.split(' ');
-            query += 'patientFirstName = ? AND patientLastName = ?';
-            queryParams.push(newUserInput[0], newUserInput[1])
-            break;
-        default:
-            return res.status(400).json({ error: 'Invalid search query' });
-    }
-    db.pool.query(query, queryParams, (err, data) => {
-        if (err) {
-            res.status(500).json({ error: 'Failed to search data' });
-        } else {
-            return res.json(data);
-        }
-    })
-});
+//     switch (userChoice) {
+//         case 'patientID':
+//             query += 'patientID = ?';
+//             queryParams.push(userInput);
+//             break;
+//         case 'patientFirstName':
+//             query += 'patientFirstName = ?';
+//             queryParams.push(userInput);
+//             break;
+//         case 'patientLastName':
+//             query += 'patientLastName = ?';
+//             queryParams.push(userInput);
+//             break;
+//         case 'patientFullName':
+//             const newUserInput = userInput.split(' ');
+//             query += 'patientFirstName = ? AND patientLastName = ?';
+//             queryParams.push(newUserInput[0], newUserInput[1])
+//             break;
+//         default:
+//             return res.status(400).json({ error: 'Invalid search query' });
+//     }
+//     db.pool.query(query, queryParams, (err, data) => {
+//         if (err) {
+//             res.status(500).json({ error: 'Failed to search data' });
+//         } else {
+//             return res.json(data);
+//         }
+//     })
+// });
 
 // Patient Profiles:  SELECT records from PatientProfiles based on certain attributes
 app.get('/sqlData/searchPatientProfiles', (req, res) => {

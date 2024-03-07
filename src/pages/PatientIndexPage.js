@@ -18,17 +18,14 @@ function PatientIndexPage() {
     // implement SELECT to obtain all records for Patient Index
     const [data, setData] = useState([]);   // Initialize state to hold fetched data
 
-    // Fetch data from the database
     useEffect(() => {
-        fetchData();
+        fetchData();    // Fetch data when component loads
     }, []);
 
     const fetchData = async () => {
         try {
-            // fetch data from sqlData route
-            const response = await axios.get('/patient-index/data');
-            // Set the fetched data to state
-            setData(response.data);
+            const response = await axios.get('/patient-index/data');    // fetch data from sqlData route
+            setData(response.data);     // Set the fetched data to state
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -43,7 +40,8 @@ function PatientIndexPage() {
 
     const handleSearch = async (userInput) => {
         try {
-            const response = await axios.get(`/sqlData/searchPatient/?userChoice=${userChoice}&userInput=${userInput}`);
+            // const response = await axios.get(`/sqlData/searchPatient/?userChoice=${userChoice}&userInput=${userInput}`);
+            const response = await axios.get(`/patient-index/search/?userChoice=${userChoice}&userInput=${userInput}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -53,9 +51,11 @@ function PatientIndexPage() {
     // Handling search ID dropdown
     const handleSelect = async (selectionValue) => {
         try {
-            let searchRoute = "searchPatient";  // hardcoded to search from Patients
+            //let searchRoute = "searchPatient";  // hardcoded to search from Patients
+            let searchRoute = "search";         // hardcoded to search from Patients
             let selection = "patientID";        // hardcoded to search by patientID
-            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            // const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            const response = await axios.get(`/patient-index/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
