@@ -90,7 +90,7 @@ function PatientIndexPage() {
     // handles deletion of a record for Patient Index
     const deleteData = async (patientID) => {
         try {
-            await axios.delete("/sqlDataDelete/" + patientID);
+            await axios.delete("/patient-index/delete/" + patientID);
             window.location.reload()
         } catch (err) {
             console.error("Failed to delete data:", err);
