@@ -53,3 +53,19 @@ exports.search = (req, res) => {
         }
     })
 };
+
+/* 
+DELETE a record based on patientID
+Code citation:  Technique Group 70 used to learn to delete data credited to https://github.com/safak/youtube2022/tree/react-mysql
+*/
+exports.delete = (req, res) => {
+    let patientID = req.params.patientID;
+    db.pool.query("DELETE FROM Patients WHERE patientID = ?", [patientID], (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to delete data' });
+        } else {
+            console.log("DELETE FROM Patients WHERE patientID = " + patientID);
+            res.send(data); // Proceed with deletion of the specific row from PatientIndex
+        }
+    })
+};
