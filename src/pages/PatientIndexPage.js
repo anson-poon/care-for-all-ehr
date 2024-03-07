@@ -143,7 +143,7 @@ function PatientIndexPage() {
                                     <th>{item.patientFirstName}</th>
                                     <th>{item.patientLastName}</th>
                                     <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.patientID)} /></th>
-                                    <th><Link to={`/sqlDataUpdate/${item.patientID}`}><RiEdit2Fill /></Link></th>
+                                    <th><Link to={`/patient-index/update/${item.patientID}`}><RiEdit2Fill /></Link></th>
                                 </tr>
                             ))}
                         </tbody>
