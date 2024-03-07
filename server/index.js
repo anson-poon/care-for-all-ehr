@@ -534,22 +534,6 @@ app.get('/sqlData/searchVisits', (req, res) => {
 });
 
 /* 
-PatientIndex Page:  Logic to DELETE a record based on patientID
-Code citation:  Technique Group 70 used to learn to delete data credited to https://github.com/safak/youtube2022/tree/react-mysql
-*/
-app.delete("/sqlDataDelete/:patientID", (req, res) => {
-    let patientID = req.params.patientID;
-    db.pool.query("DELETE FROM Patients WHERE patientID = ?", [patientID], (err, data) => {
-        if (err) {
-            res.status(500).json({ error: 'Failed to delete data' });
-        } else {
-            console.log("DELETE FROM Patients WHERE patientID = " + patientID);
-            res.send(data); // Proceed with deletion of the specific row from PatientIndex
-        }
-    })
-});
-
-/* 
 PatientProfiles Page:  Logic to DELETE a record based on patientID
 Code citation:  Technique Group 70 used to learn to delete data credited to https://github.com/safak/youtube2022/tree/react-mysql
 */
