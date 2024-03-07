@@ -69,3 +69,21 @@ exports.delete = (req, res) => {
         }
     })
 };
+
+/*
+PatientIndex Page:  Logic to INSERT, or add, a new record to entity
+Code citation:  Technique Group 70 used to learn to insert data credited to https://github.com/safak/youtube2022/tree/react-mysql
+*/
+exports.create = (req, res) => {
+    let patientID = req.body.patientID;
+    let patientFirstName = req.body.patientFirstName;
+    let patientLastName = req.body.patientLastName;
+    db.pool.query("INSERT INTO Patients (patientID, patientFirstName, patientLastName) VALUES (?, ?, ?)", [patientID, patientFirstName, patientLastName], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to update data' });
+        } else {
+            console.log("INSERT INTO Patients (patientFirstName, patientLastName) VALUES (" + patientFirstName + ", " + patientLastName + ")");
+            res.send(result); // Proceed with updating the specific entity's instance attributes
+        }
+    })
+};
