@@ -49,7 +49,7 @@ function App() {
             <Route path="/insurancepolicies" element={<InsurancePoliciesPage />} />
             <Route path="/clinicalfindings" element={<ClinicalFindingsPage />} />
             <Route path="/insurancenotes" element={<InsuranceNotesPage />} />
-            <Route path="/sqlDataUpdate/:patientID" element={<UpdatePatientIndexPage />} />
+            <Route path="/patient-index/update/:patientID" element={<UpdatePatientIndexPage />} />
             <Route path="/sqlDataUpdatePI/:providerID" element={<UpdateProviderIndexPage />} />
             <Route path="/sqlDataUpdateProviderProfiles/:providerID" element={<UpdateProviderPage />} />
             <Route path="/sqlDataUpdatePatientProfiles/:patientID" element={<UpdatePatientPage />} />
