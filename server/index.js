@@ -599,24 +599,6 @@ app.delete("/sqlDataDeletePHP/:patientID/:providerID", (req, res) => {
 });
 
 /*
-PatientIndex Page:  Logic to UPDATE a record based on patientID
-Code citation:  Technique Group 70 used to learn to update data credited to https://github.com/safak/youtube2022/tree/react-mysql
-*/
-app.put("/sqlDataUpdate/:patientID", (req, res) => {
-    let patientID = req.params.patientID;
-    let patientFirstName = req.body.patientFirstName;
-    let patientLastName = req.body.patientLastName;
-    db.pool.query("UPDATE Patients SET patientFirstName = ?, patientLastName = ? WHERE patientID = ?", [patientFirstName, patientLastName, patientID], (err, result) => {
-        if (err) {
-            res.status(500).json({ error: 'Failed to update data' });
-        } else {
-            console.log("UPDATE Patients SET patientFirstName = " + patientFirstName + " patientLastName = " + patientLastName + " WHERE patientID = " + patientID)
-            res.send(result); // Proceed with updating the specific entity's instance attributes
-        }
-    })
-});
-
-/*
 PatientProfiles Page:  Logic to UPDATE a record based on patientID
 Code citation:  Technique Group 70 used to learn to update data credited to https://github.com/safak/youtube2022/tree/react-mysql
 */
