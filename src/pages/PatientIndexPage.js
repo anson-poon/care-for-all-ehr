@@ -78,7 +78,7 @@ function PatientIndexPage() {
     const submitNewData = async (submit) => {
         submit.preventDefault()
         try {
-            await axios.post("/sqlDataInsert", attributes);
+            await axios.post("/patient-index/create", attributes);
             window.location.reload();
         } catch (err) {
             console.error("Error adding data:", err);
