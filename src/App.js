@@ -43,7 +43,7 @@ function App() {
             <Route path="/patient-profiles" element={<PatientProfilesPage />} />
             <Route path="/provider-index" element={<ProviderIndexPage />} />
             <Route path="/provider-profiles" element={<ProviderProfilesPage />} />
-            <Route path="/patientproviderintersection" element={<PatientProviderIntersectionPage />} />
+            <Route path="/patient-provider-intersection" element={<PatientProviderIntersectionPage />} />
             <Route path="/visits" element={<VisitsPage />} />
             <Route path="/clinicalnotes" element={<ClinicalNotesPage />} />
             <Route path="/insurancepolicies" element={<InsurancePoliciesPage />} />
@@ -53,7 +53,7 @@ function App() {
             <Route path="/patient-profiles/update/:patientID" element={<UpdatePatientPage />} />
             <Route path="/sqlDataUpdatePI/:providerID" element={<UpdateProviderIndexPage />} />
             <Route path="/sqlDataUpdateProviderProfiles/:providerID" element={<UpdateProviderPage />} />
-            <Route path="/sqlDataUpdatePHP/:patientID/:providerID" element={<UpdatePatientHasProviders />} />
+            <Route path="/patient-provider-intersection/update/:patientID/:providerID" element={<UpdatePatientHasProviders />} />
           </Routes>
         </div>
       </Router>
