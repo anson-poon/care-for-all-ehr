@@ -16,6 +16,80 @@ import { SearchDropdown } from '../components/SearchDropdown';
 // Page returns function that shows patients table
 function PatientProfilesPage() {
 
+    // SELECT FROM PatientProfiles
+    const [patientProfileData, setPatientProfilesData] = useState([]);   // Initialize state to hold fetched data
+
+    useEffect(() => {
+        fetchData();    // Fetch data when component loads
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('/patient-profiles/data');
+            setPatientProfilesData(response.data);
+        } catch (err) {
+            console.error(`Error fetching data:`, err);
+        }
+    };
+
+    // SELECT FROM Patient (for Inserting ID)
+    const [patientsData, setPatientsData] = useState([]);
+
+    useEffect(() => {
+        fetchIndividualPatient();
+    }, []);
+
+    const fetchIndividualPatient = async () => {
+        try {
+            const response = await axios.get('/patient-profiles/data');
+            setPatientsData(response.data);
+        } catch (err) {
+            console.error(`Error fetching data:`, err);
+        }
+    };
+
+    // SELECT * FROM PatientProfiles WHERE userChoice = ?
+    const [userChoice, setUserChoice] = useState('');
+    const handleChange = (choice) => {
+        setUserChoice(choice.target.value);
+    }
+    const handleSearch = async (userInput) => {
+        try {
+            const response = await axios.get(`/patient-profiles/search/?userChoice=${userChoice}&userInput=${userInput}`);
+            setPatientProfilesData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    }
+
+    // Handling search ID dropdown
+    const handleSelect = async (selectionValue) => {
+        try {
+            let searchRoute = "search"; // hardcoded to search from PatientProfiles
+            let selection = "patientID";        // hardcoded to search by patientID
+            const response = await axios.get(`/patient-profiles/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            setPatientProfilesData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
+    // implement SELECT to obtain records for Patients that have not been associated with a Patient Profile yet
+    const [noNote, setNote] = useState([]);
+    useEffect(() => {
+        fetchPatientsWithoutPatientProfile();
+    }, []);
+    const fetchPatientsWithoutPatientProfile = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/patient-profiles/selectiveinsert');
+            // Set the fetched data to state
+            setNote(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
     // implements INSERT to process new data 
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     // create object to hold patient attributes
@@ -34,56 +108,10 @@ function PatientProfilesPage() {
     const submitNewData = async (submit) => {
         submit.preventDefault()
         try {
-            await axios.post("/sqlDataInsertPatientProfiles", attributes)
+            await axios.post("/patient-profiles/create", attributes)
             window.location.reload()
         } catch (err) {
             console.error("Error adding data:", err);
-        }
-    };
-
-    // SELECT FROM PatientProfiles
-    const [patientProfileData, setPatientProfilesData] = useState([]);   // Initialize state to hold fetched data
-
-    // SELECT FROM Patient (for Inserting ID)
-    const [patientsData, setPatientsData] = useState([]);
-    useEffect(() => {
-        fetchData('PatientProfiles', setPatientProfilesData);
-        fetchData('Patients', setPatientsData);
-    }, []);
-    const fetchData = async (tableName, setData) => {
-        try {
-            // Fetch data from the specified table
-            const response = await axios.get(`/sqlData/?table=${tableName}`);
-            // Set the fetched data to state
-            setData(response.data);
-        } catch (err) {
-            console.error(`Error fetching ${tableName} data:`, err);
-        }
-    };
-
-    // SELECT * FROM PatientProfiles WHERE userChoice = ?
-    const [userChoice, setUserChoice] = useState('');
-    const handleChange = (choice) => {
-        setUserChoice(choice.target.value);
-    }
-    const handleSearch = async (userInput) => {
-        try {
-            const response = await axios.get(`/sqlData/searchPatientProfiles/?userChoice=${userChoice}&userInput=${userInput}`);
-            setPatientProfilesData(response.data);
-        } catch (err) {
-            console.error('Error fetching data:', err);
-        }
-    }
-
-    // Handling search ID dropdown
-    const handleSelect = async (selectionValue) => {
-        try {
-            let searchRoute = "searchPatientProfiles"; // hardcoded to search from ProviderProfiles
-            let selection = "patientProfileID";        // hardcoded to search by providerProfileID
-            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
-            setPatientProfilesData(response.data);
-        } catch (err) {
-            console.error('Error fetching data:', err);
         }
     };
 
@@ -91,7 +119,7 @@ function PatientProfilesPage() {
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     const deleteData = async (patientID) => {
         try {
-            await axios.delete("/sqlDataDeletePatientProfiles/" + patientID);
+            await axios.delete("/patient-profiles/delete/" + patientID);
             window.location.reload()
         } catch (err) {
             console.error("Failed to delete data:", err);
@@ -111,15 +139,15 @@ function PatientProfilesPage() {
 
             <div className='search-container'>
                 <SearchDropdown
-                    tableName="PatientProfiles"
-                    idProperty="patientProfileID"
+                    route="patient-profiles"
+                    idProperty="patientID"
                     onSelect={handleSelect} />
                 <SearchBoxPatientProfiles
                     userChoice={userChoice}
                     handleChange={handleChange}
                     handleSearch={handleSearch} />
             </div>
-            <button className="SELECT-button" onClick={() => fetchData('PatientProfiles', setPatientProfilesData)}>Refresh Patient Profiles</button>
+            <button className="SELECT-button" onClick={fetchData}>Refresh Patient Profiles</button>
             <div className="flex-container">
                 <div className="flex-column1">
                     <table id="patientsdetailedinformation">
@@ -143,7 +171,7 @@ function PatientProfilesPage() {
                                     <th>{moment(item.dateOfBirth).utc().format('YYYY-MM-DD')}</th>
                                     <th>{item.patientID}</th>
                                     <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.patientID)} /></th>
-                                    <th><Link to={`/sqlDataUpdatePatientProfiles/${item.patientID}`}><RiEdit2Fill /></Link></th>
+                                    <th><Link to={`/patient-profiles/update/${item.patientID}`}><RiEdit2Fill /></Link></th>
                                 </tr>
                             ))}
                         </tbody>
@@ -153,9 +181,10 @@ function PatientProfilesPage() {
                     <form action="" method="get" className="add-form">
                         <h4>Add Patient Profile:</h4>
                         <div className="form-row">
-                            <label for="patientID">Patient ID:</label>
-                            <select name="patientID" id="providerID" onChange={handleInsertData} required>
-                                {patientsData.map((item, index) => (
+                            <label for="patientID">Patient ID: </label>
+                            <select name="patientID" id="patientID" onChange={handleInsertData} required>
+                                <option value="" selected disabled hidden>Choose Attribute</option>
+                                {noNote.map((item, index) => (
                                     <option value={item.patientID}>{item.patientID}</option>
                                 ))}
                             </select>
