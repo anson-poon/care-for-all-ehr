@@ -13,29 +13,7 @@ import { SearchDropdown } from '../components/SearchDropdown';
 
 function PatientProviderIntersectionPage() {
 
-    const goToUpdatePage = useNavigate();
-
-    // implements INSERT to process new data 
-    // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
-    // create object to hold patient attributes
-    const [attributes, setAttributes] = useState({
-        patientID: "",
-        providerID: "",
-    });
-    // obtain attributes for new entry
-    const handleInsertData = (newValues) => {
-        setAttributes((currentValues) => ({ ...currentValues, [newValues.target.name]: newValues.target.value }));
-    };
-    // handle submission of new data (attributes)
-    const submitNewData = async (submit) => {
-        submit.preventDefault()
-        try {
-            await axios.post("/sqlDataInsertPatientHasProviders", attributes)
-            window.location.reload()
-        } catch (err) {
-            console.error("Error adding data:", err);
-        }
-    };
+    // const goToUpdatePage = useNavigate();
 
     // implement SELECT to obtain all records for Patient Provider Intersection
     const [data, setData] = useState([]);   // Initialize state to hold fetched data
@@ -48,7 +26,7 @@ function PatientProviderIntersectionPage() {
     const fetchData = async () => {
         try {
             // fetch data from sqlData route
-            const response = await axios.get('/sqlData/?table=Patients_has_Providers');
+            const response = await axios.get('/patient-provider-intersection/data');
             // Set the fetched data to state
             setData(response.data);
         } catch (err) {
@@ -65,7 +43,7 @@ function PatientProviderIntersectionPage() {
 
     const handleSearch = async (userInput) => {
         try {
-            const response = await axios.get(`/sqlData/searchPatientProviderRelationships/?userChoice=${userChoice}&userInput=${userInput}`);
+            const response = await axios.get(`/patient-provider-intersection/search/?userChoice=${userChoice}&userInput=${userInput}`);
             console.log(response.data)
             setData(response.data);
         } catch (err) {
@@ -76,12 +54,34 @@ function PatientProviderIntersectionPage() {
     // Handling search ID dropdown
     const handleSelect = async (selectionValue) => {
         try {
-            let searchRoute = "searchPatient";  // hardcoded to search from Patients
+            let searchRoute = "search";  // hardcoded to search from Patients
             let selection = "patientID";        // hardcoded to search by patientID
-            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            const response = await axios.get(`/patient-provider-intersection/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
+        }
+    };
+
+    // implements INSERT to process new data 
+    // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
+    // create object to hold patient attributes
+    const [attributes, setAttributes] = useState({
+        patientID: "",
+        providerID: "",
+    });
+    // obtain attributes for new entry
+    const handleInsertData = (newValues) => {
+        setAttributes((currentValues) => ({ ...currentValues, [newValues.target.name]: newValues.target.value }));
+    };
+    // handle submission of new data (attributes)
+    const submitNewData = async (submit) => {
+        submit.preventDefault()
+        try {
+            await axios.post("/patient-provider-intersection/create", attributes)
+            window.location.reload()
+        } catch (err) {
+            console.error("Error adding data:", err);
         }
     };
 
@@ -89,7 +89,7 @@ function PatientProviderIntersectionPage() {
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     const deleteData = async (patientID, providerID) => {
         try {
-            await axios.delete("/sqlDataDeletePHP/" + patientID + "/" + providerID);
+            await axios.delete("/patient-provider-intersection/delete/" + patientID + "/" + providerID);
             window.location.reload()
         } catch (err) {
             console.error("Failed to delete data:", err);
@@ -113,7 +113,7 @@ function PatientProviderIntersectionPage() {
             </div>
             <div className='search-container'>
                 <SearchDropdown
-                    tableName="Patients_has_Providers"
+                    route="patient-provider-intersection"
                     idProperty="patientID"
                     onSelect={handleSelect} />
                 <SearchBoxPatientProviderRelationships
@@ -139,7 +139,7 @@ function PatientProviderIntersectionPage() {
                                     <th>{item.patientID}</th>
                                     <th>{item.providerID}</th>
                                     <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.patientID, item.providerID)} /></th>
-                                    <th><Link to={`/sqlDataUpdatePHP/${item.patientID}/${item.providerID}`}><RiEdit2Fill /></Link></th>
+                                    <th><Link to={`/patient-provider-intersection/update/${item.patientID}/${item.providerID}`}><RiEdit2Fill /></Link></th>
                                 </tr>
                             ))}
                         </tbody>
