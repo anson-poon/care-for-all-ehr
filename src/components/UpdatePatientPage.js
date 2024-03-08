@@ -25,20 +25,22 @@ function UpdatePatientPage() {
 
   //  parses URL to get patient ID
   const urlLocation = useLocation();
-  const patientID = urlLocation.pathname.split("/")[2];
+  const patientID = urlLocation.pathname.split("/")[3];
 
   // Fetch data to prepopulate the form
   useEffect(() => {
-    fetchPatientData();
+    fetchPatientProfilesData();
   }, []);
 
-  const fetchPatientData = async () => {
+  const fetchPatientProfilesData = async () => {
     try {
-      const response = await axios.get('/sqlData/?table=PatientProfiles');
+      const response = await axios.get('/patient-profiles/data');
+      console.log(response);
       const data = response.data;
+      console.log(response.data);
 
       // Find the specific patient by ID
-      const specificPatientProfile = data.find(patientProfiles => patientProfiles.patientID === parseInt(patientID));
+      const specificPatientProfile = data.find(patientProfiles => parseInt(patientProfiles.patientID) === parseInt(patientID));
 
       // If exist, set state with that patient profile's attributes
       if (specificPatientProfile) {
@@ -49,7 +51,7 @@ function UpdatePatientPage() {
         });
       }
     } catch (err) {
-      console.error("Error fetching patient data:", err);
+      console.error("Error fetching patient profile data:", err);
     }
   };
 
@@ -62,8 +64,8 @@ function UpdatePatientPage() {
   const handleSubmissionOfUpdate = async (submitUpdate) => {
     submitUpdate.preventDefault();
     try {
-      await axios.put(`/sqlDataUpdatePatientProfiles/${patientID}`, patientProfileAttributes);
-      goBackToPatientProfiles("/patients");
+      await axios.put(`/patient-profiles/update/${patientID}`, patientProfileAttributes);
+      goBackToPatientProfiles("/patient-profiles");
     } catch (err) {
       console.error("Failed to update data:", err);
     }
@@ -87,7 +89,7 @@ function UpdatePatientPage() {
           <input type="date" name="dateOfBirth" id="dateOfBirth" value={patientProfileAttributes.dateOfBirth} onChange={setUpdateValues} />
         </div>
         <br />
-        <button className="add-button" onClick={handleSubmissionOfUpdate}>Submit</button>                <button className="add-button" onClick={() => goBackToPatientProfiles("/patients")}>Cancel</button>
+        <button className="add-button" onClick={handleSubmissionOfUpdate}>Submit</button>                <button className="add-button" onClick={() => goBackToPatientProfiles("/patient-profiles")}>Cancel</button>
       </form>
     </div>
   );
