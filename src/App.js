@@ -50,9 +50,9 @@ function App() {
             <Route path="/clinicalfindings" element={<ClinicalFindingsPage />} />
             <Route path="/insurancenotes" element={<InsuranceNotesPage />} />
             <Route path="/patient-index/update/:patientID" element={<UpdatePatientIndexPage />} />
+            <Route path="/patient-profiles/update/:patientID" element={<UpdatePatientPage />} />
             <Route path="/sqlDataUpdatePI/:providerID" element={<UpdateProviderIndexPage />} />
             <Route path="/sqlDataUpdateProviderProfiles/:providerID" element={<UpdateProviderPage />} />
-            <Route path="/sqlDataUpdatePatientProfiles/:patientID" element={<UpdatePatientPage />} />
             <Route path="/sqlDataUpdatePHP/:patientID/:providerID" element={<UpdatePatientHasProviders />} />
           </Routes>
         </div>
