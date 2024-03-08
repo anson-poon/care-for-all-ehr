@@ -27,7 +27,7 @@ function Navbar(props) {
                     </div>
                 </div>
                 <div className="dropdown">
-                    <a href="/patientproviderintersection" className="dropdown-button" >Patient/Provider Relationships</a>
+                    <a href="/patient-provider-intersection" className="dropdown-button" >Patient/Provider Relationships</a>
                 </div>
                 <div className="dropdown">
                     <a href="/visits" className="dropdown-button" >Visits</a>

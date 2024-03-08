@@ -1,7 +1,7 @@
 // Component that allows for updating a record for Provider Index Page
 
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import axios from "axios";
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ function UpdatePatientHasProviders() {
   */
 
   // go back to patient index page after submission of updated data or cancelling update of data
-  const goBackToPatientIndex = useNavigate();
+  const goBackToPatientProviderIntersection = useNavigate();
 
   // construct object to hold user entered patient's first and last name
   const [relationship, setRelationship] = useState({
@@ -22,8 +22,8 @@ function UpdatePatientHasProviders() {
 
   //  parses URL to get patient ID
   const urlLocation = useLocation();
-  const oldPatientID = urlLocation.pathname.split("/")[2];
-  const oldProviderID = urlLocation.pathname.split("/")[3];
+  const oldPatientID = urlLocation.pathname.split("/")[3];
+  const oldProviderID = urlLocation.pathname.split("/")[4];
 
   // set user entered values for patient first name and last name 
   const setUpdateValues = (enteredValues) => {
@@ -34,8 +34,8 @@ function UpdatePatientHasProviders() {
   const handleSubmissionOfUpdate = async (submitUpdate) => {
     submitUpdate.preventDefault();
     try {
-      await axios.put(`/sqlDataUpdatePHP/${oldPatientID}/${oldProviderID}`, relationship);
-      goBackToPatientIndex("/patientproviderintersection");
+      await axios.put(`/patient-provider-intersection/update/${oldPatientID}/${oldProviderID}`, relationship);
+      goBackToPatientProviderIntersection("/patient-provider-intersection");
     } catch (err) {
       console.error("Failed to update data:", err);
     }
@@ -44,7 +44,7 @@ function UpdatePatientHasProviders() {
   return (
     <div>
       <form action="" method="get" className="update-form">
-        <h4>Update Patient Name</h4>
+        <h4>Update Provider Relationship</h4>
         <div className="form-row">
           <label for="newPatientID">Patient ID:</label>
           <input type="text" name="newPatientID" id="newPatientID" onChange={setUpdateValues} />
@@ -54,7 +54,7 @@ function UpdatePatientHasProviders() {
           <input type="text" name="newProviderID" id="newProviderID" onChange={setUpdateValues} />
         </div>
         <br />
-        <button className="add-button" onClick={handleSubmissionOfUpdate}>Submit</button>                <button className="add-button" onClick={() => goBackToPatientIndex("/patientproviderintersection")}>Cancel</button>
+        <button className="add-button" onClick={handleSubmissionOfUpdate}>Submit</button>                <button className="add-button" onClick={() => goBackToPatientProviderIntersection("/patient-provider-intersection")}>Cancel</button>
       </form>
     </div>
   );
