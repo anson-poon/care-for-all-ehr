@@ -46,7 +46,7 @@ function App() {
             <Route path="/patient-provider-intersection" element={<PatientProviderIntersectionPage />} />
             <Route path="/visits" element={<VisitsPage />} />
             <Route path="/clinicalnotes" element={<ClinicalNotesPage />} />
-            <Route path="/insurancepolicies" element={<InsurancePoliciesPage />} />
+            <Route path="/insurance-policies" element={<InsurancePoliciesPage />} />
             <Route path="/clinicalfindings" element={<ClinicalFindingsPage />} />
             <Route path="/insurancenotes" element={<InsuranceNotesPage />} />
             <Route path="/patient-index/update/:patientID" element={<UpdatePatientIndexPage />} />
