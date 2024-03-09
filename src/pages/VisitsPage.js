@@ -27,9 +27,7 @@ function VisitsPage() {
 
     const fetchData = async () => {
         try {
-            // fetch data from sqlData route
-            const response = await axios.get('/sqlData/?table=Visits');
-            // Set the fetched data to state
+            const response = await axios.get('/visits/data');
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -45,7 +43,7 @@ function VisitsPage() {
 
     const handleSearch = async (userInput) => {
         try {
-            const response = await axios.get(`/sqlData/searchVisits/?userChoice=${userChoice}&userInput=${userInput}`);
+            const response = await axios.get(`/visits/search/?userChoice=${userChoice}&userInput=${userInput}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -55,9 +53,9 @@ function VisitsPage() {
     // Handling search ID dropdown
     const handleSelect = async (selectionValue) => {
         try {
-            let searchRoute = "searchVisits"; // hardcoded to search from Visits
+            let searchRoute = "search"; // hardcoded to search from Visits
             let selection = "patientID";        // hardcoded to search by patientID
-            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            const response = await axios.get(`/visits/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -82,7 +80,7 @@ function VisitsPage() {
     const submitNewData = async (submit) => {
         submit.preventDefault()
         try {
-            await axios.post("/sqlDataInsertVisits", attributes);
+            await axios.post("/visits/create", attributes);
             window.location.reload();
         } catch (err) {
             console.error("Error adding data:", err);
@@ -105,7 +103,7 @@ function VisitsPage() {
             </div>
             <div className='search-container'>
                 <SearchDropdown
-                    tableName="Visits"
+                    route="visits"
                     idProperty="patientID"
                     onSelect={handleSelect} />
                 <SearchBoxVisits

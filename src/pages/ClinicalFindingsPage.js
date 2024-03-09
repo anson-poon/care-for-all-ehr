@@ -11,22 +11,6 @@ import { redirect } from 'react-router-dom';
 
 function ClinicalFindingsPage() {
 
-    // implement SELECT to obtain records for Clinical Notes that have not been associated with a clinical findings note
-    const [noNote, setNote] = useState([]);
-    useEffect(() => {
-        fetchClinicalNoteWithoutClinicalFindings();
-    }, []);
-    const fetchClinicalNoteWithoutClinicalFindings = async () => {
-        try {
-            // fetch data from sqlData route
-            const response = await axios.get('/sqlData/searchClinicalNotesWithoutClinicalFindings');
-            // Set the fetched data to state
-            setNote(response.data);
-        } catch (err) {
-            console.error('Error fetching data:', err);
-        }
-    };
-
     // implement SELECT to obtain all records for Clinical Findings
     const [data, setData] = useState([]);   // Initialize state to hold fetched data
 
@@ -37,9 +21,7 @@ function ClinicalFindingsPage() {
 
     const fetchData = async () => {
         try {
-            // fetch data from sqlData route
-            const response = await axios.get('/sqlData/?table=ClinicalFindings');
-            // Set the fetched data to state
+            const response = await axios.get('/clinical-findings/data');
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -55,7 +37,7 @@ function ClinicalFindingsPage() {
 
     const handleSearch = async (userInput) => {
         try {
-            const response = await axios.get(`/sqlData/searchClinicalFindings/?userChoice=${userChoice}&userInput=${userInput}`);
+            const response = await axios.get(`/clinical-findings/search/?userChoice=${userChoice}&userInput=${userInput}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -65,10 +47,26 @@ function ClinicalFindingsPage() {
     // Handling search ID dropdown
     const handleSelect = async (selectionValue) => {
         try {
-            let searchRoute = "searchClinicalFindings"; // hardcoded to search from Insurance Notes
+            let searchRoute = "search"; // hardcoded to search from Insurance Notes
             let selection = "clinicalNoteID";        // hardcoded to search by clinicalNoteID
-            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            const response = await axios.get(`/clinical-findings/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
             setData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
+    // implement SELECT to obtain records for Clinical Notes that have not been associated with a clinical findings note
+    const [noNote, setNote] = useState([]);
+    useEffect(() => {
+        fetchClinicalNoteWithoutClinicalFindings();
+    }, []);
+    const fetchClinicalNoteWithoutClinicalFindings = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/clinical-findings/selectiveinsert');
+            // Set the fetched data to state
+            setNote(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -96,7 +94,7 @@ function ClinicalFindingsPage() {
         submit.preventDefault()
         try {
             console.log(attributes)
-            await axios.post("/sqlDataInsertClinicalFindings", attributes);
+            await axios.post("/clinical-findings/create", attributes);
             window.location.reload();
         } catch (err) {
             console.error("Error adding data:", err);
@@ -113,7 +111,7 @@ function ClinicalFindingsPage() {
             </div>
             <div className='search-container'>
                 <SearchDropdown
-                    tableName="ClinicalFindings"
+                    route="clinical-findings"
                     idProperty="clinicalNoteID"
                     onSelect={handleSelect} />
                 <SearchBarClinicalFindings

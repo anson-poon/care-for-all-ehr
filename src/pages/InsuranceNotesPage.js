@@ -11,22 +11,6 @@ import { redirect } from 'react-router-dom';
 
 function InsuranceNotesPage() {
 
-    // implement SELECT to obtain records for Visits that have not been associated with an insurance note
-    const [noNote, setNote] = useState([]);
-    useEffect(() => {
-        fetchVisitWithoutNote();
-    }, []);
-    const fetchVisitWithoutNote = async () => {
-        try {
-            // fetch data from sqlData route
-            const response = await axios.get('/sqlData/searchVisitWithoutInsuranceNote');
-            // Set the fetched data to state
-            setNote(response.data);
-        } catch (err) {
-            console.error('Error fetching data:', err);
-        }
-    };
-
     // implement SELECT to obtain all records for Insurance Notes
     const [data, setData] = useState([]);   // Initialize state to hold fetched data
 
@@ -37,9 +21,7 @@ function InsuranceNotesPage() {
 
     const fetchData = async () => {
         try {
-            // fetch data from sqlData route
-            const response = await axios.get('/sqlData/?table=InsuranceNotes');
-            // Set the fetched data to state
+            const response = await axios.get('/insurance-notes/data');
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -55,7 +37,7 @@ function InsuranceNotesPage() {
 
     const handleSearch = async (userInput) => {
         try {
-            const response = await axios.get(`/sqlData/searchInsuranceNotes/?userChoice=${userChoice}&userInput=${userInput}`);
+            const response = await axios.get(`/insurance-notes/search/?userChoice=${userChoice}&userInput=${userInput}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -65,10 +47,26 @@ function InsuranceNotesPage() {
     // Handling search ID dropdown
     const handleSelect = async (selectionValue) => {
         try {
-            let searchRoute = "searchInsuranceNotes"; // hardcoded to search from Insurance Notes
+            let searchRoute = "search"; // hardcoded to search from Insurance Notes
             let selection = "visitID";        // hardcoded to search by visitID
-            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            const response = await axios.get(`/insurance-notes/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
             setData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
+    // implement SELECT to obtain records for Visits that have not been associated with an insurance note
+    const [noNote, setNote] = useState([]);
+    useEffect(() => {
+        fetchVisitWithoutNote();
+    }, []);
+    const fetchVisitWithoutNote = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/insurance-notes/selectiveinsert');
+            // Set the fetched data to state
+            setNote(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -91,7 +89,7 @@ function InsuranceNotesPage() {
         submit.preventDefault()
         try {
             console.log(attributes)
-            await axios.post("/sqlDataInsertInsuranceNotes", attributes);
+            await axios.post("/insurance-notes/create", attributes);
             window.location.reload();
         } catch (err) {
             console.error("Error adding data:", err);
@@ -108,7 +106,7 @@ function InsuranceNotesPage() {
             </div>
             <div className='search-container'>
                 <SearchDropdown
-                    tableName="InsuranceNotes"
+                    route="insurance-notes"
                     idProperty="visitID"
                     onSelect={handleSelect} />
                 <SearchBoxInsuranceNotes
