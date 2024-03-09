@@ -33,13 +33,13 @@ function Navbar(props) {
                     <a href="/visits" className="dropdown-button" >Visits</a>
                 </div>
                 <div className="dropdown">
-                    <a href="/insurancenotes" className="dropdown-button">Insurance Notes</a>
+                    <a href="/insurance-notes" className="dropdown-button">Insurance Notes</a>
                 </div>
                 <div className="dropdown">
                     <button className="dropdown-button">Clinical Notes ▾</button>
                     <div className="dropdown-content">
-                        <a href="/clinicalnotes" className="dropdown-link" >List of Clinical Notes</a>
-                        <a href="/clinicalfindings" className="dropdown-link" >List of Clinical Findings</a>
+                        <a href="/clinical-notes" className="dropdown-link" >List of Clinical Notes</a>
+                        <a href="/clinical-findings" className="dropdown-link" >List of Clinical Findings</a>
                     </div>
                 </div>
             </div>
