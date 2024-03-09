@@ -25,9 +25,7 @@ function ProviderIndexPage() {
 
     const fetchData = async () => {
         try {
-            // fetch data from sqlData route
-            const response = await axios.get('/sqlData/?table=Providers');
-            // Set the fetched data to state
+            const response = await axios.get('/provider-index/data');
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -43,7 +41,7 @@ function ProviderIndexPage() {
 
     const handleSearch = async (userInput) => {
         try {
-            const response = await axios.get(`/sqlData/searchProvider/?userChoice=${userChoice}&userInput=${userInput}`);
+            const response = await axios.get(`/provider-index/search/?userChoice=${userChoice}&userInput=${userInput}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -53,9 +51,9 @@ function ProviderIndexPage() {
     // Handling search ID dropdown
     const handleSelect = async (selectionValue) => {
         try {
-            let searchRoute = "searchProvider"; // hardcoded to search from ProviderProfiles
+            let searchRoute = "search"; // hardcoded to search from ProviderProfiles
             let selection = "providerID";        // hardcoded to search by providerProfileID
-            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            const response = await axios.get(`/provider-index/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -78,7 +76,7 @@ function ProviderIndexPage() {
     const submitNewData = async (submit) => {
         submit.preventDefault()
         try {
-            await axios.post("/sqlDataInsertPI", attributes);
+            await axios.post("/provider-index/create", attributes);
             window.location.reload();
         } catch (err) {
             console.error("Error adding data:", err);
@@ -90,7 +88,7 @@ function ProviderIndexPage() {
     // handles deletion of a record for Provider Index
     const deleteData = async (providerID) => {
         try {
-            await axios.delete("/sqlDataDeletePI/" + providerID);
+            await axios.delete("/provider-index/delete/" + providerID);
             window.location.reload()
         } catch (err) {
             console.error("Failed to delete data:", err);
@@ -113,7 +111,7 @@ function ProviderIndexPage() {
             </div>
             <div className='search-container'>
                 <SearchDropdown
-                    tableName="Providers"
+                    route="provider-index"
                     idProperty="providerID"
                     onSelect={handleSelect} />
                 <SearchBoxProviderIndex
@@ -141,7 +139,7 @@ function ProviderIndexPage() {
                                     <th>{item.providerFirstName}</th>
                                     <th>{item.providerLastName}</th>
                                     <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.providerID)} /></th>
-                                    <th><Link to={`/sqlDataUpdatePI/${item.providerID}`}><RiEdit2Fill /></Link></th>
+                                    <th><Link to={`/provider-index/update/${item.providerID}`}><RiEdit2Fill /></Link></th>
                                 </tr>
                             ))}
                         </tbody>

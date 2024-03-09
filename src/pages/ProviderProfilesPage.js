@@ -15,6 +15,80 @@ import { SearchDropdown } from '../components/SearchDropdown';
 
 function ProviderProfilesPage() {
 
+    // SELECT FROM ProviderProfiles
+    const [providerProfileData, setProviderProfileData] = useState([]);   // Initialize state to hold fetched data
+
+    useEffect(() => {
+        fetchData();    // Fetch data when component loads
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(`/provider-profiles/data`);
+            setProviderProfileData(response.data);
+        } catch (err) {
+            console.error(`Error fetching data:`, err);
+        }
+    };
+
+    // SELECT FROM Patient (for Inserting ID)
+    const [providerData, setProvidersData] = useState([]);
+
+    useEffect(() => {
+        fetchIndividualProvider();
+    }, []);
+
+    const fetchIndividualProvider = async () => {
+        try {
+            const response = await axios.get('/provider-profiles/data');
+            setProvidersData(response.data);
+        } catch (err) {
+            console.error(`Error fetching data:`, err);
+        }
+    };
+
+    // SELECT * FROM ProviderProfiles WHERE userChoice = ?
+    const [userChoice, setUserChoice] = useState('');
+    const handleChange = (choice) => {
+        setUserChoice(choice.target.value);
+    }
+    const handleSearch = async (userInput) => {
+        try {
+            const response = await axios.get(`/provider-profiles/search/?userChoice=${userChoice}&userInput=${userInput}`);
+            setProviderProfileData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    }
+
+    // Handling search ID dropdown
+    const handleSelect = async (selectionValue) => {
+        try {
+            let searchRoute = "search"; // hardcoded to search from ProviderProfiles
+            let selection = "providerID";        // hardcoded to search by providerProfileID
+            const response = await axios.get(`/provider-profiles/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            setProviderProfileData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
+    // implement SELECT to obtain records for Providers that have not been associated with a Provider Profile yet
+    const [noNote, setNote] = useState([]);
+    useEffect(() => {
+        fetchProvidersWithoutProviderProfile();
+    }, []);
+    const fetchProvidersWithoutProviderProfile = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/provider-profiles/selectiveinsert');
+            // Set the fetched data to state
+            setNote(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
     // implements INSERT to process new data 
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     // create object to hold provider attributes
@@ -33,57 +107,10 @@ function ProviderProfilesPage() {
     const submitNewData = async (submit) => {
         submit.preventDefault()
         try {
-            await axios.post("/sqlDataInsertProviderProfiles", attributes)
+            await axios.post("/provider-profiles/create", attributes)
             window.location.reload()
         } catch (err) {
             console.error("Error adding data:", err);
-        }
-    };
-
-    // SELECT FROM ProviderProfiles
-    const [providerProfileData, setProviderProfileData] = useState([]);   // Initialize state to hold fetched data
-
-    // SELECT FROM Provider (for Inserting ID)
-    const [providerData, setProviderData] = useState([]);
-    useEffect(() => {
-        fetchData('ProviderProfiles', setProviderProfileData);
-        fetchData('Providers', setProviderData);
-    }, []);
-
-    const fetchData = async (tableName, setData) => {
-        try {
-            // Fetch data from the specified table
-            const response = await axios.get(`/sqlData/?table=${tableName}`);
-            // Set the fetched data to state
-            setData(response.data);
-        } catch (err) {
-            console.error(`Error fetching ${tableName} data:`, err);
-        }
-    };
-
-    // SELECT * FROM ProviderProfiles WHERE userChoice = ?
-    const [userChoice, setUserChoice] = useState('');
-    const handleChange = (choice) => {
-        setUserChoice(choice.target.value);
-    }
-    const handleSearch = async (userInput) => {
-        try {
-            const response = await axios.get(`/sqlData/searchProviderProfiles?userChoice=${userChoice}&userInput=${userInput}`);
-            setProviderProfileData(response.data);
-        } catch (err) {
-            console.error('Error fetching data:', err);
-        }
-    }
-
-    // Handling search ID dropdown
-    const handleSelect = async (selectionValue) => {
-        try {
-            let searchRoute = "searchProviderProfiles"; // hardcoded to search from ProviderProfiles
-            let selection = "providerProfileID";        // hardcoded to search by providerProfileID
-            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
-            setProviderProfileData(response.data);
-        } catch (err) {
-            console.error('Error fetching data:', err);
         }
     };
 
@@ -91,7 +118,7 @@ function ProviderProfilesPage() {
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     const deleteData = async (providerID) => {
         try {
-            await axios.delete("/sqlDataDeleteProviderProfiles/" + providerID);
+            await axios.delete("/provider-profiles/delete/" + providerID);
             window.location.reload()
         } catch (err) {
             console.error("Failed to delete data:", err);
@@ -110,15 +137,15 @@ function ProviderProfilesPage() {
             </div>
             <div className='search-container'>
                 <SearchDropdown
-                    tableName="ProviderProfiles"
-                    idProperty="providerProfileID"
+                    route="provider-profiles"
+                    idProperty="providerID"
                     onSelect={handleSelect} />
                 <SearchBoxProviderProfiles
                     userChoice={userChoice}
                     handleChange={handleChange}
                     handleSearch={handleSearch} />
             </div>
-            <button className="SELECT-button" onClick={() => fetchData('ProviderProfiles', setProviderProfileData)}>Refresh Provider Profiles</button>
+            <button className="SELECT-button" onClick={fetchData}>Refresh Provider Profiles</button>
             <div className="flex-container">
                 <div className="flex-column1">
                     <table id="providerdetailedinformation">
@@ -142,7 +169,7 @@ function ProviderProfilesPage() {
                                     <th>{item.providerPhoneNumber}</th>
                                     <th>{item.providerID}</th>
                                     <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.providerID)} /></th>
-                                    <th><Link to={`/sqlDataUpdateProviderProfiles/${item.providerID}`}><RiEdit2Fill /></Link></th>
+                                    <th><Link to={`/provider-profiles/update/${item.providerID}`}><RiEdit2Fill /></Link></th>
                                 </tr>
                             ))}
                         </tbody>
@@ -154,7 +181,8 @@ function ProviderProfilesPage() {
                         <div className="form-row">
                             <label for="providerID">Provider ID: </label>
                             <select name="providerID" id="providerID" onChange={handleInsertData} required>
-                                {providerData.map((item, index) => (
+                                <option value="" selected disabled hidden>Choose Attribute</option>
+                                {noNote.map((item, index) => (
                                     <option value={item.providerID}>{item.providerID}</option>
                                 ))}
                             </select>
