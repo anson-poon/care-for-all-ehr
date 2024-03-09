@@ -22,7 +22,7 @@ function UpdateProviderIndexPage() {
 
   //  parses URL to get provider ID
   const urlLocation = useLocation();
-  const providerID = urlLocation.pathname.split("/")[2];
+  const providerID = urlLocation.pathname.split("/")[3];
 
   // Fetch data to prepopulate the form
   useEffect(() => {
@@ -32,7 +32,7 @@ function UpdateProviderIndexPage() {
 
   const fetchProviderData = async () => {
     try {
-      const response = await axios.get('/sqlData/?table=Providers');
+      const response = await axios.get('/provider-index/data');
       const data = response.data;
 
       // Find the specific provider by ID
@@ -59,8 +59,8 @@ function UpdateProviderIndexPage() {
   const handleSubmissionOfUpdate = async (submitUpdate) => {
     submitUpdate.preventDefault();
     try {
-      await axios.put(`/sqlDataUpdatePI/${providerID}`, providerName);
-      goBackToProviderIndex("/providerindex");
+      await axios.put(`/provider-index/update/${providerID}`, providerName);
+      goBackToProviderIndex("/provider-index");
     } catch (err) {
       console.error("Failed to update data:", err);
     }
@@ -79,7 +79,7 @@ function UpdateProviderIndexPage() {
           <input type="text" name="providerLastName" id="providerLastName" value={providerName.providerLastName} onChange={setUpdateValues} />
         </div>
         <br />
-        <button className="add-button" onClick={handleSubmissionOfUpdate}>Submit</button>             <button className="add-button" onClick={() => goBackToProviderIndex("/providerindex")}>Cancel</button>
+        <button className="add-button" onClick={handleSubmissionOfUpdate}>Submit</button>             <button className="add-button" onClick={() => goBackToProviderIndex("/provider-index")}>Cancel</button>
       </form>
     </div>
   );
