@@ -30,6 +30,7 @@ app.use(cors())
 
 const patientIndexRoute = require('./routes/patientIndexRoutes');
 const patientProfilesRoute = require('./routes/patientProfilesRoutes');
+const insurancePoliciesRoute = require('./routes/insurancePoliciesRoutes');
 const providerIndexRoute = require('./routes/providerIndexRoutes');
 const providerProfileRoute = require('./routes/providerProfilesRoutes');
 const patientProviderIntersectionRoute = require('./routes/patientProviderIntersectionRoutes');
@@ -37,6 +38,7 @@ const patientProviderIntersectionRoute = require('./routes/patientProviderInters
 
 app.use('/patient-index', patientIndexRoute);
 app.use('/patient-profiles', patientProfilesRoute);
+app.use('/insurance-policies', insurancePoliciesRoute);
 app.use('/provider-index', providerIndexRoute);
 app.use('/provider-profiles', providerProfileRoute);
 app.use('/patient-provider-intersection', patientProviderIntersectionRoute);
@@ -53,9 +55,9 @@ app.get('/sqlData', (req, res) => {
         /*case 'PatientProfiles':
             query += 'PatientProfiles';
             break;*/
-        case 'InsurancePolicies':
+        /*case 'InsurancePolicies':
             query = 'SELECT insuranceID, insuranceType, CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID FROM InsurancePolicies JOIN Patients ON InsurancePolicies.patientID = Patients.patientID';
-            break;
+            break;*/
         /*case 'Providers':
             query += 'Providers';
             break;
@@ -232,47 +234,6 @@ app.get('/sqlData/searchInsuranceNotes', (req, res) => {
     })
 });
 
-// Insurance Policies: SELECT records from Patient Provider Intersection based on certain attributes
-app.get('/sqlData/searchInsurancePolicies', (req, res) => {
-    const { userChoice, userInput } = req.query;
-
-    console.log(userChoice);
-    console.log(userInput);
-
-    let query = 'SELECT insuranceID, insuranceType, CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID FROM InsurancePolicies JOIN Patients ON InsurancePolicies.patientID = Patients.patientID WHERE ';
-    let queryParams = [];
-
-    switch (userChoice) {
-        case 'insuranceID':
-            query += 'insuranceID = ?';
-            queryParams.push(userInput);
-            break;
-        case 'insuranceType':
-            query += 'insuranceType = ?'
-            queryParams.push(userInput);
-            break;
-        case 'patientID':
-            query += 'Patients.patientID = ?'
-            queryParams.push(userInput);
-            break;
-        case 'patientFullName':
-            const newPatientUserInput = userInput.split(' ');
-            query = 'SELECT insuranceID, insuranceType, CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID FROM InsurancePolicies JOIN Patients ON InsurancePolicies.patientID = Patients.patientID WHERE Patients.patientFirstName = ? and Patients.patientLastName = ?';
-            queryParams.push(newPatientUserInput[0], newPatientUserInput[1])
-            break;
-        default:
-            return res.status(400).json({ error: 'Invalid search query' });
-    }
-    db.pool.query(query, queryParams, (err, data) => {
-        if (err) {
-            res.status(500).json({ error: 'Failed to search data' });
-        } else {
-            return res.json(data);
-        }
-    })
-});
-
-
 // Visits: SELECT records from Visits based on certain attributes
 app.get('/sqlData/searchVisits', (req, res) => {
     const { userChoice, userInput } = req.query;
@@ -340,27 +301,6 @@ app.post("/sqlDataInsertVisits", (req, res) => {
             res.status(500).json({ error: 'Failed to delete data' });
         } else {
             console.log("INSERT INTO Visits (visitDateTime, providerID, patientID, insuranceID) VALUES (" + req.body.visitDateTime + ", " + req.body.providerID + ", " + req.body.patientID + ", " + req.body.insuranceID + ")");
-            return res.json({ data });
-        }
-    })
-});
-
-/*
-Insurance Policy Page:  Logic to INSERT, or add, a new insurance policy 
-Code citation:  Code modified from base of INSERT code for Patient Index page
-*/
-app.post("/sqlDataInsertInsurancePolicies", (req, res) => {
-    let attributes = [
-        req.body.insuranceID,
-        req.body.insuranceType,
-        req.body.patientID
-    ]
-    let query = 'INSERT INTO InsurancePolicies (insuranceID, insuranceType, patientID) VALUES (?)';
-    db.pool.query(query, [attributes], (err, data) => {
-        if (err) {
-            res.status(500).json({ error: 'Failed to delete data' });
-        } else {
-            console.log("INSERT INTO InsurancePolicies (insuranceID, insuranceType, patientID) VALUES (" + req.body.insuranceID + ", " + req.body.insuranceType + ", " + req.body.patientID + ")");
             return res.json({ data });
         }
     })
