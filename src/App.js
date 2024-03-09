@@ -41,14 +41,14 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/patient-index" element={<PatientIndexPage />} />
             <Route path="/patient-profiles" element={<PatientProfilesPage />} />
+            <Route path="/insurance-policies" element={<InsurancePoliciesPage />} />
             <Route path="/provider-index" element={<ProviderIndexPage />} />
             <Route path="/provider-profiles" element={<ProviderProfilesPage />} />
             <Route path="/patient-provider-intersection" element={<PatientProviderIntersectionPage />} />
             <Route path="/visits" element={<VisitsPage />} />
-            <Route path="/clinicalnotes" element={<ClinicalNotesPage />} />
-            <Route path="/insurance-policies" element={<InsurancePoliciesPage />} />
-            <Route path="/clinicalfindings" element={<ClinicalFindingsPage />} />
-            <Route path="/insurancenotes" element={<InsuranceNotesPage />} />
+            <Route path="/insurance-notes" element={<InsuranceNotesPage />} />
+            <Route path="/clinical-notes" element={<ClinicalNotesPage />} />
+            <Route path="/clinical-findings" element={<ClinicalFindingsPage />} />
             <Route path="/patient-index/update/:patientID" element={<UpdatePatientIndexPage />} />
             <Route path="/patient-profiles/update/:patientID" element={<UpdatePatientPage />} />
             <Route path="/provider-index/update/:providerID" element={<UpdateProviderIndexPage />} />
