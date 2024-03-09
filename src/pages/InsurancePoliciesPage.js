@@ -22,9 +22,7 @@ function InsurancePoliciesPage() {
 
     const fetchData = async () => {
         try {
-            // fetch data from sqlData route
-            const response = await axios.get('/sqlData/?table=InsurancePolicies');
-            // Set the fetched data to state
+            const response = await axios.get('/insurance-policies/data');
             setData(response.data); 
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -40,7 +38,7 @@ function InsurancePoliciesPage() {
 
     const handleSearch = async (userInput) => {
         try {
-            const response = await axios.get(`/sqlData/searchInsurancePolicies/?userChoice=${userChoice}&userInput=${userInput}`);
+            const response = await axios.get(`/insurance-policies/search/?userChoice=${userChoice}&userInput=${userInput}`);
             setData(response.data); 
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -50,9 +48,9 @@ function InsurancePoliciesPage() {
     // Handling search ID dropdown
     const handleSelect = async (selectionValue) => {
         try {
-            let searchRoute = "searchInsurancePolicies"; // hardcoded to search from Insurance Policies
+            let searchRoute = "search"; // hardcoded to search from Insurance Policies
             let selection = "patientID";        // hardcoded to search by patientID
-            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            const response = await axios.get(`/insurance-policies/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -76,7 +74,7 @@ function InsurancePoliciesPage() {
         submit.preventDefault()
         try {
             console.log(attributes)
-            await axios.post("/sqlDataInsertInsurancePolicies", attributes);
+            await axios.post("/insurance-policies/create", attributes);
             window.location.reload();
         } catch (err) {
             console.error("Error adding data:", err);
@@ -94,7 +92,7 @@ function InsurancePoliciesPage() {
             </div>
             <div className='search-container'>
                 <SearchDropdown
-                    tableName="InsurancePolicies"
+                    route="insurance-policies"
                     idProperty="patientID"
                     onSelect={handleSelect} />
                 <SearchBoxInsurancePolicies
