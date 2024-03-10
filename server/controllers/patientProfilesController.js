@@ -118,15 +118,21 @@ PatientProfiles Page:  Logic to UPDATE a record based on patientID
 Code citation:  Technique Group 70 used to learn to update data credited to https://github.com/safak/youtube2022/tree/react-mysql
 */
 exports.update = (req, res) => {
-    let patientID = req.params.patientID;
+    let patientID = req.body.patientID;
+    if ((patientID === 'NULL') || (patientID === 'null')) {
+        patientID = null;
+    };
+    let oldPatientID = req.params.patientID;
     let patientPhoneNumber = req.body.patientPhoneNumber;
     let emailAddress = req.body.emailAddress;
     let dateOfBirth = req.body.dateOfBirth;
-    db.pool.query("UPDATE PatientProfiles SET patientPhoneNumber = ?, emailAddress = ?, dateOfBirth = ? WHERE patientID = ?", [patientPhoneNumber, emailAddress, dateOfBirth, patientID], (err, result) => {
+    db.pool.query("UPDATE PatientProfiles SET patientPhoneNumber = ?, emailAddress = ?, dateOfBirth = ?, patientID = ? WHERE PatientProfiles.patientID = ?", [patientPhoneNumber, emailAddress, dateOfBirth, patientID, oldPatientID], (err, result) => {
         if (err) {
+            console.log(oldPatientID, patientID)
+            console.log(err)
             res.status(500).json({ error: 'Failed to update data' });
         } else {
-            console.log("UPDATE PatientProfiles SET patientPhoneNumber = " + patientPhoneNumber + " emailAddress = " + emailAddress + " dateOfBirth" + dateOfBirth + " WHERE patientID = " + patientID)
+            console.log("UPDATE PatientProfiles SET patientPhoneNumber = " + patientPhoneNumber + " emailAddress = " + emailAddress + " dateOfBirth = " + dateOfBirth + " patientID = " + patientID + " WHERE patientID = " + oldPatientID)
             res.send(result); // Proceed with updating the specific entity's instance attributes
         }
     })
