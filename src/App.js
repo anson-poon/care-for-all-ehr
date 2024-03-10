@@ -26,9 +26,6 @@ import UpdateProviderIndexPage from './components/UpdateProviderIndex';
 import UpdatePatientHasProviders from './components/UpdatePatientHasProviders';
 
 function App() {
-
-
-
   return (
     <div className="App">
       <Router>

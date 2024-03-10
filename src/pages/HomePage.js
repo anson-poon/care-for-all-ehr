@@ -8,8 +8,7 @@ import { useNavigate } from 'react-router-dom';
 function HomePage() {
     return (
         <div>
-            <h3>Care For All</h3>
-            <h4>Electronic Health Record</h4>
+            <h3>Care For All - Electronic Health Record</h3>
             <div className="page-description">
                 <p>Care for All is an electronic health record (EHR) system that provides healthcare organizations with a system to record patient encounters for reimbursement and continuity of care purposes.</p>
                 <p>Care for All's database-oriented website records encounters (visits) between Providers and Patients for healthcare organizations to collect information on various data.</p>
