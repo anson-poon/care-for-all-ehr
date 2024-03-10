@@ -18,6 +18,7 @@ function UpdatePatientPage() {
 
   // construct object to hold user entered patient's first and last name
   const [patientProfileAttributes, setPatientProfileAttributes] = useState({
+    patientID: "",
     patientPhoneNumber: "",
     emailAddress: "",
     dateOfBirth: "",
@@ -45,6 +46,7 @@ function UpdatePatientPage() {
       // If exist, set state with that patient profile's attributes
       if (specificPatientProfile) {
         setPatientProfileAttributes({
+          patientID: specificPatientProfile.patientID,
           patientPhoneNumber: specificPatientProfile.patientPhoneNumber,
           emailAddress: specificPatientProfile.emailAddress,
           dateOfBirth: moment(specificPatientProfile.dateOfBirth).utc().format('YYYY-MM-DD')
@@ -76,6 +78,10 @@ function UpdatePatientPage() {
     <div>
       <form action="" method="get" className="update-form">
         <h4>Update Patient Information</h4>
+        <div className="form-row">
+          <label for="patientID">Patient ID:</label>
+          <input type="text" name="patientID" id="patientID" value={patientProfileAttributes.patientID} onChange={setUpdateValues} />
+        </div>
         <div className="form-row">
           <label for="patientPhoneNumber">Phone Number:</label>
           <input type="text" name="patientPhoneNumber" id="patientPhoneNumber" value={patientProfileAttributes.patientPhoneNumber} onChange={setUpdateValues} />
