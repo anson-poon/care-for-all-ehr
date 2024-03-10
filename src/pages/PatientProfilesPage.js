@@ -10,10 +10,11 @@ import moment from "moment";
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import { DescriptionPatientProfiles } from '../components/DescriptionBox';
 import { SearchBoxPatientProfiles } from '../components/SearchBox';
 import { SearchDropdown } from '../components/SearchDropdown';
 
-// Page returns function that shows patients table
+/* Page handles SELECT, CREATE, UPDATE, DELETE for PatientProfiles, which outlines the detailed information for each patient in the database */
 function PatientProfilesPage() {
 
     // SELECT FROM PatientProfiles
@@ -129,14 +130,7 @@ function PatientProfilesPage() {
     return (
         <div>
             <h3>Patient Profiles</h3>
-            <div className="page-description">
-                <p>This page allows you to <b>get</b> and <b>refresh</b> detailed information for all patients from the MySQL database.</p>
-                <p>Available information for each patient includes their Profile ID, Phone Number, Email Address, Date of Birth, and Patient ID.</p>
-                <p>Additionally, this page allows you to <b>insert</b>, or <b>add</b> information about a new patient that was created on List of Patients page.</p>
-                <p>This page also allows you to <b>delete</b> information for each patient from the MySQL database.</p>
-                <p>Lastly, this page also allows you to update update for each patient, including the ability to set Phone Number, Email Address, and Date of Birth as <b>NULL</b>.</p>
-            </div>
-
+            <DescriptionPatientProfiles />
             <div className='search-container'>
                 <SearchDropdown
                     route="patient-profiles"
