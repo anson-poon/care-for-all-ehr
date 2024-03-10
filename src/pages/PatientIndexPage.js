@@ -13,7 +13,7 @@ import { DescriptionPatients } from '../components/DescriptionBox';
 import { SearchBoxPatientIndex } from '../components/SearchBox';
 import { SearchDropdown } from '../components/SearchDropdown';
 
-// Page returns function to show Patient Index page
+/* Page to handle and display List of Patient page */
 function PatientIndexPage() {
 
     // SELECT all records for Patient Index

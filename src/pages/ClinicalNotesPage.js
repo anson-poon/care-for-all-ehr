@@ -1,14 +1,12 @@
-// Create Clinical Notes Page that uses sample data from data directory
-
 import React from 'react';
 import axios from "axios";
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import { DescriptionClinicalNotes } from '../components/DescriptionBox';
 import { SearchBoxClinicalNotes } from '../components/SearchBox';
 import { SearchDropdown } from '../components/SearchDropdown';
-import { redirect } from 'react-router-dom';
 
+
+/* Page to handle and display Clinical Notes page */
 function ClinicalNotesPage() {
 
     // implement SELECT to obtain all records for Clinical Notes
@@ -99,11 +97,7 @@ function ClinicalNotesPage() {
     return (
         <div>
             <h3>Clinical Notes</h3>
-            <div className="page-description">
-                <p>This page allows you to <b>get</b> and <b>refresh</b> information on clinical notes that have been associated with existing visits between patients and providers in the MySQL database.</p>
-                <p>Available information for each clinical note includes Clinical Note ID, Length of Visit, and Visit ID.</p>
-                <p>Lastly, this page allows you to <b>insert</b>, or <b>add</b> information about a clinical note for only new visits.</p>
-            </div>
+            <DescriptionClinicalNotes />
             <div className='search-container'>
                 <SearchDropdown
                     route="clinical-notes"

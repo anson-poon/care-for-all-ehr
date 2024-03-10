@@ -1,14 +1,11 @@
-// Creates Insurance Notes page that uses sample data from data directory
-
 import React from 'react';
 import axios from "axios";
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import { DescriptionInsuranceNotes } from '../components/DescriptionBox';
 import { SearchBoxInsuranceNotes } from '../components/SearchBox';
 import { SearchDropdown } from '../components/SearchDropdown';
-import { redirect } from 'react-router-dom';
 
+/* Page to handle and display Insurance Notes page */
 function InsuranceNotesPage() {
 
     // implement SELECT to obtain all records for Insurance Notes
@@ -99,11 +96,7 @@ function InsuranceNotesPage() {
     return (
         <div>
             <h3>Insurance Notes</h3>
-            <div className="page-description">
-                <p>This page allows you to <b>get</b> and <b>refresh</b> information on insurance notes that have been associated with existing visits between patients and providers in the MySQL database.</p>
-                <p>Available information for each insurance note includes Insurance Note ID, Reimbursement Code, and VisitID.</p>
-                <p>Lastly, this page allows you to <b>insert</b>, or <b>add</b> information about an insurance note for only new visits.</p>
-            </div>
+            <DescriptionInsuranceNotes />
             <div className='search-container'>
                 <SearchDropdown
                     route="insurance-notes"

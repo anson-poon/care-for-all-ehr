@@ -1,14 +1,11 @@
-// Create Clinical Finding Page that uses sample data from data directory
-
 import React from 'react';
 import axios from "axios";
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import { DescriptionClinicalFindings } from '../components/DescriptionBox';
 import { SearchBarClinicalFindings } from '../components/SearchBox';
 import { SearchDropdown } from '../components/SearchDropdown';
-import { redirect } from 'react-router-dom';
 
+/* Page to handle and display Clinical Findings Page */
 function ClinicalFindingsPage() {
 
     // implement SELECT to obtain all records for Clinical Findings
@@ -104,11 +101,7 @@ function ClinicalFindingsPage() {
     return (
         <div>
             <h3>Clinical Findings</h3>
-            <div className="page-description">
-                <p>This page allows you to <b>get</b> and <b>refresh</b> information on clinical findings that have been associated with existing clinical note IDs in the MySQL database.</p>
-                <p>Available information for each clinical findings note includes Clinical Finding ID, Chief Complaint, Patient Blood Pressure, Patient Heart Rate, Patient Temperature, Patient Respiratory Rate, Treatment Plan, and Clinical Note ID.</p>
-                <p>Lastly, this page allows you to <b>insert</b>, or <b>add</b> information on clinical findings for only a new clinical note ID.</p>
-            </div>
+            <DescriptionClinicalFindings />
             <div className='search-container'>
                 <SearchDropdown
                     route="clinical-findings"

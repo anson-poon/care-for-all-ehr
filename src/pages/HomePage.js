@@ -1,8 +1,4 @@
-// Creates Home Page
-
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 
 /* HomePage is the landing page with an introduction and guide to using the site*/
 function HomePage() {

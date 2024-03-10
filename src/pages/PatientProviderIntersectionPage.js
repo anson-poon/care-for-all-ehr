@@ -1,16 +1,13 @@
-// Create Patient Provider Relationships (intersection table) page that incorporates sample data from data directory
-
 import React from 'react';
 import axios from "axios";
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
-import patientData from '../data/patientData';
+import { DescriptionPatientProviderRelationships } from '../components/DescriptionBox';
 import { SearchBoxPatientProviderRelationships } from '../components/SearchBox';
-import { redirect } from 'react-router-dom';
 import { SearchDropdown } from '../components/SearchDropdown';
 
-
+/* Page to handle and display Patient Provider Relationships (intersection table) page */
 function PatientProviderIntersectionPage() {
 
     // const goToUpdatePage = useNavigate();
@@ -99,18 +96,7 @@ function PatientProviderIntersectionPage() {
     return (
         <div>
             <h3>Patient/Provider Relationships</h3>
-            <div className="page-description">
-                <p>This page allows you to <b>get</b> and <b>refresh</b> information on current relationships between patients and providers from the MySQL database.</p>
-                <p>Available information on the relationships between patients and providers include Patient ID and Provider ID.</p>
-                <p>Lastly, this page allows you to only <b>insert</b>, or define, a relationship among entities in the following scenarios:</p>
-                <ol className="userGuide">
-                    <li>A new relationship can be formed between a newly created patient and a newly created provider.</li>
-                    <li>A new relationship can be formed between a newly created patient and an existing provider.</li>
-                    <li>A new relationship can be formed between an existing patient and a newly created provider.</li>
-                    <li>A new relationship can be formed between an existing patient and an existing provider only if the two existing entities have never established a relationship before.</li>
-                </ol>
-                <p><b>Special Note</b>:  Once a relationship has been defined between a patient and a provider, then a visit entry can be created on List of Visits page to represent a visit occurred between the two entities.</p>
-            </div>
+            <DescriptionPatientProviderRelationships />
             <div className='search-container'>
                 <SearchDropdown
                     route="patient-provider-intersection"

@@ -7,12 +7,13 @@ Code adapted to work with group 70's project.
 import React from 'react';
 import axios from "axios";
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import { DescriptionProviderProfiles } from '../components/DescriptionBox';
 import { SearchBoxProviderProfiles } from '../components/SearchBox';
 import { SearchDropdown } from '../components/SearchDropdown';
 
-
+/* Page to handle and display Provider Profiles Page */
 function ProviderProfilesPage() {
 
     // SELECT FROM ProviderProfiles
@@ -128,13 +129,7 @@ function ProviderProfilesPage() {
     return (
         <div>
             <h3>Provider Profiles</h3>
-            <div className="page-description">
-                <p>This page allows you to <b>get</b> and <b>refresh</b> detailed information for all providers from the MySQL database.</p>
-                <p>Available information for each provider includes their Provider Profile ID, Title, Specialty, Phone Number, and Provider ID.</p>
-                <p>Additionally, this page allows you to <b>insert</b>, or <b>add</b> information about a new provider that was created on List of Providers page.</p>
-                <p>This page also allows you to <b>delete</b> information for each provider from the MySQL database.</p>
-                <p>Lastly, this page also allows you to update update for each provider, including the ability to set Title, Specialty, and Phone Number as <b>NULL</b>.</p>
-            </div>
+            <DescriptionProviderProfiles />
             <div className='search-container'>
                 <SearchDropdown
                     route="provider-profiles"
