@@ -9,13 +9,14 @@ import axios from "axios";
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import { DescriptionPatients } from '../components/DescriptionBox';
 import { SearchBoxPatientIndex } from '../components/SearchBox';
 import { SearchDropdown } from '../components/SearchDropdown';
 
 // Page returns function to show Patient Index page
 function PatientIndexPage() {
 
-    // implement SELECT to obtain all records for Patient Index
+    // SELECT all records for Patient Index
     const [data, setData] = useState([]);   // Initialize state to hold fetched data
 
     useEffect(() => {
@@ -31,7 +32,7 @@ function PatientIndexPage() {
         }
     };
 
-    // implement SELECT to obtain records based on a user's criteria for attributes
+    // SELECT records based on a user's criteria for attributes
     const [userChoice, setUserChoice] = useState('');
 
     const handleChange = (choice) => {
@@ -62,7 +63,7 @@ function PatientIndexPage() {
         }
     };
 
-    // implements INSERT to process new data 
+    // INSERT a new record
     // Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     // create object to hold patient attributes
     const [attributes, setAttributes] = useState({
@@ -85,7 +86,7 @@ function PatientIndexPage() {
         }
     };
 
-    // implements DELETE to remove a record
+    // DELETE a record
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     // handles deletion of a record for Patient Index
     const deleteData = async (patientID) => {
@@ -102,17 +103,7 @@ function PatientIndexPage() {
     return (
         <div>
             <h3>List of Patients</h3>
-            <div className="page-description">
-                <p>This page allows you to <b>get</b> and <b>refresh</b> a list of patients, if any, from the MySQL database.</p>
-                <p>Available information on the list of patients from the database includes their IDs and names.</p>
-                <p>Additionally, this page allows you to <b>insert</b> a new patient into the MySQL database.</p>
-                <p>Lastly, this page allows you to <b>delete</b> patient(s) from the MySQL database.</p>
-                <p><b>Special Note</b>:
-                    Deleting a patient from the database will result in the removal of the patient's demographics from Information for Each Patient page, if any.
-                    The patient's Patient ID and Patient Name, however, will not be changed for consideration of legality purposes.
-                    Details of any visit the patient may have had with provider(s) will remain unchanged.
-                </p>
-            </div>
+            <DescriptionPatients />
             <div className='search-container'>
                 <SearchDropdown
                     route="patient-index"
