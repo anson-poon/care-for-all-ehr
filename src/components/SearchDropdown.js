@@ -3,9 +3,11 @@ import axios from 'axios';
 
 export function SearchDropdown({ route, idProperty, onSelect }) {
 
+    // State to store the fetched data
     const [data, setData] = useState([]);
     const [selectedValue, setSelectedValue] = useState('');
 
+    // Fetch data from the specified table
     useEffect(() => {
         fetchData(route, setData);
     }, [route]);
@@ -22,6 +24,7 @@ export function SearchDropdown({ route, idProperty, onSelect }) {
         }
     };
 
+    // Handle the change event of the select element
     const handleSelectChange = (event) => {
         const selectedValue = event.target.value;
         setSelectedValue(selectedValue);

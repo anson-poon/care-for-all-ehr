@@ -1,17 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../database/db-connector');
+const patientController = require('../controllers/patientIndexController');
 
-router.get('/data', (req, res) => {
-    let query = 'SELECT * FROM Patients';
-    db.pool.query(query, (err, data) => {
-        if (err) {
-            console.error('Error fetching patients:', err);
-            res.status(500).json({ error: 'Failed to fetch data' });
-        } else {
-            res.json(data); // Send the fetched data as JSON response
-        }
-    });
-});
+// Routes for patient that uses functions from patientController
+router.get('/data', patientController.selectAll);
+router.get('/search', patientController.search);
+router.post('/create', patientController.create);
+router.put('/update/:patientID', patientController.update);
+router.delete('/delete/:patientID', patientController.delete);
 
 module.exports = router;

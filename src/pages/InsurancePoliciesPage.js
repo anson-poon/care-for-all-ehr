@@ -1,15 +1,11 @@
-// Creates Insurance Policies page that uses sample data from data directory
-
 import React from 'react';
 import axios from "axios";
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
-import patientData from '../data/patientData';
+import { DescriptionInsurancePolicies } from '../components/DescriptionBox';
 import { SearchBoxInsurancePolicies } from '../components/SearchBox';
 import { SearchDropdown } from '../components/SearchDropdown';
-import { redirect } from 'react-router-dom';
 
+/* Page to handle and display Insurance Policies page */
 function InsurancePoliciesPage() {
 
     // implement SELECT to obtain all records for Insurance Policies
@@ -22,10 +18,8 @@ function InsurancePoliciesPage() {
 
     const fetchData = async () => {
         try {
-            // fetch data from sqlData route
-            const response = await axios.get('/sqlData/?table=InsurancePolicies');
-            // Set the fetched data to state
-            setData(response.data); 
+            const response = await axios.get('/insurance-policies/data');
+            setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -40,8 +34,8 @@ function InsurancePoliciesPage() {
 
     const handleSearch = async (userInput) => {
         try {
-            const response = await axios.get(`/sqlData/searchInsurancePolicies/?userChoice=${userChoice}&userInput=${userInput}`);
-            setData(response.data); 
+            const response = await axios.get(`/insurance-policies/search/?userChoice=${userChoice}&userInput=${userInput}`);
+            setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -50,10 +44,24 @@ function InsurancePoliciesPage() {
     // Handling search ID dropdown
     const handleSelect = async (selectionValue) => {
         try {
-            let searchRoute = "searchInsurancePolicies"; // hardcoded to search from Insurance Policies
+            let searchRoute = "search"; // hardcoded to search from Insurance Policies
             let selection = "patientID";        // hardcoded to search by patientID
-            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            const response = await axios.get(`/insurance-policies/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
             setData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
+    // implement SELECT to obtain unique patient IDs for use in CREATE function
+    const [noNote, setNote] = useState([]);
+    useEffect(() => {
+        fetchUniquePatientID();
+    }, []);
+    const fetchUniquePatientID = async () => {
+        try {
+            const response = await axios.get('/insurance-policies/selectiveinsert');
+            setNote(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -65,18 +73,18 @@ function InsurancePoliciesPage() {
     const [attributes, setAttributes] = useState({
         insuranceID: "",
         insuranceType: "",
-        patientID: "", 
+        patientID: "",
     });
     // obtain attributes for new entry
     const handleInsertData = (newValues) => {
-        setAttributes((currentValues)=>({ ...currentValues, [newValues.target.name]:newValues.target.value}));
+        setAttributes((currentValues) => ({ ...currentValues, [newValues.target.name]: newValues.target.value }));
     };
     // handle submission of new data (attributes)
     const submitNewData = async (submit) => {
         submit.preventDefault()
         try {
             console.log(attributes)
-            await axios.post("/sqlDataInsertInsurancePolicies", attributes);
+            await axios.post("/insurance-policies/create", attributes);
             window.location.reload();
         } catch (err) {
             console.error("Error adding data:", err);
@@ -86,15 +94,10 @@ function InsurancePoliciesPage() {
     return (
         <div>
             <h3>List of Insurance Policies</h3>
-            <div className="page-description">
-                <p>This page allows you to <b>get</b> and <b>refresh</b> information on insurance policies that have been associated with patients in the MySQL database.</p>
-                <p>Available information for each insurance policy includes Insurance ID, Insurance Type, and Patient ID.</p>
-                <p>Lastly, this page allows you to <b>insert</b>, or <b>add</b> information about an insurance policy for an existing patient or a newly created patient.</p>
-                <p><b>Special Note</b>:  If an insurance policy is already linked with a patient, then an error will occur if the insurance policy is linked with another patient.</p>
-            </div>
+            <DescriptionInsurancePolicies />
             <div className='search-container'>
                 <SearchDropdown
-                    tableName="InsurancePolicies"
+                    route="insurance-policies"
                     idProperty="patientID"
                     onSelect={handleSelect} />
                 <SearchBoxInsurancePolicies
@@ -129,23 +132,23 @@ function InsurancePoliciesPage() {
                         <h4>Add a New Insurance Policy</h4>
                         <div className="form-row">
                             <label for="insuranceID">Insurance ID: </label>
-                            <input type="text" name="insuranceID" id="insuranceID" onChange = {handleInsertData} required />
+                            <input type="text" name="insuranceID" id="insuranceID" onChange={handleInsertData} required />
                         </div>
                         <div className="form-row">
                             <label for="insuranceType">Insurance Type: </label>
-                            <input type="text" name="insuranceType" id="insuranceType" onChange = {handleInsertData} required />
+                            <input type="text" name="insuranceType" id="insuranceType" onChange={handleInsertData} required />
                         </div>
                         <div className="form-row">
-                            <label for="patientID">Patient ID: </label>    
-                            <select name="patientID" id="patientID" onChange = {handleInsertData} required>
-                            <option value="" selected disabled hidden>Choose Attribute</option>
-                                {data.map((item, index) => (
+                            <label for="patientID">Patient ID: </label>
+                            <select name="patientID" id="patientID" onChange={handleInsertData} required>
+                                <option value="" selected disabled hidden>Choose Attribute</option>
+                                {noNote.map((item, index) => (
                                     <option value={item.patientID}>{item.patientID}</option>
                                 ))}
                             </select>
                         </div>
                         <br />
-                        <button className="add-button" onClick = {submitNewData}>Add</button>
+                        <button className="add-button" onClick={submitNewData}>Add</button>
                     </form>
                 </div>
             </div>

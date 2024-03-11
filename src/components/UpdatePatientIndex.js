@@ -22,7 +22,7 @@ function UpdatePatientIndexPage() {
 
   //  parses URL to get patient ID
   const urlLocation = useLocation();
-  const patientID = urlLocation.pathname.split("/")[2];
+  const patientID = urlLocation.pathname.split("/")[3];
 
   // Fetch data to prepopulate the form
   useEffect(() => {
@@ -31,7 +31,7 @@ function UpdatePatientIndexPage() {
 
   const fetchPatientData = async () => {
     try {
-      const response = await axios.get('/sqlData/?table=Patients');
+      const response = await axios.get('/patient-index/data');
       const data = response.data;
 
       // Find the specific patient by ID
@@ -58,8 +58,8 @@ function UpdatePatientIndexPage() {
   const handleSubmissionOfUpdate = async (submitUpdate) => {
     submitUpdate.preventDefault();
     try {
-      await axios.put(`/sqlDataUpdate/${patientID}`, patientName);
-      goBackToPatientIndex("/patientindex");
+      await axios.put(`/patient-index/update/${patientID}`, patientName);
+      goBackToPatientIndex("/patient-index");
     } catch (err) {
       console.error("Failed to update data:", err);
     }
@@ -78,7 +78,7 @@ function UpdatePatientIndexPage() {
           <input type="text" name="patientLastName" id="patientLastName" value={patientName.patientLastName} onChange={setUpdateValues} />
         </div>
         <br />
-        <button className="add-button" onClick={handleSubmissionOfUpdate}>Submit</button>                <button className="add-button" onClick={() => goBackToPatientIndex("/patientindex")}>Cancel</button>
+        <button className="add-button" onClick={handleSubmissionOfUpdate}>Submit</button>                <button className="add-button" onClick={() => goBackToPatientIndex("/patient-index")}>Cancel</button>
       </form>
     </div>
   );

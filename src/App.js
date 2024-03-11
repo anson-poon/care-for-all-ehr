@@ -26,9 +26,6 @@ import UpdateProviderIndexPage from './components/UpdateProviderIndex';
 import UpdatePatientHasProviders from './components/UpdatePatientHasProviders';
 
 function App() {
-
-
-
   return (
     <div className="App">
       <Router>
@@ -41,19 +38,19 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/patient-index" element={<PatientIndexPage />} />
             <Route path="/patient-profiles" element={<PatientProfilesPage />} />
+            <Route path="/insurance-policies" element={<InsurancePoliciesPage />} />
             <Route path="/provider-index" element={<ProviderIndexPage />} />
             <Route path="/provider-profiles" element={<ProviderProfilesPage />} />
-            <Route path="/patientproviderintersection" element={<PatientProviderIntersectionPage />} />
+            <Route path="/patient-provider-intersection" element={<PatientProviderIntersectionPage />} />
             <Route path="/visits" element={<VisitsPage />} />
-            <Route path="/clinicalnotes" element={<ClinicalNotesPage />} />
-            <Route path="/insurancepolicies" element={<InsurancePoliciesPage />} />
-            <Route path="/clinicalfindings" element={<ClinicalFindingsPage />} />
-            <Route path="/insurancenotes" element={<InsuranceNotesPage />} />
-            <Route path="/sqlDataUpdate/:patientID" element={<UpdatePatientIndexPage />} />
-            <Route path="/sqlDataUpdatePI/:providerID" element={<UpdateProviderIndexPage />} />
-            <Route path="/sqlDataUpdateProviderProfiles/:providerID" element={<UpdateProviderPage />} />
-            <Route path="/sqlDataUpdatePatientProfiles/:patientID" element={<UpdatePatientPage />} />
-            <Route path="/sqlDataUpdatePHP/:patientID/:providerID" element={<UpdatePatientHasProviders />} />
+            <Route path="/insurance-notes" element={<InsuranceNotesPage />} />
+            <Route path="/clinical-notes" element={<ClinicalNotesPage />} />
+            <Route path="/clinical-findings" element={<ClinicalFindingsPage />} />
+            <Route path="/patient-index/update/:patientID" element={<UpdatePatientIndexPage />} />
+            <Route path="/patient-profiles/update/:patientID" element={<UpdatePatientPage />} />
+            <Route path="/provider-index/update/:providerID" element={<UpdateProviderIndexPage />} />
+            <Route path="/provider-profiles/update/:providerID" element={<UpdateProviderPage />} />
+            <Route path="/patient-provider-intersection/update/:patientID/:providerID" element={<UpdatePatientHasProviders />} />
           </Routes>
         </div>
       </Router>
