@@ -15,3 +15,7 @@ This project is useful in terms of teaching others the kind of healthcare data t
 The project is currently being maintained by Anson and Tony, students in CS 340 with Oregon State University.
 
 ### Code citations/credit
+1) https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%201%20-%20Connecting%20to%20a%20MySQL%20Database architecture inspired the development of the architecture for this project, along with the db-connector code was modified by this project's group to connect the application to a database.
+2) https://github.com/safak/youtube2022/tree/react-mysql code was considered, reviewed, and learned by group 70 to learn to implement basic methods for CRUD. After learning how to implement CRUD methods by following this project, group 70 then adapted the CRUD implementation strategies to Care for All to implement CRUD methods with consideration of the project's constraints.
+3) CS290 concept of Model-View-Controller was reviewed by group 70. This concept was then refined to help group 70 make this project's architecture more modular and maintainable, i.e., splitting code that handles route and code that handles SQL logic into separate directories in the backend.
+4) https://levelup.gitconnected.com/how-to-render-react-app-using-express-server-in-node-js-a428ec4dfe2b was reviewed by group 70 to learn technique to deploy React with Node.JS/Express/MySQL all on one server. Technique was adapted to the backend's architecture.
