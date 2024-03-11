@@ -53,6 +53,18 @@ exports.search = (req, res) => {
     })
 };
 
+// Insurance Policies: SELECT DISTINCT patientIDs with first and last name for use in CREATE function
+exports.selectiveInsert = (req, res) => {
+    let query = 'SELECT DISTINCT(CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")")) as patientID FROM InsurancePolicies JOIN Patients ON InsurancePolicies.patientID = Patients.patientID';
+    db.pool.query(query, (err, data) => {
+        if (err) {
+            res.status(500).json({ error: 'Failed to search data' });
+        } else {
+            return res.json(data);
+        }
+    })
+};
+
 /*
 Insurance Policy Page:  Logic to INSERT, or add, a new insurance policy 
 Code citation:  Code modified from base of INSERT code for Patient Index page
