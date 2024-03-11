@@ -42,6 +42,15 @@ const clinicalFindingRoute = require('./routes/clinicalFindingsRoutes');
 
 // Instantiates routes to entities for use by express application
 app.use('/patient-index', patientIndexRoute);
+app.use('/patient-profiles', patientProfilesRoute);
+app.use('/insurance-policies', insurancePoliciesRoute);
+app.use('/provider-index', providerIndexRoute);
+app.use('/provider-profiles', providerProfileRoute);
+app.use('/patient-provider-intersection', patientProviderIntersectionRoute);
+app.use('/visits', visitRoute);
+app.use('/insurance-notes', insuranceNoteRoute);
+app.use('/clinical-notes', clinicalNoteRoute);
+app.use('/clinical-findings', clinicalFindingRoute);
 
 // Define route for Express to serve static/build React version
 app.use(express.static(path.join(__dirname, "..", "build")));
