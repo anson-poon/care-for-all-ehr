@@ -164,7 +164,7 @@ function PatientProviderIntersectionPage() {
                             <label for="patientID">Patient ID:</label>
                             <select name="patientID" id="providerID" onChange={handleInsertData} required>
                                 {patientData.map((item, index) => (
-                                    <option value={item.patientID}>{item.patientID}</option>
+                                    <option value={item.patientID}>{item.patientID} ({item.patientFirstName} {item.patientLastName})</option>
                                 ))}
                             </select>
                         </div>
@@ -172,7 +172,7 @@ function PatientProviderIntersectionPage() {
                             <label for="providerID">Provider ID:</label>
                             <select name="providerID" id="providerID" onChange={handleInsertData} required>
                                 {providerData.map((item, index) => (
-                                    <option value={item.providerID}>{item.providerID}</option>
+                                    <option value={item.providerID}>{item.providerID} ({item.providerFirstName} {item.providerLastName})</option>
                                 ))}
                             </select>
                         </div>
