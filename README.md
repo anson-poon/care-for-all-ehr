@@ -8,6 +8,20 @@ Healthcare related data is centered around patients seeing healthcaare providers
 ### Technologies Used
 This application was created with MySQL as the database, Node.JS and Express as the backend, and React as the frontend.
 
+### Libraries/Modules Used
+This application was made possible by the following libraries/modules:
+1) Create React App
+2) nodemon
+3) forever
+4) axios
+5) cors
+6) dotenv
+7) jquery
+8) mysql
+9) node
+10) express
+11) react
+
 ### Purpose of Project
 This project is useful in terms of teaching others the kind of healthcare data that may be collected during a visit between a patient and healthcare provider.
 
