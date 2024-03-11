@@ -163,6 +163,7 @@ function PatientProviderIntersectionPage() {
                         <div className="form-row">
                             <label for="patientID">Patient ID:</label>
                             <select name="patientID" id="providerID" onChange={handleInsertData} required>
+                                <option value="" selected disabled hidden>Choose Attribute</option>
                                 {patientData.map((item, index) => (
                                     <option value={item.patientID}>{item.patientID} ({item.patientFirstName} {item.patientLastName})</option>
                                 ))}
@@ -171,6 +172,7 @@ function PatientProviderIntersectionPage() {
                         <div className="form-row">
                             <label for="providerID">Provider ID:</label>
                             <select name="providerID" id="providerID" onChange={handleInsertData} required>
+                                <option value="" selected disabled hidden>Choose Attribute</option>
                                 {providerData.map((item, index) => (
                                     <option value={item.providerID}>{item.providerID} ({item.providerFirstName} {item.providerLastName})</option>
                                 ))}
