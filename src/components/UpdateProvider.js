@@ -24,7 +24,7 @@ function UpdateProviderPage() {
 
   //  parses URL to get patient ID
   const urlLocation = useLocation();
-  const providerID = urlLocation.pathname.split("/")[2];
+  const providerID = urlLocation.pathname.split("/")[3];
 
   // Fetch data to prepopulate the form
   useEffect(() => {
@@ -33,11 +33,11 @@ function UpdateProviderPage() {
 
   const fetchProviderData = async () => {
     try {
-      const response = await axios.get('/sqlData/?table=ProviderProfiles');
+      const response = await axios.get('/provider-profiles/data');
       const data = response.data;
 
       // Find the specific provider by ID
-      const specificProviderProfile = data.find(providerProfiles => providerProfiles.providerID === parseInt(providerID));
+      const specificProviderProfile = data.find(providerProfiles => parseInt(providerProfiles.providerID) === parseInt(providerID));
 
       // If exist, set state with that provider's first/last name
       if (specificProviderProfile) {
@@ -61,8 +61,8 @@ function UpdateProviderPage() {
   const handleSubmissionOfUpdate = async (submitUpdate) => {
     submitUpdate.preventDefault();
     try {
-      await axios.put(`/sqlDataUpdateProviderProfiles/${providerID}`, providerProfileAttributes);
-      goBackToProviderProfiles("/providers");
+      await axios.put(`/provider-profiles/update/${providerID}`, providerProfileAttributes);
+      goBackToProviderProfiles("/provider-profiles");
     } catch (err) {
       console.error("Failed to update data:", err);
     }
@@ -85,7 +85,7 @@ function UpdateProviderPage() {
           <input type="text" name="providerPhoneNumber" id="providerPhoneNumber" value={providerProfileAttributes.providerPhoneNumber} onChange={setUpdateValues} />
         </div>
         <br />
-        <button className="add-button" onClick={handleSubmissionOfUpdate}>Submit</button>                <button className="add-button" onClick={() => goBackToProviderProfiles("/providers")}>Cancel</button>
+        <button className="add-button" onClick={handleSubmissionOfUpdate}>Submit</button>                <button className="add-button" onClick={() => goBackToProviderProfiles("/provider-profiles")}>Cancel</button>
       </form>
     </div>
   );

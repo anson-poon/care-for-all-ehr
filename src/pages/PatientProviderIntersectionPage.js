@@ -1,19 +1,93 @@
-// Create Patient Provider Relationships (intersection table) page that incorporates sample data from data directory
-
 import React from 'react';
 import axios from "axios";
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
-import patientData from '../data/patientData';
+import { DescriptionPatientProviderRelationships } from '../components/DescriptionBox';
 import { SearchBoxPatientProviderRelationships } from '../components/SearchBox';
-import { redirect } from 'react-router-dom';
 import { SearchDropdown } from '../components/SearchDropdown';
 
-
+/* Page to handle and display Patient Provider Relationships (intersection table) page */
 function PatientProviderIntersectionPage() {
 
-    const goToUpdatePage = useNavigate();
+    // const goToUpdatePage = useNavigate();
+
+    // implement SELECT to obtain all records for Patient Provider Intersection
+    const [data, setData] = useState([]);   // Initialize state to hold fetched data
+    const [patientData, setPatientData] = useState([]);   // Initialize state to hold fetched data
+    const [providerData, setProviderData] = useState([]);   // Initialize state to hold fetched data
+
+    // Fetch data from the database
+    useEffect(() => {
+        fetchData();
+        fetchPatientData();
+        fetchProviderData();
+    }, []);
+
+    // function for fetching patient-to-provider relationships data
+    const fetchData = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/patient-provider-intersection/data');
+            // Set the fetched data to state
+            setData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
+    // function for fetching patient-index data
+    const fetchPatientData = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/patient-index/data');
+            // Set the fetched data to state
+            setPatientData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
+    // function for fetching provider-index data
+    const fetchProviderData = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/provider-index/data');
+            // Set the fetched data to state
+            setProviderData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
+    // implement SELECT to obtain records based on a user's criteria for attributes
+    const [userChoice, setUserChoice] = useState('');
+
+    const handleChange = (choice) => {
+        setUserChoice(choice.target.value);
+    }
+
+    const handleSearch = async (userInput) => {
+        try {
+            const response = await axios.get(`/patient-provider-intersection/search/?userChoice=${userChoice}&userInput=${userInput}`);
+            console.log(response.data)
+            setData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    }
+
+    // handling search ID dropdown
+    const handleSelect = async (selectionValue) => {
+        try {
+            let searchRoute = "search";  // hardcoded to search from Patients
+            let selection = "patientID";        // hardcoded to search by patientID
+            const response = await axios.get(`/patient-provider-intersection/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            setData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
 
     // implements INSERT to process new data 
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
@@ -30,58 +104,10 @@ function PatientProviderIntersectionPage() {
     const submitNewData = async (submit) => {
         submit.preventDefault()
         try {
-            await axios.post("/sqlDataInsertPatientHasProviders", attributes)
+            await axios.post("/patient-provider-intersection/create", attributes)
             window.location.reload()
         } catch (err) {
             console.error("Error adding data:", err);
-        }
-    };
-
-    // implement SELECT to obtain all records for Patient Provider Intersection
-    const [data, setData] = useState([]);   // Initialize state to hold fetched data
-
-    // Fetch data from the database
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
-        try {
-            // fetch data from sqlData route
-            const response = await axios.get('/sqlData/?table=Patients_has_Providers');
-            // Set the fetched data to state
-            setData(response.data);
-        } catch (err) {
-            console.error('Error fetching data:', err);
-        }
-    };
-
-    // implement SELECT to obtain records based on a user's criteria for attributes
-    const [userChoice, setUserChoice] = useState('');
-
-    const handleChange = (choice) => {
-        setUserChoice(choice.target.value);
-    }
-
-    const handleSearch = async (userInput) => {
-        try {
-            const response = await axios.get(`/sqlData/searchPatientProviderRelationships/?userChoice=${userChoice}&userInput=${userInput}`);
-            console.log(response.data)
-            setData(response.data);
-        } catch (err) {
-            console.error('Error fetching data:', err);
-        }
-    }
-
-    // Handling search ID dropdown
-    const handleSelect = async (selectionValue) => {
-        try {
-            let searchRoute = "searchPatient";  // hardcoded to search from Patients
-            let selection = "patientID";        // hardcoded to search by patientID
-            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
-            setData(response.data);
-        } catch (err) {
-            console.error('Error fetching data:', err);
         }
     };
 
@@ -89,7 +115,7 @@ function PatientProviderIntersectionPage() {
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     const deleteData = async (patientID, providerID) => {
         try {
-            await axios.delete("/sqlDataDeletePHP/" + patientID + "/" + providerID);
+            await axios.delete("/patient-provider-intersection/delete/" + patientID + "/" + providerID);
             window.location.reload()
         } catch (err) {
             console.error("Failed to delete data:", err);
@@ -99,21 +125,10 @@ function PatientProviderIntersectionPage() {
     return (
         <div>
             <h3>Patient/Provider Relationships</h3>
-            <div className="page-description">
-                <p>This page allows you to <b>get</b> and <b>refresh</b> information on current relationships between patients and providers from the MySQL database.</p>
-                <p>Available information on the relationships between patients and providers include Patient ID and Provider ID.</p>
-                <p>Lastly, this page allows you to only <b>insert</b>, or define, a relationship among entities in the following scenarios:</p>
-                <ol className="userGuide">
-                    <li>A new relationship can be formed between a newly created patient and a newly created provider.</li>
-                    <li>A new relationship can be formed between a newly created patient and an existing provider.</li>
-                    <li>A new relationship can be formed between an existing patient and a newly created provider.</li>
-                    <li>A new relationship can be formed between an existing patient and an existing provider only if the two existing entities have never established a relationship before.</li>
-                </ol>
-                <p><b>Special Note</b>:  Once a relationship has been defined between a patient and a provider, then a visit entry can be created on List of Visits page to represent a visit occurred between the two entities.</p>
-            </div>
+            <DescriptionPatientProviderRelationships />
             <div className='search-container'>
                 <SearchDropdown
-                    tableName="Patients_has_Providers"
+                    route="patient-provider-intersection"
                     idProperty="patientID"
                     onSelect={handleSelect} />
                 <SearchBoxPatientProviderRelationships
@@ -139,7 +154,7 @@ function PatientProviderIntersectionPage() {
                                     <th>{item.patientID}</th>
                                     <th>{item.providerID}</th>
                                     <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.patientID, item.providerID)} /></th>
-                                    <th><Link to={`/sqlDataUpdatePHP/${item.patientID}/${item.providerID}`}><RiEdit2Fill /></Link></th>
+                                    <th><Link to={`/patient-provider-intersection/update/${item.patientID}/${item.providerID}`}><RiEdit2Fill /></Link></th>
                                 </tr>
                             ))}
                         </tbody>
@@ -151,16 +166,18 @@ function PatientProviderIntersectionPage() {
                         <div className="form-row">
                             <label for="patientID">Patient ID:</label>
                             <select name="patientID" id="providerID" onChange={handleInsertData} required>
-                                {data.map((item, index) => (
-                                    <option value={item.patientID}>{item.patientID}</option>
+                                <option value="" selected disabled hidden>Choose Attribute</option>
+                                {patientData.map((item, index) => (
+                                    <option value={item.patientID}>{item.patientID} ({item.patientFirstName} {item.patientLastName})</option>
                                 ))}
                             </select>
                         </div>
                         <div className="form-row">
                             <label for="providerID">Provider ID:</label>
                             <select name="providerID" id="providerID" onChange={handleInsertData} required>
-                                {data.map((item, index) => (
-                                    <option value={item.providerID}>{item.providerID}</option>
+                                <option value="" selected disabled hidden>Choose Attribute</option>
+                                {providerData.map((item, index) => (
+                                    <option value={item.providerID}>{item.providerID} ({item.providerFirstName} {item.providerLastName})</option>
                                 ))}
                             </select>
                         </div>

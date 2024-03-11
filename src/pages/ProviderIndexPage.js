@@ -7,12 +7,13 @@ Code adapted to work with group 70's project.
 import React from 'react';
 import axios from "axios";
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
+import { DescriptionProviders } from '../components/DescriptionBox';
 import { SearchBoxProviderIndex } from '../components/SearchBox';
-import { AddFormProviderIndex } from '../components/AddForm';
 import SearchDropdown from '../components/SearchDropdown';
 
+/* Page to handle and display Provider Index Page */
 function ProviderIndexPage() {
 
     // implement SELECT to obtain all records for Provider Index
@@ -25,9 +26,7 @@ function ProviderIndexPage() {
 
     const fetchData = async () => {
         try {
-            // fetch data from sqlData route
-            const response = await axios.get('/sqlData/?table=Providers');
-            // Set the fetched data to state
+            const response = await axios.get('/provider-index/data');
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -43,7 +42,7 @@ function ProviderIndexPage() {
 
     const handleSearch = async (userInput) => {
         try {
-            const response = await axios.get(`/sqlData/searchProvider/?userChoice=${userChoice}&userInput=${userInput}`);
+            const response = await axios.get(`/provider-index/search/?userChoice=${userChoice}&userInput=${userInput}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -53,9 +52,9 @@ function ProviderIndexPage() {
     // Handling search ID dropdown
     const handleSelect = async (selectionValue) => {
         try {
-            let searchRoute = "searchProvider"; // hardcoded to search from ProviderProfiles
+            let searchRoute = "search"; // hardcoded to search from ProviderProfiles
             let selection = "providerID";        // hardcoded to search by providerProfileID
-            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            const response = await axios.get(`/provider-index/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -78,7 +77,7 @@ function ProviderIndexPage() {
     const submitNewData = async (submit) => {
         submit.preventDefault()
         try {
-            await axios.post("/sqlDataInsertPI", attributes);
+            await axios.post("/provider-index/create", attributes);
             window.location.reload();
         } catch (err) {
             console.error("Error adding data:", err);
@@ -90,7 +89,7 @@ function ProviderIndexPage() {
     // handles deletion of a record for Provider Index
     const deleteData = async (providerID) => {
         try {
-            await axios.delete("/sqlDataDeletePI/" + providerID);
+            await axios.delete("/provider-index/delete/" + providerID);
             window.location.reload()
         } catch (err) {
             console.error("Failed to delete data:", err);
@@ -100,20 +99,10 @@ function ProviderIndexPage() {
     return (
         <div>
             <h3>List of Providers</h3>
-            <div className="page-description">
-                <p>This page allows you to <b>get</b> and <b>refresh</b> a list of providers, if any, from the MySQL database.</p>
-                <p>Available information on the list of providers from the database includes their IDs and names.</p>
-                <p>Additionally, this page allows you to <b>insert</b> a new provider into the MySQL database.</p>
-                <p>Lastly, this page allows you to <b>delete</b> provider(s) from the MySQL database.</p>
-                <p><b>Special Note</b>:
-                    Deleting a provider from the database will result in the removal of the provider's demographics from Information for Each Provider page, if any.
-                    The provider's Provider ID and Provider Name, however, will not be changed for consideration of legality purposes.
-                    Details of any visit the provider may have had with patient(s) will remain unchanged.
-                </p>
-            </div>
+            <DescriptionProviders />
             <div className='search-container'>
                 <SearchDropdown
-                    tableName="Providers"
+                    route="provider-index"
                     idProperty="providerID"
                     onSelect={handleSelect} />
                 <SearchBoxProviderIndex
@@ -141,7 +130,7 @@ function ProviderIndexPage() {
                                     <th>{item.providerFirstName}</th>
                                     <th>{item.providerLastName}</th>
                                     <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.providerID)} /></th>
-                                    <th><Link to={`/sqlDataUpdatePI/${item.providerID}`}><RiEdit2Fill /></Link></th>
+                                    <th><Link to={`/provider-index/update/${item.providerID}`}><RiEdit2Fill /></Link></th>
                                 </tr>
                             ))}
                         </tbody>
