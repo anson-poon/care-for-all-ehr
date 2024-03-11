@@ -1,5 +1,5 @@
 /*
-Components that, once imported, allow for the insertion of new data on a Page for a given entity
+(Inactive) Components that, once imported, allow for the insertion of new data on a Page for a given entity
 */
 
 // general form to add data

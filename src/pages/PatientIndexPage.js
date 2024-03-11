@@ -7,36 +7,32 @@ Code adapted to work with group 70's project.
 import React from 'react';
 import axios from "axios";
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
-import patientData from '../data/patientData';
+import { DescriptionPatients } from '../components/DescriptionBox';
 import { SearchBoxPatientIndex } from '../components/SearchBox';
 import { SearchDropdown } from '../components/SearchDropdown';
-import { redirect } from 'react-router-dom';
 
-// Page returns function to show Patient Index page
+/* Page to handle and display List of Patient page */
 function PatientIndexPage() {
 
-    // implement SELECT to obtain all records for Patient Index
+    // SELECT all records for Patient Index
     const [data, setData] = useState([]);   // Initialize state to hold fetched data
 
-    // Fetch data from the database
     useEffect(() => {
-        fetchData();
+        fetchData();    // Fetch data when component loads
     }, []);
 
     const fetchData = async () => {
         try {
-            // fetch data from sqlData route
-            const response = await axios.get('/sqlData/?table=Patients');
-            // Set the fetched data to state
-            setData(response.data);
+            const response = await axios.get('/patient-index/data');    // fetch data from sqlData route
+            setData(response.data);     // Set the fetched data to state
         } catch (err) {
             console.error('Error fetching data:', err);
         }
     };
 
-    // implement SELECT to obtain records based on a user's criteria for attributes
+    // SELECT records based on a user's criteria for attributes
     const [userChoice, setUserChoice] = useState('');
 
     const handleChange = (choice) => {
@@ -45,7 +41,8 @@ function PatientIndexPage() {
 
     const handleSearch = async (userInput) => {
         try {
-            const response = await axios.get(`/sqlData/searchPatient/?userChoice=${userChoice}&userInput=${userInput}`);
+            // const response = await axios.get(`/sqlData/searchPatient/?userChoice=${userChoice}&userInput=${userInput}`);
+            const response = await axios.get(`/patient-index/search/?userChoice=${userChoice}&userInput=${userInput}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
@@ -55,16 +52,18 @@ function PatientIndexPage() {
     // Handling search ID dropdown
     const handleSelect = async (selectionValue) => {
         try {
-            let searchRoute = "searchPatient";  // hardcoded to search from Patients
+            //let searchRoute = "searchPatient";  // hardcoded to search from Patients
+            let searchRoute = "search";         // hardcoded to search from Patients
             let selection = "patientID";        // hardcoded to search by patientID
-            const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            // const response = await axios.get(`/sqlData/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
+            const response = await axios.get(`/patient-index/${searchRoute}?userChoice=${selection}&userInput=${selectionValue}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
     };
 
-    // implements INSERT to process new data 
+    // INSERT a new record
     // Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     // create object to hold patient attributes
     const [attributes, setAttributes] = useState({
@@ -80,42 +79,34 @@ function PatientIndexPage() {
     const submitNewData = async (submit) => {
         submit.preventDefault()
         try {
-            await axios.post("/sqlDataInsert", attributes);
+            await axios.post("/patient-index/create", attributes);
             window.location.reload();
         } catch (err) {
             console.error("Error adding data:", err);
         }
     };
 
-    // implements DELETE to remove a record
+    // DELETE a record
     // Code citation:  Code to implement UPDATE, INSERT, DELETE learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     // handles deletion of a record for Patient Index
     const deleteData = async (patientID) => {
         try {
-            await axios.delete("/sqlDataDelete/" + patientID);
+            await axios.delete("/patient-index/delete/" + patientID);
             window.location.reload()
         } catch (err) {
             console.error("Failed to delete data:", err);
         }
     };
 
+    console.log(data);
+
     return (
         <div>
             <h3>List of Patients</h3>
-            <div className="page-description">
-                <p>This page allows you to <b>get</b> and <b>refresh</b> a list of patients, if any, from the MySQL database.</p>
-                <p>Available information on the list of patients from the database includes their IDs and names.</p>
-                <p>Additionally, this page allows you to <b>insert</b> a new patient into the MySQL database.</p>
-                <p>Lastly, this page allows you to <b>delete</b> patient(s) from the MySQL database.</p>
-                <p><b>Special Note</b>:
-                    Deleting a patient from the database will result in the removal of the patient's demographics from Information for Each Patient page, if any.
-                    The patient's Patient ID and Patient Name, however, will not be changed for consideration of legality purposes.
-                    Details of any visit the patient may have had with provider(s) will remain unchanged.
-                </p>
-            </div>
+            <DescriptionPatients />
             <div className='search-container'>
                 <SearchDropdown
-                    tableName="Patients"
+                    route="patient-index"
                     idProperty="patientID"
                     onSelect={handleSelect} />
                 <SearchBoxPatientIndex
@@ -143,7 +134,7 @@ function PatientIndexPage() {
                                     <th>{item.patientFirstName}</th>
                                     <th>{item.patientLastName}</th>
                                     <th><RiChatDeleteFill className="icon" onClick={() => deleteData(item.patientID)} /></th>
-                                    <th><Link to={`/sqlDataUpdate/${item.patientID}`}><RiEdit2Fill /></Link></th>
+                                    <th><Link to={`/patient-index/update/${item.patientID}`}><RiEdit2Fill /></Link></th>
                                 </tr>
                             ))}
                         </tbody>

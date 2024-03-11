@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export function SearchDropdown({ tableName, idProperty, onSelect }) {
+export function SearchDropdown({ route, idProperty, onSelect }) {
 
+    // State to store the fetched data
     const [data, setData] = useState([]);
     const [selectedValue, setSelectedValue] = useState('');
 
+    // Fetch data from the specified table
     useEffect(() => {
-        fetchData(tableName, setData);
-    }, [tableName]);
+        fetchData(route, setData);
+    }, [route]);
 
-    const fetchData = async (tableName, setData) => {
+    const fetchData = async (route, setData) => {
         try {
             // Fetch data from the specified table
-            const response = await axios.get(`/sqlData/?table=${tableName}`);
+            console.log(`/?route=${route}/data`)
+            const response = await axios.get(`/${route}/data`);
             // Set the fetched data to state
             setData(response.data);
         } catch (err) {
-            console.error(`Error fetching ${tableName} data:`, err);
+            console.error(`Error fetching ${route} data:`, err);
         }
     };
 
+    // Handle the change event of the select element
     const handleSelectChange = (event) => {
         const selectedValue = event.target.value;
         setSelectedValue(selectedValue);

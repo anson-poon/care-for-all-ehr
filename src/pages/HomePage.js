@@ -1,27 +1,22 @@
-// Creates Home Page
-
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 
+/* HomePage is the landing page with an introduction and guide to using the site*/
 function HomePage() {
     return (
         <div>
-            <h3>Care For All</h3>
-            <h4>Electronic Health Record</h4>
+            <h3>Care For All - Electronic Health Record</h3>
             <div className="page-description">
-                <p><b>At of 02/29/24, List of Patients, List of Providers, Patient Profiles, and Provider Profiles are the only entities with all CRUD functions in working condition to some degree.</b></p>
-                <p>Care for All is an electronic health record (EHR) system that provides 100,000 healthcare organizations with a system to record patient encounters for reimbursement and continuity of care purposes.</p>
-                <p>Care for All’s database-oriented website that records Visits between Providers and Patients. With all encounters (visits) between Providers and Patients, healthcare organizations collect information on various data.</p>
-                <p>InsurancePolicies (including HMO, PPO, and EPO), InsuranceNotes, and ClinicalNotes, including ClinicalFindings, to submit for reimbursement from health insurance carriers and for continuity of care to promote patient outcomes.</p>
-                <p>Various functions will be available for the database user to manipulate each table on different pages of the site.</p>
-                <p>Proper utilization of this website will promote the user's experience, thus it is recommended for the user to read the following guide:</p>
+                <p>Care for All is an electronic health record (EHR) system that provides healthcare organizations with a system to record patient encounters for reimbursement and continuity of care purposes.</p>
+                <p>Care for All's database-oriented website records encounters (visits) between Providers and Patients for healthcare organizations to collect information on various data.</p>
+                <p>Insurance Policies (including HMO, PPO, and EPO), Insurance Notes, and Clinical Notes, including Clinical Findings, are used to submit for reimbursement from health insurance carriers and for continuity of care to promote patient outcomes.</p>
+                <p>Various functions will be available for the database user to manipulate the table on each pages of the site.</p>
+                <p><b>Proper utilization of this website will promote the user's experience, thus it is recommended for the user to read the following guide:</b></p>
                 <ol className="userGuide">
                     <li>A patient must first be added to the database on the List of Patients page.</li>
                     <br></br>
                     <li>A provider then must be added to the database on the List of Providers page.</li>
                     <br></br>
-                    <li>It is optional to add detailed information for a patient or a provider on the following pages, respectively:  Information for Each Patient and Information for Each Provider.</li>
+                    <li>It is optional to add details for a patient or a provider on the Profile pages after creating an entry on the List pages</li>
                     <br></br>
                     <li>A patient can have one or more providers. Similarly, a provider can have one or more patients. In order for a visit to be created between a patient and a provider, the relationship must first be defined.</li>
                     <br></br>

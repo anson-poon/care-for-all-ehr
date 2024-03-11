@@ -6,7 +6,6 @@ https://levelup.gitconnected.com/how-to-render-react-app-using-express-server-in
 
 import './App.css';
 import React from 'react';
-import axios from "axios";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
@@ -25,8 +24,6 @@ import UpdatePatientPage from './components/UpdatePatientPage';
 import UpdatePatientIndexPage from './components/UpdatePatientIndex';
 import UpdateProviderIndexPage from './components/UpdateProviderIndex';
 import UpdatePatientHasProviders from './components/UpdatePatientHasProviders';
-import { useState, useEffect, } from 'react';
-import { Link } from 'react-router';
 
 function App() {
   return (
@@ -39,21 +36,21 @@ function App() {
         <div className="App-body">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/patients" element={<PatientProfilesPage />} />
-            <Route path="/providers" element={<ProviderProfilesPage />} />
+            <Route path="/patient-index" element={<PatientIndexPage />} />
+            <Route path="/patient-profiles" element={<PatientProfilesPage />} />
+            <Route path="/insurance-policies" element={<InsurancePoliciesPage />} />
+            <Route path="/provider-index" element={<ProviderIndexPage />} />
+            <Route path="/provider-profiles" element={<ProviderProfilesPage />} />
+            <Route path="/patient-provider-intersection" element={<PatientProviderIntersectionPage />} />
             <Route path="/visits" element={<VisitsPage />} />
-            <Route path="/patientindex" element={<PatientIndexPage />} />
-            <Route path="/patientproviderintersection" element={<PatientProviderIntersectionPage />} />
-            <Route path="/providerindex" element={<ProviderIndexPage />} />
-            <Route path="/clinicalnotes" element={<ClinicalNotesPage />} />
-            <Route path="/insurancepolicies" element={<InsurancePoliciesPage />} />
-            <Route path="/clinicalfindings" element={<ClinicalFindingsPage />} />
-            <Route path="/insurancenotes" element={<InsuranceNotesPage />} />
-            <Route path="/sqlDataUpdate/:patientID" element={<UpdatePatientIndexPage />} />
-            <Route path="/sqlDataUpdatePI/:providerID" element={<UpdateProviderIndexPage />} />
-            <Route path="/sqlDataUpdateProviderProfiles/:providerID" element={<UpdateProviderPage />} />
-            <Route path="/sqlDataUpdatePatientProfiles/:patientID" element={<UpdatePatientPage />} />
-            <Route path="/sqlDataUpdatePHP/:patientID/:providerID" element={<UpdatePatientHasProviders />} />
+            <Route path="/insurance-notes" element={<InsuranceNotesPage />} />
+            <Route path="/clinical-notes" element={<ClinicalNotesPage />} />
+            <Route path="/clinical-findings" element={<ClinicalFindingsPage />} />
+            <Route path="/patient-index/update/:patientID" element={<UpdatePatientIndexPage />} />
+            <Route path="/patient-profiles/update/:patientID" element={<UpdatePatientPage />} />
+            <Route path="/provider-index/update/:providerID" element={<UpdateProviderIndexPage />} />
+            <Route path="/provider-profiles/update/:providerID" element={<UpdateProviderPage />} />
+            <Route path="/patient-provider-intersection/update/:patientID/:providerID" element={<UpdatePatientHasProviders />} />
           </Routes>
         </div>
       </Router>
