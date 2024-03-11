@@ -24,6 +24,7 @@ function PatientProviderIntersectionPage() {
         fetchProviderData();
     }, []);
 
+    // function for fetching patient-to-provider relationships data
     const fetchData = async () => {
         try {
             // fetch data from sqlData route
@@ -35,6 +36,7 @@ function PatientProviderIntersectionPage() {
         }
     };
 
+    // function for fetching patient-index data
     const fetchPatientData = async () => {
         try {
             // fetch data from sqlData route
@@ -46,6 +48,7 @@ function PatientProviderIntersectionPage() {
         }
     };
 
+    // function for fetching provider-index data
     const fetchProviderData = async () => {
         try {
             // fetch data from sqlData route
@@ -74,7 +77,7 @@ function PatientProviderIntersectionPage() {
         }
     }
 
-    // Handling search ID dropdown
+    // handling search ID dropdown
     const handleSelect = async (selectionValue) => {
         try {
             let searchRoute = "search";  // hardcoded to search from Patients
