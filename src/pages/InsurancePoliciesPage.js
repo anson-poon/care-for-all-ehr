@@ -53,6 +53,20 @@ function InsurancePoliciesPage() {
         }
     };
 
+    // implement SELECT to obtain unique patient IDs for use in CREATE function
+    const [noNote, setNote] = useState([]);
+    useEffect(() => {
+        fetchUniquePatientID();
+    }, []);
+    const fetchUniquePatientID = async () => {
+        try {
+            const response = await axios.get('/insurance-policies/selectiveinsert');
+            setNote(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
     // implements INSERT to process new data 
     // Code to implement INSERT learned from https://github.com/safak/youtube2022/tree/react-mysql. 
     // create object to hold patient attributes
@@ -128,7 +142,7 @@ function InsurancePoliciesPage() {
                             <label for="patientID">Patient ID: </label>
                             <select name="patientID" id="patientID" onChange={handleInsertData} required>
                                 <option value="" selected disabled hidden>Choose Attribute</option>
-                                {data.map((item, index) => (
+                                {noNote.map((item, index) => (
                                     <option value={item.patientID}>{item.patientID}</option>
                                 ))}
                             </select>
