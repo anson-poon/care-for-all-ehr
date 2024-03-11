@@ -1,5 +1,7 @@
 const db = require('../database/db-connector');
 
+/* Controller with functions used by the Provider Profiles Routes */
+
 // SELECT all records for Provider Profiles
 exports.selectAll = (req, res) => {
     let query = 'SELECT providerProfileID, title, specialty, providerPhoneNumber, CONCAT(Providers.providerID, " ", "(", Providers.providerFirstName, " ", Providers.providerLastName, ")") as providerID FROM Providers JOIN ProviderProfiles ON ProviderProfiles.providerID = Providers.providerID';

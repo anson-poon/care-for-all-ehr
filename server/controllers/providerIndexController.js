@@ -1,5 +1,7 @@
 const db = require('../database/db-connector');
 
+/* Controller with functions used by the Provider Index Routes */
+
 // SELECT all records for provider index
 exports.selectAll = (req, res) => {
     let query = 'SELECT * FROM Providers';

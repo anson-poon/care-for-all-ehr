@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const patientProfilesController = require('../controllers/patientProfilesController');
-const db = require('../database/db-connector');
 
+// Routes for patient profiles that uses functions from patientProfilesController
 router.get('/data', patientProfilesController.selectAll);
 router.get('/search', patientProfilesController.search);
 router.get('/selectiveinsert', patientProfilesController.selectiveInsert);

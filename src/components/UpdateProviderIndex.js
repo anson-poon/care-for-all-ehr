@@ -29,7 +29,6 @@ function UpdateProviderIndexPage() {
     fetchProviderData();
   }, []);
 
-
   const fetchProviderData = async () => {
     try {
       const response = await axios.get('/provider-index/data');

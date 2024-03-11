@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const patientProviderIntersectionController = require('../controllers/patientProviderIntersectionController');
-const db = require('../database/db-connector');
 
+// Routes for patient-provider intersection that uses functions from patientProviderIntersectionController
 router.get('/data', patientProviderIntersectionController.selectAll);
 router.get('/search', patientProviderIntersectionController.search);
 router.post('/create', patientProviderIntersectionController.create);

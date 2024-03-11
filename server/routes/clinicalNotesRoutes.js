@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const clinicalNotesController = require('../controllers/clinicalNotesController');
-const db = require('../database/db-connector');
 
+// Routes for clinical notes that uses functions from clinicalNotesController
 router.get('/data', clinicalNotesController.selectAll);
 router.get('/search', clinicalNotesController.search);
 router.get('/selectiveinsert', clinicalNotesController.selectiveInsert);

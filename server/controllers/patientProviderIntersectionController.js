@@ -1,5 +1,7 @@
 const db = require('../database/db-connector');
 
+/* Controller with functions used by the Patient Provider Intersection Routes */
+
 // SELECT all records for Patient Provider Relationships
 exports.selectAll = (req, res) => {
     let query = 'SELECT CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID, CONCAT(Providers.providerID, " ", "(", Providers.providerFirstName, " ", Providers.providerLastName, ")") as providerID FROM Patients JOIN Patients_has_Providers ON Patients.patientID = Patients_has_Providers.patientID JOIN Providers ON Providers.providerID = Patients_has_Providers.providerID';

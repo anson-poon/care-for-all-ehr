@@ -1,5 +1,7 @@
 const db = require('../database/db-connector');
 
+/* Controller with functions used by the Patient Profiles Routes */
+
 // SELECT all records for Patient Profiles
 exports.selectAll = (req, res) => {
     let query = 'SELECT patientProfileID, patientPhoneNumber, emailAddress, dateOfBirth, CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID FROM PatientProfiles JOIN Patients ON PatientProfiles.patientID = Patients.patientID';

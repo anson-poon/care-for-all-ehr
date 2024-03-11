@@ -1,5 +1,7 @@
 const db = require('../database/db-connector');
 
+/* Controller with functions used by the Clinical Findings Routes */
+
 // SELECT all records for clinical findings
 exports.selectAll = (req, res) => {
     let query = 'SELECT clinicalFindingID, chiefComplaint, patientBloodPressure, patientHeartRate, patientTemperature, patientRespiratoryRate, narrativeTreatmentPlan, CONCAT(ClinicalNotes.clinicalNoteID, " { Visit on ", Visits.visitDateTime, " between Provider ID ", Visits.providerID, " [", Providers.providerFirstName, " ", Providers.providerLastName, "] and Patient ID ", Visits.patientID, " [", Patients.patientFirstName, " ", Patients.patientLastName, "] }" ) as clinicalNoteID FROM ClinicalFindings JOIN ClinicalNotes ON ClinicalFindings.clinicalNoteID = ClinicalNotes.clinicalNoteID JOIN Visits ON ClinicalNotes.visitID = Visits.visitID JOIN Providers ON Visits.providerID = Providers.providerID JOIN Patients ON Visits.patientID = Patients.patientID';

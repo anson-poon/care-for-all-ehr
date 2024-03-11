@@ -1,5 +1,6 @@
 /* Component for the description box on each pages */
 
+// Description box for Patients Page
 export function DescriptionPatients() {
     return (
         <div className="page-description">
@@ -15,6 +16,7 @@ export function DescriptionPatients() {
     )
 }
 
+// Description box for Patient Profiles Page
 export function DescriptionPatientProfiles() {
     return (
         <div className="page-description">
@@ -26,6 +28,7 @@ export function DescriptionPatientProfiles() {
     )
 }
 
+// Description box for Insurance Policies Page
 export function DescriptionInsurancePolicies() {
     return (
         <div className="page-description">
@@ -37,6 +40,7 @@ export function DescriptionInsurancePolicies() {
     )
 }
 
+// Description box for Providers Page
 export function DescriptionProviders() {
     return (
         <div className="page-description">
@@ -52,6 +56,7 @@ export function DescriptionProviders() {
     )
 }
 
+// Description box for Provider Profiles Page
 export function DescriptionProviderProfiles() {
     return (
         <div className="page-description">
@@ -63,6 +68,7 @@ export function DescriptionProviderProfiles() {
     )
 }
 
+// Description box for Patients/Providers Relationships Page
 export function DescriptionPatientProviderRelationships() {
     return (
         <div className="page-description">
@@ -80,6 +86,7 @@ export function DescriptionPatientProviderRelationships() {
     )
 }
 
+// Description box for Visits Page
 export function DescriptionVisits() {
     return (
         <div className="page-description">
@@ -96,6 +103,7 @@ export function DescriptionVisits() {
     )
 }
 
+// Description box for Insurance Notes Page
 export function DescriptionInsuranceNotes() {
     return (
         <div className="page-description">
@@ -106,6 +114,7 @@ export function DescriptionInsuranceNotes() {
     )
 }
 
+// Description box for Clinical Notes Page
 export function DescriptionClinicalNotes() {
     return (
         <div className="page-description">
@@ -116,6 +125,7 @@ export function DescriptionClinicalNotes() {
     )
 }
 
+// Description box for Clinical Findings Page
 export function DescriptionClinicalFindings() {
     return (
         <div className="page-description">

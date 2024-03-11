@@ -1,5 +1,7 @@
 const db = require('../database/db-connector');
 
+/* Controller with functions used by the Visits Routes */
+
 // SELECT all records for visits
 exports.selectAll = (req, res) => {
     let query = 'SELECT visitID, visitDateTime, CONCAT(Patients.patientID, " ", "(", Patients.patientFirstName, " ", Patients.patientLastName, ")") as patientID, CONCAT(Providers.providerID, " ", "(", Providers.providerFirstName, " ", Providers.providerLastName, ")") as providerID, CONCAT(InsurancePolicies.insuranceID, " ", "(", InsurancePolicies.insuranceType, ")") as insuranceID FROM Visits as visitAttributes JOIN Patients on visitAttributes.patientID = Patients.patientID  JOIN Providers on visitAttributes.providerID = Providers.providerID  JOIN InsurancePolicies on visitAttributes.insuranceID = InsurancePolicies.insuranceID';

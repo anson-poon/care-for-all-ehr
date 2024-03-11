@@ -8,7 +8,7 @@ import React from 'react';
 import axios from "axios";
 import moment from "moment";
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { RiChatDeleteFill, RiEdit2Fill } from 'react-icons/ri';
 import { DescriptionPatientProfiles } from '../components/DescriptionBox';
 import { SearchBoxPatientProfiles } from '../components/SearchBox';

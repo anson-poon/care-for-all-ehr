@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const providerProfilesController = require('../controllers/providerProfilesController');
-const db = require('../database/db-connector');
 
+// Routes for provider profiles that uses functions from providerProfilesController
 router.get('/data', providerProfilesController.selectAll);
 router.get('/search', providerProfilesController.search);
 router.get('/selectiveinsert', providerProfilesController.selectiveInsert);
