@@ -174,7 +174,6 @@ export function SearchBoxVisits({ userChoice, handleChange, handleSearch }) {
             <select name="attributes" id="attributes" value={userChoice} onChange={handleChange}>
                 <option value="" selected disabled hidden>Search By Attribute</option>
                 <option value="visitID">Visit ID</option>
-                <option value="visitDateTime">Date & Time</option>
                 <option value="providerID">Provider ID</option>
                 <option value="patientID">Patient ID</option>
                 <option value="insuranceID">Insurance ID</option>
