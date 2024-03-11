@@ -5,6 +5,7 @@ const db = require('../database/db-connector');
 
 router.get('/data', insurancePoliciesController.selectAll);
 router.get('/search', insurancePoliciesController.search);
+router.get('/selectiveinsert', insurancePoliciesController.selectiveInsert);
 router.post('/create', insurancePoliciesController.create);
 
 module.exports = router;
