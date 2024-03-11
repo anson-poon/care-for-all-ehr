@@ -1,3 +1,5 @@
+/* Component for the description box on each pages */
+
 export function DescriptionPatients() {
     return (
         <div className="page-description">
