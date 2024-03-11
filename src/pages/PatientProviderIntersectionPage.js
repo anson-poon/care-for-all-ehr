@@ -14,10 +14,14 @@ function PatientProviderIntersectionPage() {
 
     // implement SELECT to obtain all records for Patient Provider Intersection
     const [data, setData] = useState([]);   // Initialize state to hold fetched data
+    const [patientData, setPatientData] = useState([]);   // Initialize state to hold fetched data
+    const [providerData, setProviderData] = useState([]);   // Initialize state to hold fetched data
 
     // Fetch data from the database
     useEffect(() => {
         fetchData();
+        fetchPatientData();
+        fetchProviderData();
     }, []);
 
     const fetchData = async () => {
@@ -26,6 +30,28 @@ function PatientProviderIntersectionPage() {
             const response = await axios.get('/patient-provider-intersection/data');
             // Set the fetched data to state
             setData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
+    const fetchPatientData = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/patient-index/data');
+            // Set the fetched data to state
+            setPatientData(response.data);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+        }
+    };
+
+    const fetchProviderData = async () => {
+        try {
+            // fetch data from sqlData route
+            const response = await axios.get('/provider-index/data');
+            // Set the fetched data to state
+            setProviderData(response.data);
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -137,7 +163,7 @@ function PatientProviderIntersectionPage() {
                         <div className="form-row">
                             <label for="patientID">Patient ID:</label>
                             <select name="patientID" id="providerID" onChange={handleInsertData} required>
-                                {data.map((item, index) => (
+                                {patientData.map((item, index) => (
                                     <option value={item.patientID}>{item.patientID}</option>
                                 ))}
                             </select>
@@ -145,7 +171,7 @@ function PatientProviderIntersectionPage() {
                         <div className="form-row">
                             <label for="providerID">Provider ID:</label>
                             <select name="providerID" id="providerID" onChange={handleInsertData} required>
-                                {data.map((item, index) => (
+                                {providerData.map((item, index) => (
                                     <option value={item.providerID}>{item.providerID}</option>
                                 ))}
                             </select>
