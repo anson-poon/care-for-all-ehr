@@ -1,12 +1,12 @@
 ***README content inspired by https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes that group 70 reviewed on 03/11/24***
 
 ## Care for All
-Care for All EHR (electronic health record) is a prototype database application that allows for the capturing and manipulation of healthcare related data. 
+Care for All EHR (electronic health record) is a prototype database application designed for the comprehensive recording and management of healthcare-related data. 
 
-Healthcare related data is centered around patients seeing healthcaare providers.
+THis includes patient profiles, provider profiles, and detailed records encompassing patient visits to healthcare providers, completed with credentials including insurance information and clinical notes.
 
 ### Technologies Used
-This application was created with MySQL as the database, Node.JS and Express as the backend, and React as the frontend.
+This application created with MySQL as the database, Node.JS and Express as the backend, and React as the frontend.
 
 ### Libraries/Modules Used
 This application was made possible by the following libraries/modules:
@@ -26,7 +26,7 @@ This application was made possible by the following libraries/modules:
 This project is useful in terms of teaching others the kind of healthcare data that may be collected during a visit between a patient and healthcare provider.
 
 ### Project Maintenance
-The project is currently being maintained by Anson and Tony, students in CS 340 with Oregon State University.
+The project is currently being maintained by Anson and Tony, students in CS340 at Oregon State University.
 
 ### Code Citations / Credit
 1) https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%201%20-%20Connecting%20to%20a%20MySQL%20Database architecture inspired the development of the architecture for this project, along with the db-connector code was modified by this project's group to connect the application to a database.
