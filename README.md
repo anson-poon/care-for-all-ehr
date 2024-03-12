@@ -17,10 +17,11 @@ This application was made possible by the following libraries/modules:
 5) cors
 6) dotenv
 7) jquery
-8) mysql
-9) node
-10) express
-11) react
+8) react-router-dom
+9) mysql
+10) node
+11) express
+12) react
 
 ### Purpose of Project
 This project is useful in terms of teaching others the kind of healthcare data that may be collected during a visit between a patient and healthcare provider.
