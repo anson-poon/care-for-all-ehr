@@ -9,7 +9,7 @@ THis includes patient profiles, provider profiles, and detailed records encompas
 * [Technologies used](#technologies-used)
 * [Libraries/Modules Used](#librariesmodules-used)
 * [Purpose Statement](#purpose-statement)
-* [UI Screenshots](#ui-screenshots)
+* [UI Screenshot](#ui-screenshot)
 * [Project Maintenance](#project-maintenance)
 * [Code Citations/Credit](#code-citationscredit)
 
@@ -36,6 +36,11 @@ This application was made possible by the following libraries/modules:
 
 ## Purpose Statement
 This project is created to emulate a real-world usage of an electronic health record and the kind of healthcare data that may be collected during a visit between a patient and healthcare provider.
+
+## UI Screenshot
+A screenshot of the general layout of each page, which consist of a navigation bar, search functionalities, form to add entry, and the database table.
+![UI](https://github.com/anson-poon/care-for-all-ehr/assets/75619539/6b6be52f-d9c7-45f3-b9f5-763130a10d6f)
+
 
 ## Project Maintenance
 The project is currently being maintained by Anson and Tony, students in CS340 at Oregon State University.
