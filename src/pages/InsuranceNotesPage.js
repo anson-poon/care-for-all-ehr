@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { DescriptionInsuranceNotes } from '../components/DescriptionBox';
 import { SearchBoxInsuranceNotes } from '../components/SearchBox';
 import { SearchDropdown } from '../components/SearchDropdown';
+import { isDisabled } from '@testing-library/user-event/dist/utils';
 
 /* Page to handle and display Insurance Notes page */
 function InsuranceNotesPage() {
@@ -58,12 +59,35 @@ function InsuranceNotesPage() {
     useEffect(() => {
         fetchVisitWithoutNote();
     }, []);
+
+    // https://www.geeksforgeeks.org/how-to-disable-a-button-in-reactjs/ used to learn technique to create disable button with technique to inject css to change disable button color
+    // https://www.shecodes.io/athena/72444-how-to-do-conditional-rendering-of-html-elements-in-react used to learn to do conditional rendering of HTML elements (custom message)
+    // https://www.w3schools.com/react/react_css.asp how to do inline css to change color of custom messages
+    const [disableButton, setDisableButton] = useState(false);
+    const styleDisabledButton = {
+        disabledButton: {
+            padding: "0.5em 2em",
+            fontSize: "1rem",
+            backgroundColor: "gray",
+            color: "white",
+            border: "none",
+            borderRadius: "10px",
+            cursor: "pointer",
+            transition: "ease-out 200ms",
+        }
+    };
+
     const fetchVisitWithoutNote = async () => {
         try {
             // fetch data from sqlData route
             const response = await axios.get('/insurance-notes/selectiveinsert');
             // Set the fetched data to state
-            setNote(response.data);
+            if (response.data.length !== 0) {
+                setDisableButton(false);
+                setNote(response.data);
+            } else {
+                setDisableButton(true);
+            }  
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -146,7 +170,10 @@ function InsuranceNotesPage() {
                             </select>
                         </div>
                         <br />
-                        <button className="add-button" onClick={submitNewData}>Add</button>
+                        <button className="add-button" id="add-button" onClick={submitNewData} disabled={disableButton} style={disableButton ? styleDisabledButton.disabledButton : {}}>Add</button>
+                        <div>
+                            {disableButton ? <p style={{color: "red", textAlign: "center"}}>There is no visit available to be associated with a clinical note!</p> : <p style={{color: "blue", textAlign: "center"}}>A new visit is available to be associated with a clinical note!</p>}
+                        </div>
                     </form>
                 </div>
             </div>
