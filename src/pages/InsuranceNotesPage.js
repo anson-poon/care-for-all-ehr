@@ -64,18 +64,6 @@ function InsuranceNotesPage() {
     // https://www.shecodes.io/athena/72444-how-to-do-conditional-rendering-of-html-elements-in-react used to learn to do conditional rendering of HTML elements (custom message)
     // https://www.w3schools.com/react/react_css.asp how to do inline css to change color of custom messages
     const [disableButton, setDisableButton] = useState(false);
-    const styleDisabledButton = {
-        disabledButton: {
-            padding: "0.5em 2em",
-            fontSize: "1rem",
-            backgroundColor: "gray",
-            color: "white",
-            border: "none",
-            borderRadius: "10px",
-            cursor: "pointer",
-            transition: "ease-out 200ms",
-        }
-    };
 
     const fetchVisitWithoutNote = async () => {
         try {
@@ -87,7 +75,7 @@ function InsuranceNotesPage() {
                 setNote(response.data);
             } else {
                 setDisableButton(true);
-            }  
+            }
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -163,16 +151,26 @@ function InsuranceNotesPage() {
                         <div className="form-row">
                             <label for="visitID">Visit ID: </label>
                             <select name="visitID" id="visitID" onChange={handleInsertData} required>
-                                <option value="" selected disabled hidden>Choose Attribute</option>
-                                {noNote.map((item, index) => (
-                                    <option value={item.visitID}>{item.visitID}</option>
-                                ))}
+                                {noNote.length === 0 ? (
+                                    <option value="" selected disabled hidden>No Visits Available</option>) : (
+                                    <option value="" selected disabled hidden>Choose Attribute</option>
+                                )}
+                                {noNote.map((item, index) => (<option key={index} value={item.visitID}>{item.visitID}</option>)
+                                )}
                             </select>
                         </div>
                         <br />
-                        <button className="add-button" id="add-button" onClick={submitNewData} disabled={disableButton} style={disableButton ? styleDisabledButton.disabledButton : {}}>Add</button>
+                        <button
+                            className={disableButton ? "disabled-add-button" : "add-button"}
+                            id="add-button"
+                            onClick={submitNewData}
+                            disabled={disableButton}>
+                            Add
+                        </button>
                         <div>
-                            {disableButton ? <p style={{color: "red", textAlign: "center"}}>There is no visit available to be associated with a clinical note!</p> : <p style={{color: "blue", textAlign: "center"}}>A new visit is available to be associated with a clinical note!</p>}
+                            {disableButton ?
+                                <p style={{ textAlign: "center" }}>All visits have been associated with insurance notes</p> :
+                                <p style={{ textAlign: "center" }}>Pending visit(s) to be associated with insurance note</p>}
                         </div>
                     </form>
                 </div>
