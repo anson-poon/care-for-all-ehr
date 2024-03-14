@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { DescriptionInsuranceNotes } from '../components/DescriptionBox';
 import { SearchBoxInsuranceNotes } from '../components/SearchBox';
 import { SearchDropdown } from '../components/SearchDropdown';
-import { isDisabled } from '@testing-library/user-event/dist/utils';
 
 /* Page to handle and display Insurance Notes page */
 function InsuranceNotesPage() {
@@ -60,19 +59,20 @@ function InsuranceNotesPage() {
         fetchVisitWithoutNote();
     }, []);
 
-    // https://www.geeksforgeeks.org/how-to-disable-a-button-in-reactjs/ used to learn technique to create disable button with technique to inject css to change disable button color
-    // https://www.shecodes.io/athena/72444-how-to-do-conditional-rendering-of-html-elements-in-react used to learn to do conditional rendering of HTML elements (custom message)
-    // https://www.w3schools.com/react/react_css.asp how to do inline css to change color of custom messages
+    /*
+    Technique learned to create a disable button with changing colors and custom HTML messages based on conditional credit to 
+    https://www.geeksforgeeks.org/how-to-disable-a-button-in-reactjs/ and https://www.shecodes.io/athena/72444-how-to-do-conditional-rendering-of-html-elements-in-react
+    */
     const [disableButton, setDisableButton] = useState(false);
 
     const fetchVisitWithoutNote = async () => {
         try {
-            // fetch data from sqlData route
             const response = await axios.get('/insurance-notes/selectiveinsert');
-            // Set the fetched data to state
+            // if there is a visit available to associate insurance note
             if (response.data.length !== 0) {
                 setDisableButton(false);
                 setNote(response.data);
+            // if there is no visit available to associate insurance note 
             } else {
                 setDisableButton(true);
             }

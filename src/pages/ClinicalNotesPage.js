@@ -59,12 +59,24 @@ function ClinicalNotesPage() {
     useEffect(() => {
         fetchVisitWithoutNote();
     }, []);
+
+    /*
+    Technique learned to create a disable button with changing colors and custom HTML messages based on conditional credit to 
+    https://www.geeksforgeeks.org/how-to-disable-a-button-in-reactjs/ and https://www.shecodes.io/athena/72444-how-to-do-conditional-rendering-of-html-elements-in-react
+    */
+    const [disableButton, setDisableButton] = useState(false);
+
     const fetchVisitWithoutNote = async () => {
         try {
-            // fetch data from sqlData route
             const response = await axios.get('/clinical-notes/selectiveinsert');
-            // Set the fetched data to state
-            setNote(response.data);
+            // if there is a visit available to associate clinical note
+            if (response.data.length !== 0) {
+                setDisableButton(false);
+                setNote(response.data);
+            // if there is no visit available to associate clinical note 
+            } else {
+                setDisableButton(true);
+            }
         } catch (err) {
             console.error('Error fetching data:', err);
         }
@@ -141,14 +153,27 @@ function ClinicalNotesPage() {
                         <div className="form-row">
                             <label for="visitID">Visit ID: </label>
                             <select name="visitID" id="visitID" onChange={handleInsertData} required>
-                                <option value="" selected disabled hidden>Choose Attribute</option>
-                                {noNote.map((item, index) => (
-                                    <option value={item.visitID}>{item.visitID}</option>
-                                ))}
+                            {noNote.length === 0 ? (
+                                    <option value="" selected disabled hidden>No Visits Available</option>) : (
+                                    <option value="" selected disabled hidden>Choose Attribute</option>
+                                )}
+                                {noNote.map((item, index) => (<option key={index} value={item.visitID}>{item.visitID}</option>)
+                                )}
                             </select>
                         </div>
                         <br />
-                        <button className="add-button" onClick={submitNewData}>Add</button>
+                        <button
+                            className={disableButton ? "disabled-add-button" : "add-button"}
+                            id="add-button"
+                            onClick={submitNewData}
+                            disabled={disableButton}>
+                            Add
+                        </button>
+                        <div>
+                            {disableButton ?
+                                <p style={{ textAlign: "center" }}>All visits have been associated with clinical notes</p> :
+                                <p style={{ textAlign: "center" }}>Pending visit(s) to be associated with clinical note</p>}
+                        </div>
                     </form>
                 </div>
             </div>

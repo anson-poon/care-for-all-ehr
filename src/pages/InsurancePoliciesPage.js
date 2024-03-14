@@ -131,10 +131,6 @@ function InsurancePoliciesPage() {
                     <form action="" method="get" className="add-form">
                         <h4>Add a New Insurance Policy</h4>
                         <div className="form-row">
-                            <label for="insuranceID">Insurance ID: </label>
-                            <input type="text" name="insuranceID" id="insuranceID" onChange={handleInsertData} required />
-                        </div>
-                        <div className="form-row">
                             <label for="insuranceType">Insurance Type: </label>
                             <input type="text" name="insuranceType" id="insuranceType" onChange={handleInsertData} required />
                         </div>
