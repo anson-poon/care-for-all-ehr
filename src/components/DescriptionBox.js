@@ -35,7 +35,6 @@ export function DescriptionInsurancePolicies() {
             <p>This page allows you to <b>get</b> and <b>search</b> information on insurance policies that have been associated with patients in the MySQL database.</p>
             <p>Available information for each insurance policy includes Insurance ID, Insurance Type, and Patient ID.</p>
             <p>You can <b>insert</b> information about an insurance policy for an existing patient or a newly created patient.</p>
-            <p><b>Special Note</b>:  If an insurance policy is already linked with a patient, then an error will occur if the insurance policy is linked with another patient.</p>
         </div>
     )
 }
