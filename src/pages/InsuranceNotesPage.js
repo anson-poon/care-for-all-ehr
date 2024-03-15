@@ -72,7 +72,7 @@ function InsuranceNotesPage() {
             if (response.data.length !== 0) {
                 setDisableButton(false);
                 setNote(response.data);
-            // if there is no visit available to associate insurance note 
+                // if there is no visit available to associate insurance note 
             } else {
                 setDisableButton(true);
             }
@@ -144,21 +144,33 @@ function InsuranceNotesPage() {
                 <div className="flex-column2">
                     <form action="" method="get" className="add-form">
                         <h4>Add an Insurance Note for a New Visit</h4>
-                        <div className="form-row">
-                            <label for="reimbursementCode">Reimbursement Code: </label>
-                            <input type="text" name="reimbursementCode" id="reimbursementCode" onChange={handleInsertData} required />
-                        </div>
-                        <div className="form-row">
-                            <label for="visitID">Visit ID: </label>
-                            <select name="visitID" id="visitID" onChange={handleInsertData} required>
-                                {noNote.length === 0 ? (
-                                    <option value="" selected disabled hidden>No Visits Available</option>) : (
-                                    <option value="" selected disabled hidden>Choose Attribute</option>
-                                )}
-                                {noNote.map((item, index) => (<option key={index} value={item.visitID}>{item.visitID}</option>)
-                                )}
-                            </select>
-                        </div>
+                        {noNote.length === 0 ? (
+                            <div>
+                                <div className="form-row">
+                                    <label for="reimbursementCode">Reimbursement Code: </label>
+                                    <input type="text" name="reimbursementCode" id="reimbursementCode" onChange={handleInsertData} disabled />
+                                </div>
+                                <div className="form-row">
+                                    <label for="visitID">Visit ID: </label>
+                                    <select name="visitID" id="visitID" onChange={handleInsertData} disabled>
+                                        <option value="" selected disabled hidden>Choose Attribute</option>
+                                    </select>
+                                </div>
+                            </div>) : (
+                            <div>
+                                <div className="form-row">
+                                    <label for="reimbursementCode">Reimbursement Code: </label>
+                                    <input type="text" name="reimbursementCode" id="reimbursementCode" onChange={handleInsertData} required />
+                                </div>
+                                <div className="form-row">
+                                    <label for="visitID">Visit ID: </label>
+                                    <select name="visitID" id="visitID" onChange={handleInsertData} required>
+                                        <option value="" selected disabled hidden>Choose Attribute</option>
+                                        {noNote.map((item, index) => (<option key={index} value={item.visitID}>{item.visitID}</option>))}
+                                    </select>
+                                </div>
+                            </div>
+                        )}
                         <br />
                         <button
                             className={disableButton ? "disabled-add-button" : "add-button"}
@@ -175,7 +187,7 @@ function InsuranceNotesPage() {
                     </form>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 

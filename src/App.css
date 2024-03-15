@@ -396,7 +396,7 @@ select {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: ease-out 200ms;
+  pointer-events: none;
 }
 
 .update-form {

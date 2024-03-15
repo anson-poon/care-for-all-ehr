@@ -73,7 +73,7 @@ function ClinicalNotesPage() {
             if (response.data.length !== 0) {
                 setDisableButton(false);
                 setNote(response.data);
-            // if there is no visit available to associate clinical note 
+                // if there is no visit available to associate clinical note 
             } else {
                 setDisableButton(true);
             }
@@ -146,21 +146,33 @@ function ClinicalNotesPage() {
                 <div className="flex-column2">
                     <form action="" method="get" className="add-form">
                         <h4>Add a New Clinical Note</h4>
-                        <div className="form-row">
-                            <label for="lengthOfVisit">Length of Visit</label>
-                            <input type="text" name="lengthOfVisit" id="lengthOfVisit" onChange={handleInsertData} required />
-                        </div>
-                        <div className="form-row">
-                            <label for="visitID">Visit ID: </label>
-                            <select name="visitID" id="visitID" onChange={handleInsertData} required>
-                            {noNote.length === 0 ? (
-                                    <option value="" selected disabled hidden>No Visits Available</option>) : (
-                                    <option value="" selected disabled hidden>Choose Attribute</option>
-                                )}
-                                {noNote.map((item, index) => (<option key={index} value={item.visitID}>{item.visitID}</option>)
-                                )}
-                            </select>
-                        </div>
+                        {noNote.length === 0 ? (
+                            <div>
+                                <div className="form-row">
+                                    <label for="lengthOfVisit">Length of Visit</label>
+                                    <input type="text" name="lengthOfVisit" id="lengthOfVisit" onChange={handleInsertData} disabled />
+                                </div>
+                                <div className="form-row">
+                                    <label for="visitID">Visit ID: </label>
+                                    <select name="visitID" id="visitID" onChange={handleInsertData} disabled>
+                                        <option value="" selected disabled hidden>Choose Attribute</option>
+                                    </select>
+                                </div>
+                            </div>) : (
+                            <div>
+                                <div className="form-row">
+                                    <label for="lengthOfVisit">Length of Visit</label>
+                                    <input type="text" name="lengthOfVisit" id="lengthOfVisit" onChange={handleInsertData} required />
+                                </div>
+                                <div className="form-row">
+                                    <label for="visitID">Visit ID: </label>
+                                    <select name="visitID" id="visitID" onChange={handleInsertData} required>
+                                        <option value="" selected disabled hidden>Choose Attribute</option>
+                                        {noNote.map((item, index) => (<option key={index} value={item.visitID}>{item.visitID}</option>))}
+                                    </select>
+                                </div>
+                            </div>
+                        )}
                         <br />
                         <button
                             className={disableButton ? "disabled-add-button" : "add-button"}
